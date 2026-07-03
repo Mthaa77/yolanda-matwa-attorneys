@@ -45,11 +45,17 @@ export function ContactSection() {
     handleSubmit,
     reset,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: { name: "", email: "", phone: "", service: "", message: "" },
   });
+
+  const messageValue = watch("message");
+  const messageCount = messageValue?.length ?? 0;
+  const MIN_MESSAGE = 10;
+  const MAX_MESSAGE = 5000;
 
   // Listen for service-modal "Start Your Enquiry" prefill requests.
   useEffect(() => {
@@ -266,15 +272,36 @@ export function ContactSection() {
               </div>
 
               <div className="mt-5 flex flex-col gap-1.5">
-                <label
-                  htmlFor="message"
-                  className="text-xs font-semibold uppercase tracking-wider text-navy-deep"
-                >
-                  How Can We Help?
-                </label>
+                <div className="flex items-baseline justify-between">
+                  <label
+                    htmlFor="message"
+                    className="text-xs font-semibold uppercase tracking-wider text-navy-deep"
+                  >
+                    How Can We Help?
+                  </label>
+                  {/* Live character counter */}
+                  <span
+                    className={cn(
+                      "text-[0.65rem] font-medium tabular-nums transition-colors",
+                      messageCount === 0
+                        ? "text-muted-foreground/40"
+                        : messageCount < MIN_MESSAGE
+                          ? "text-gold"
+                          : messageCount > MAX_MESSAGE * 0.9
+                            ? "text-destructive"
+                            : "text-muted-foreground/60",
+                    )}
+                    aria-live="polite"
+                  >
+                    {messageCount < MIN_MESSAGE
+                      ? `${messageCount}/${MIN_MESSAGE} min`
+                      : `${messageCount.toLocaleString()} chars`}
+                  </span>
+                </div>
                 <textarea
                   id="message"
                   rows={5}
+                  maxLength={MAX_MESSAGE}
                   placeholder="Tell us briefly about your matter…"
                   className={cn(
                     fieldClass,

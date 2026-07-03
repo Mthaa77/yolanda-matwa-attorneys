@@ -460,3 +460,44 @@ Task: Continuous QA + service modal breadcrumb "Service N of 6" indicator + clic
 3. **Service comparison cell clickability** — make the individual coverage cells (✓ / ○) in the comparison table clickable to open the corresponding service modal, in addition to the row labels and column headers.
 4. **"Last updated" timestamp on insights articles** — show a "Last updated: [date]" line on each article modal for content credibility.
 5. **Contact form character counter** — add a live character counter to the message textarea so users can see how much they've written relative to the minimum (10 chars).
+
+---
+Task ID: 11
+Agent: Main (Z.ai Code) — webDevReview cron cycle 10
+Task: Continuous QA + contact form character counter + insights article "Last updated" timestamps + clickable comparison coverage cells.
+
+## Current Project Status Assessment
+- Site stable and fully verified through 10 prior cycles. No bugs, no runtime errors.
+- QA at start of cycle: clean 200 responses, no console/page errors.
+- All previously-built features working (see prior cycle summaries).
+
+## Completed Modifications This Cycle
+
+### New Features
+1. **Contact form character counter** — added a live character counter next to the "How Can We Help?" label using react-hook-form's `watch("message")`. Displays "0/10 min" (gold, below minimum) → "5/10 min" → "44 chars" (muted, above minimum) → turns destructive at 90% of the 5000-char max. Uses `tabular-nums` for stable digit width, `aria-live="polite"` for screen readers, and `maxLength={5000}` on the textarea to enforce the cap. Verified: empty=0/10 min → typed "Hello"=5/10 min → typed more=44 chars.
+2. **Insights article "Last updated" timestamps** — added `updatedAt: string` (ISO date) to the InsightArticle interface and all 4 articles (2026-07-01, 2026-06-28, 2026-06-20, 2026-06-15). The ArticleModal header now shows a "Updated 01 Jul 2026" badge with a Calendar icon, formatted via a `formatDate()` helper using `en-ZA` locale. Verified: transfer-costs article shows "Updated 01 Jul 2026".
+3. **Clickable comparison coverage cells** — the "yes" (✓) and "partial" (○) cells in the comparison table are now buttons that open the corresponding service modal. Each has a descriptive aria-label ("Buying or selling a home — open Conveyancing details (Covered)") and a `title` tooltip. Hover scales the icon to 110% and shifts color to gold. "no" (—) cells remain non-interactive spans. Verified: clicked the "Covered" cell for "Buying or selling a home" → Conveyancing service modal opened.
+
+### Styling Polish
+4. Character counter uses color states (gold below min, muted above, destructive near max) for at-a-glance feedback.
+5. Comparison cell buttons have `hover:scale-110` + gold color shift for a satisfying micro-interaction.
+6. Article "Updated" badge uses Calendar icon + cream/50 text matching the existing read-time badge for header consistency.
+
+## Verification Results
+- `bun run lint`: CLEAN — no errors.
+- agent-browser QA: no page errors, no console errors.
+- Character counter: empty="0/10 min" → "Hello"="5/10 min" → "Hello — I need help with a property transfer"="44 chars". aria-live="polite" confirmed.
+- Article timestamp: opened transfer-costs article → "Updated 01 Jul 2026" displayed in header with Calendar icon.
+- Clickable cells: "Buying or selling a home — open Conveyancing details (Covered)" renders as button. Clicked it → Conveyancing modal opened (modalTitle: "Conveyancing & Property Transfers").
+- Mobile responsive (390px): contact form with counter renders correctly.
+- Screenshots: qa-round11-article-timestamp, qa-round11-contact-mobile, qa-round11-fullpage (2.3MB).
+
+## Unresolved Issues / Risks
+- None functional. All features verified working end-to-end.
+
+## Priority Recommendations for Next Cycle
+1. **Keyboard tab-order audit** — verify the full-page tab order is logical with all interactive elements (skip link → nav → service cards → comparison headers/cells/row labels/filters → FAQ → insights form → contact form → footer links), with visible focus indicators throughout.
+2. **Email confirmation flow** — send a confirmation email on insights subscribe (with a verification link) to fully comply with email best practices and confirm the address is valid/owned.
+3. **Contact form save-draft** — auto-save form progress to localStorage so a user who accidentally navigates away doesn't lose their input.
+4. **Service modal "share" button** — add a share button to the service modal (copy link / WhatsApp) so a user can share a specific service's info.
+5. **Insights article reading-progress bar** — add a thin progress bar at the top of the article modal showing scroll position through the article.

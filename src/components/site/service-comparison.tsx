@@ -197,20 +197,39 @@ export function ServiceComparison() {
                     const cov = row.coverage[s.slug];
                     const cfg = coverageConfig[cov];
                     const Icon = cfg.icon;
+                    const clickable = cov === "yes" || cov === "partial";
                     return (
                       <td
                         key={s.slug}
                         className={cn(
                           "px-3 py-4 text-center sm:px-4",
                           cfg.cell,
+                          clickable && "transition-colors",
                         )}
                       >
-                        <span className="inline-flex h-7 w-7 items-center justify-center">
-                          <Icon
-                            className={cn("h-4 w-4", cfg.iconClass)}
-                            aria-label={cfg.label}
-                          />
-                        </span>
+                        {clickable ? (
+                          <button
+                            onClick={() => openServiceModal(s.slug)}
+                            className="group inline-flex h-7 w-7 items-center justify-center rounded-full transition-all hover:scale-110 focus-visible:scale-110"
+                            aria-label={`${row.need} — open ${s.shortTitle} details (${cfg.label})`}
+                            title={`${s.shortTitle}: ${cfg.label}`}
+                          >
+                            <Icon
+                              className={cn(
+                                "h-4 w-4 transition-colors",
+                                cfg.iconClass,
+                                "group-hover:text-gold",
+                              )}
+                            />
+                          </button>
+                        ) : (
+                          <span className="inline-flex h-7 w-7 items-center justify-center">
+                            <Icon
+                              className={cn("h-4 w-4", cfg.iconClass)}
+                              aria-label={cfg.label}
+                            />
+                          </span>
+                        )}
                       </td>
                     );
                   })}

@@ -547,6 +547,7 @@ export interface InsightArticle {
   question: string;
   readTime: string;
   status: "drafting" | "planned";
+  updatedAt: string; // ISO date string
   excerpt: string;
   body: string[];
 }
@@ -560,6 +561,7 @@ export const INSIGHT_ARTICLES: InsightArticle[] = [
     question: "How much does property transfer really cost in Pretoria?",
     readTime: "6 min read",
     status: "drafting",
+    updatedAt: "2026-07-01",
     excerpt:
       "Beyond the purchase price, buyers face transfer duty, conveyancer fees, Deeds Office charges, and — if bonded — bond registration fees. Here is what each one actually is, and why a written quote matters before you commit.",
     body: [
@@ -576,6 +578,7 @@ export const INSIGHT_ARTICLES: InsightArticle[] = [
     question: "ANC with or without accrual: which actually protects you?",
     readTime: "5 min read",
     status: "drafting",
+    updatedAt: "2026-06-28",
     excerpt:
       "An antenuptial contract can include or exclude accrual — and the choice shapes your entire financial life during the marriage and at its end. Here is what each option genuinely means, beyond the textbook definition.",
     body: [
@@ -592,6 +595,7 @@ export const INSIGHT_ARTICLES: InsightArticle[] = [
     question: "Why most DIY wills fail at the Master's Office",
     readTime: "7 min read",
     status: "planned",
+    updatedAt: "2026-06-20",
     excerpt:
       "A will written on a napkin can be valid. A will printed from a template website can be invalid. The difference is not the paper — it is the formalities, the clarity, and the estate-planning thought that should sit behind the words.",
     body: [
@@ -607,6 +611,7 @@ export const INSIGHT_ARTICLES: InsightArticle[] = [
     question: "What a cartel investigator looks for in your commercial contract",
     readTime: "8 min read",
     status: "planned",
+    updatedAt: "2026-06-15",
     excerpt:
       "Yolanda investigated cartel cases and assessed the public-interest impact of mergers at the Competition Commission. That lens — trained to spot anti-competitive risk — now reads every commercial contract this firm drafts.",
     body: [

@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   X,
   Clock,
+  Calendar,
   ArrowRight,
   AlertCircle,
   Share2,
@@ -16,6 +17,18 @@ import { useEffect } from "react";
 import { type InsightArticle, FIRM } from "@/lib/site-data";
 import { useFocusTrap } from "@/hooks/use-focus-trap";
 import { toast } from "sonner";
+
+function formatDate(iso: string): string {
+  try {
+    return new Date(iso).toLocaleDateString("en-ZA", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+  } catch {
+    return iso;
+  }
+}
 
 interface ArticleModalProps {
   article: InsightArticle | null;
@@ -105,6 +118,10 @@ export function ArticleModal({ article, onClose }: ArticleModalProps) {
                     <span className="inline-flex items-center gap-1.5 text-[0.65rem] font-medium uppercase tracking-wider text-cream/50">
                       <Clock className="h-3 w-3" />
                       {article.readTime}
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 text-[0.65rem] font-medium uppercase tracking-wider text-cream/50">
+                      <Calendar className="h-3 w-3" />
+                      Updated {formatDate(article.updatedAt)}
                     </span>
                   </div>
                   <h3
