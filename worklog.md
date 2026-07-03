@@ -98,3 +98,47 @@ Task: Continuous QA + add new features (FAQ, Why Choose Us, Process Timeline) + 
 3. **Insights/blog scaffold** — content scrape flagged zero blog content as a major SEO gap; a styled "Legal Insights" teaser section (even if empty initially) could be added, or a simple articles data structure.
 4. **Cookie consent / POPIA notice** — South African POPIA compliance requires a cookie/privacy notice; a discreet banner would add professional compliance polish.
 5. **Print stylesheet** — for wills/estates clients who may want to print service info, a print-friendly stylesheet would be a thoughtful premium touch.
+
+---
+Task ID: 3
+Agent: Main (Z.ai Code) — webDevReview cron cycle 2
+Task: Continuous QA + new features (POPIA cookie consent, service "What to Prepare" checklists, testimonials scaffold, legal insights teaser) + decorative section dividers.
+
+## Current Project Status Assessment
+- Site stable and fully verified from cycles 1 & 2. No bugs, no runtime errors.
+- Existing sections: Hero, TrustBar, AboutFounder, WhyChooseUs, ServicesGrid+Modals, Competence, ProcessTimeline, FAQ, ContactSection, FinalCTA, Footer + global enhancements (ScrollProgress, BackToTop, LoadingScreen, WhatsAppButton).
+- QA at start of cycle: clean 200 responses, no console errors.
+
+## Completed Modifications This Cycle
+
+### New Features
+1. **Service modal "What to Prepare" checklist** — added `prepare: string[]` field to all 6 services in site-data.ts (5 practical items each: documents to bring, ID, proof of address, etc.). ServiceModal now renders a distinct sage-accented "What to Prepare for Your First Meeting" card with a ClipboardList icon and dot-bullet checklist — visually differentiated from the gold "What This Covers" checkmark list. Gives clients a concrete action item before their first meeting.
+2. **POPIA cookie consent banner** (`cookie-consent.tsx`) — South African POPIA compliance notice. Fixed bottom-center, navy with gold accents, ShieldCheck icon, "Accept all" / "Essential only" buttons, dismiss X, POPIA link scrolls to contact. Persists choice in localStorage (`yma_popia_consent_v1`), defers appearance 1.4s after load to avoid jarring initial paint. Verified: appears on first load → disappears on accept → stays gone after reload.
+3. **Testimonials scaffold section** (`testimonials-scaffold.tsx`) — honest "coming soon" approach per the brief (NO fabricated testimonials). Left card: animated 5-star "Reviews loading…" with explanation of why we don't show fake quotes + "Review collection live" pulse badge. Right column: trust pillars card + navy "Have you worked with us? Share Your Experience" CTA. Bottom bar: verified registration status (Matwa Nongogo Incorporated, Legal Practice Council, High Court of SA). Placed between FAQ and LegalInsights.
+4. **Legal Insights teaser section** (`legal-insights.tsx`) — SEO content scaffold addressing the "zero blog content" gap flagged in research. 4 article cards grounded in real long-tail keywords from content scrape Section 21 (transfer costs, ANC accrual, DIY wills, cartel investigator perspective). Each card has topic badge, "Drafting"/"Planned" status, read time, hover effects. "Launching soon" badge + "Suggest a Topic" CTA. Placed between TestimonialsScaffold and ContactSection.
+5. **Decorative SectionDivider component** (`section-divider.tsx`) — centered YM monogram flanked by gradient gold lines, used between sections (after AboutFounder and after FAQ) for premium visual rhythm.
+
+### Styling Polish
+6. Service modal prepare card uses sage palette to visually distinguish "action items" from "coverage" (gold) — adds color hierarchy to the modal.
+7. Testimonials section uses faded Quote watermark, staggered star animation, and a live-pulse badge for premium "honest but aspirational" tone.
+8. Legal Insights cards have consistent hover lift + gold bottom-line reveal matching the services grid pattern.
+
+## Verification Results
+- `bun run lint`: CLEAN — no errors.
+- agent-browser QA: no page errors, no console errors.
+- New sections confirmed present: "Built on Trust, Earned Over Time" (testimonials), "Plain Answers to the Questions We Hear Most" (legal insights) with all 4 article cards.
+- Service modal "What to Prepare": opened Conveyancing modal → verified "WHAT TO PREPARE FOR YOUR FIRST MEETING" heading + all 5 checklist items present (Offer to Purchase, ID document, Proof of address, Bond grant, Rates account).
+- POPIA cookie consent: cleared localStorage + reloaded → banner appeared with all elements (privacy, POPIA, Accept all, Essential only) → clicked "Accept all" → banner dismissed, consent stored as "accepted" → reloaded → banner stayed gone (persistence confirmed).
+- Mobile responsive (390px): new sections render correctly.
+- Screenshots: qa-round3-modal-prepare, qa-round3-cookie, qa-round3-mobile-top, qa-round3-mobile-testimonials, qa-round3-fullpage (2.0MB).
+
+## Unresolved Issues / Risks
+- None functional. All features verified working.
+- Minor: agent-browser click interception by overlays (cookie banner / Next.js dev portal) required scroll-into-view workarounds during testing — dev-environment only, does not affect real users.
+
+## Priority Recommendations for Next Cycle
+1. **Print stylesheet** — for wills/estates clients who may want to print service info or the "What to Prepare" checklist; a `@media print` stylesheet hiding nav/footer/CTAs and rendering clean content would be a thoughtful premium touch.
+2. **Service modal "Common Questions" mini-FAQ** — each service modal could include 2–3 service-specific Q&As (e.g., conveyancing: "Can I choose my own conveyancer?" — yes, by law).
+3. **"Insights" article route scaffold** — if/when articles are written, a `/insights/[slug]` rendering path (or an in-page modal) would let the Legal Insights cards become clickable.
+4. **Accessibility audit pass** — verify ARIA labels on all interactive elements, color contrast ratios, and keyboard tab order across the new sections.
+5. **Performance check** — with more sections now on the page, consider lazy-loading below-the-fold images and verifying LCP/CLS remain optimal.

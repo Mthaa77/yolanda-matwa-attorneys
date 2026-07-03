@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ArrowRight, Check } from "lucide-react";
+import { X, ArrowRight, Check, ClipboardList } from "lucide-react";
 import { useEffect } from "react";
 import { type ServiceDetail, FIRM } from "@/lib/site-data";
 import { cn } from "@/lib/utils";
@@ -115,6 +115,28 @@ export function ServiceModal({ service, onClose }: ServiceModalProps) {
                 <p className="text-base leading-relaxed text-muted-foreground text-pretty">
                   {service.approach}
                 </p>
+              </div>
+
+              {/* What to Prepare — distinct sage-accented checklist */}
+              <div className="mt-8 rounded-xl border border-sage/20 bg-sage/[0.04] p-5 sm:p-6">
+                <div className="mb-4 flex items-center gap-2">
+                  <ClipboardList className="h-4 w-4 text-sage" />
+                  <h4 className="text-xs font-semibold uppercase tracking-[0.18em] text-sage">
+                    What to Prepare for Your First Meeting
+                  </h4>
+                </div>
+                <ul className="space-y-2.5">
+                  {service.prepare.map((p, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-sage/30 bg-white">
+                        <span className="h-1.5 w-1.5 rounded-full bg-sage" />
+                      </span>
+                      <span className="text-sm leading-relaxed text-foreground/75">
+                        {p}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
 

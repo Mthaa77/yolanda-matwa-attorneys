@@ -99,6 +99,7 @@ export interface ServiceDetail {
   featured?: boolean;
   covers: string[];
   approach: string;
+  prepare: string[];
   accent: "navy" | "gold" | "sage";
 }
 
@@ -123,6 +124,13 @@ export const SERVICES: ServiceDetail[] = [
     ],
     approach:
       "Conveyancing is the anchor of our practice. We manage the full transfer lifecycle with the rigour you would expect from someone who once investigated cartel cases at the Competition Commission — every lodgement, every clearance certificate, every rate figure checked against the source. You receive clear progress updates and transparent fee quotes before work begins, so there are no surprises at registration.",
+    prepare: [
+      "A copy of the signed Offer to Purchase / Agreement of Sale",
+      "Your South African ID document (or passport for non-residents)",
+      "Proof of address (utility bill, not older than 3 months)",
+      "Bond grant letter from your bank (if financed)",
+      "Rates account number for the property (if available)",
+    ],
   },
   {
     slug: "wills-estates",
@@ -143,6 +151,13 @@ export const SERVICES: ServiceDetail[] = [
     ],
     approach:
       "A will is the most personal legal document you will ever sign. We take the time to understand your family structure, your assets, and your wishes — then draft language that leaves no room for ambiguity. Our tax-law grounding (UNISA certificate, LLM in Taxation in progress) means we also flag the structural issues most basic wills miss.",
+    prepare: [
+      "Your South African ID document",
+      "A list of your assets and approximate values (property, accounts, policies)",
+      "Full names and ID numbers of intended beneficiaries",
+      "Names and details of your chosen executor (or ask us to act)",
+      "Guardian details, if you have minor children",
+    ],
   },
   {
     slug: "antenuptial-contracts",
@@ -163,6 +178,13 @@ export const SERVICES: ServiceDetail[] = [
     ],
     approach:
       "As a Notary of the High Court, Yolanda is one of the few practitioners legally empowered to register antenuptial contracts. We explain accrual in plain language, help you choose the structure that genuinely fits your circumstances, and ensure the contract is notarised and registered — not merely signed.",
+    prepare: [
+      "Both parties' South African ID documents",
+      "Proposed wedding date (the ANC must be signed before the marriage)",
+      "A list of assets each party brings into the marriage",
+      "Details of any existing trusts or business interests",
+      "Whether you wish to include or exclude accrual",
+    ],
   },
   {
     slug: "deceased-estates",
@@ -183,6 +205,13 @@ export const SERVICES: ServiceDetail[] = [
     ],
     approach:
       "Losing a loved one is hard enough without navigating the Master's Office alone. We handle the full administration — reporting, the L&D account, SARS compliance, distribution — with quiet competence and regular, plain-language updates. Our estate-planning and tax background means we catch the issues that delay estates, before they delay yours.",
+    prepare: [
+      "The original will (if one exists)",
+      "The deceased's South African ID and death certificate",
+      "A list of the deceased's assets and liabilities",
+      "Details of all beneficiaries and next of kin",
+      "Bank statements and bond account details (where applicable)",
+    ],
   },
   {
     slug: "commercial-contracts",
@@ -203,6 +232,13 @@ export const SERVICES: ServiceDetail[] = [
     ],
     approach:
       "Most boutique conveyancers draft contracts from templates. Yolanda's competition-law grounding at the CCSA — where she assessed the public-interest impact of mergers and drafted merger conditions — means she reads a contract for the risks no template anticipates. Regulatory exposure, anti-competitive clauses, compliance gaps: caught before you sign.",
+    prepare: [
+      "An outline of the transaction or relationship you wish to record",
+      "Any existing draft agreement or term sheet",
+      "Company / CC registration documents (if a business party)",
+      "Details of the other contracting party or parties",
+      "Your commercial non-negotiables and preferred timelines",
+    ],
   },
   {
     slug: "litigation",
@@ -223,6 +259,13 @@ export const SERVICES: ServiceDetail[] = [
     ],
     approach:
       "Litigation should be a last resort, never a reflex. Having negotiated settlement agreements and appeared at the Competition Tribunal, Yolanda approaches disputes strategically — looking for the resolution that protects your interests without unnecessary cost. When court is unavoidable, every pleading is prepared to a standard that withstands scrutiny.",
+    prepare: [
+      "A written chronology of events (dates, what happened, who was involved)",
+      "Copies of all relevant correspondence and contracts",
+      "Invoices, receipts or proof of financial loss (if claimed)",
+      "Contact details of any witnesses",
+      "Any prior court documents or demand letters received",
+    ],
   },
 ];
 
