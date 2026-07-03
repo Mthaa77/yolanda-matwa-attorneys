@@ -47,3 +47,54 @@ Stage Summary:
 - Responsive across desktop (1440px) and mobile (390px).
 - Sticky footer confirmed.
 - Ready for production. Next: set up 15-minute recurring webDevReview cron job for continuous QA/improvement.
+
+---
+Task ID: 2
+Agent: Main (Z.ai Code) — webDevReview cron cycle 1
+Task: Continuous QA + add new features (FAQ, Why Choose Us, Process Timeline) + styling enhancements + global UX components.
+
+## Current Project Status Assessment
+- Site was in a fully-verified, stable state from Task 1 (no bugs, no runtime errors).
+- All original features confirmed working: hero, trust bar, about founder, services grid + modals, competence statement + credentials timeline, contact form with DB persistence, final CTA, footer, WhatsApp button, mobile nav.
+- QA pass at start of this cycle: no console errors, no page errors, clean 200 responses.
+
+## Completed Modifications This Cycle
+
+### New Features (3 new sections)
+1. **"Why Choose Us" value props section** (`why-choose-us.tsx`) — 4 cards grounded in REAL verified credentials (not fabricated): Rare Competition Tribunal Experience, Dual Notary & Conveyancer Admission, Transparent Upfront Pricing, Continually Sharpening Expertise. Each card has large faded background number, icon, highlight badge, hover lift + gold bottom-line reveal. Placed between AboutFounder and ServicesGrid.
+2. **Process Timeline section** (`process-timeline.tsx`) — 4-step client journey (First Conversation → Clear Scope & Quote → Diligent Handling → Resolution & Handover) with numbered nodes connected by a horizontal gold gradient line on desktop, duration badges, pulse ring on the first node. Placed between Competence and FAQ.
+3. **FAQ accordion section** (`faq-section.tsx`) — 6 questions grounded in the long-tail SEO keyword opportunities flagged in content scrape Section 21 (transfer timelines, transfer costs, ANC vs postnuptial, notary for wills, deceased estate duration, transparent pricing). Category filter (All / Property / Family & Wills / General), animated expand/collapse with height + opacity, plus a "Still have a question?" CTA card. Placed between ProcessTimeline and ContactSection. Added "FAQ" to nav links.
+
+### New Global UX Components (`site-enhancements.tsx`)
+4. **Scroll progress bar** — thin gold gradient bar fixed to top of viewport, uses framer-motion useScroll + useSpring for smooth scaleX tracking.
+5. **Back-to-top button** — appears bottom-left after 700px scroll (mirrors WhatsApp button on bottom-right, no collision), navy with gold border + arrow icon.
+6. **Loading screen** — restrained dark navy overlay with gold "YM" monogram + animated gold loading line, shows once per session (sessionStorage flag), ~1.1s duration per the brief's "keep restrained" instruction.
+
+### Styling Polish
+7. **Global gold focus-visible rings** for keyboard accessibility (2px gold outline, offset 2px).
+8. **Refined heading rendering** — text-wrap balance + tighter letter-spacing on h1–h4.
+9. **prefers-reduced-motion support** — disables animations/transitions for users who request reduced motion (accessibility).
+10. Added Scale, ShieldCheck, GraduationCap icon imports to site-data for the value props.
+
+## Verification Results
+- `bun run lint`: CLEAN (fixed one react-hooks/set-state-in-effect error in LoadingScreen by deferring setState into setTimeout callbacks).
+- agent-browser QA: page loads with correct title, no console/runtime errors.
+- Verified all 3 new sections render: "What Sets This Practice Apart" (4 value props), "A Clear Path From First Call to Resolution" (4 process steps), "Straight Answers, Not Legal Evasion" (6 FAQ questions).
+- FAQ accordion interaction: clicking a collapsed question expands it and collapses the previous — verified `expanded` state toggling works.
+- FAQ category filter: clicking "General" filters to show only the 1 General-category question — verified filtering works.
+- Scroll progress bar: confirmed present in DOM via JS eval.
+- Back-to-top button: confirmed present + functional (triggered click via JS, scrollY went 2000 → 0).
+- Loading screen: cleared sessionStorage + reloaded → screen appeared (loadingScreenPresent: true) → after 1.5s screen gone (loadingScreenStillPresent: false). Works as designed.
+- Mobile responsive (390px): FAQ section renders correctly on mobile.
+- Screenshots captured: qa-round2-home, qa-round2-faq, qa-round2-process, qa-round2-faq-mobile, qa-round2-fullpage (1.8MB).
+
+## Unresolved Issues / Risks
+- Fast Refresh informational warnings about mixing data exports and component exports in `site-data.ts` — these are dev-only warnings, do NOT affect production or functionality. Could be resolved in a future cycle by splitting data into a separate non-component file, but low priority.
+- The Next.js dev-tools portal occasionally covers the bottom-left back-to-top button during automated clicking in agent-browser — this is a dev-environment-only artifact and does not affect real users.
+
+## Priority Recommendations for Next Cycle
+1. **Service detail "deep dive" expansion** — the service modals currently have covers + approach; could add a "common questions" mini-FAQ per service, or a "what to bring / what to prepare" checklist.
+2. **Testimonials placeholder structure** — the brief says no fabricated testimonials, but the site could include a tasteful "Reviews coming soon" / Google review integration scaffold ready for when the client collects real reviews.
+3. **Insights/blog scaffold** — content scrape flagged zero blog content as a major SEO gap; a styled "Legal Insights" teaser section (even if empty initially) could be added, or a simple articles data structure.
+4. **Cookie consent / POPIA notice** — South African POPIA compliance requires a cookie/privacy notice; a discreet banner would add professional compliance polish.
+5. **Print stylesheet** — for wills/estates clients who may want to print service info, a print-friendly stylesheet would be a thoughtful premium touch.

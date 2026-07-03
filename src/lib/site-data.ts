@@ -5,6 +5,9 @@ import {
   FileCheck2,
   Briefcase,
   Gavel,
+  Scale,
+  ShieldCheck,
+  GraduationCap,
   type LucideIcon,
 } from "lucide-react";
 
@@ -228,5 +231,129 @@ export const NAV_LINKS = [
   { label: "About", href: "#about" },
   { label: "Services", href: "#services" },
   { label: "Credentials", href: "#credentials" },
+  { label: "FAQ", href: "#faq" },
   { label: "Contact", href: "#contact" },
+];
+
+export interface ValueProp {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+  highlight: string;
+}
+
+// Value props grounded in REAL, verified credentials — no fabrication
+export const VALUE_PROPS: ValueProp[] = [
+  {
+    icon: Scale,
+    title: "Rare Competition Tribunal Experience",
+    description:
+      "Most boutique conveyancers cannot claim this. Yolanda investigated cartel cases, conducted dawn raids and appeared at the Competition Tribunal — rigour now applied to every property transfer and contract.",
+    highlight: "Former CCSA Investigator",
+  },
+  {
+    icon: ScrollText,
+    title: "Dual Notary & Conveyancer Admission",
+    description:
+      "Not every attorney holds both. As a Notary of the High Court, Yolanda is empowered to register antenuptial contracts and notarial documents — handled correctly the first time, not merely signed.",
+    highlight: "Admitted 2019",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Transparent, Upfront Pricing",
+    description:
+      "We promise it because we mean it. Clear fee quotes before work begins — no surprise line items at registration, no opaque disbursements. Trust is built on receipts you can read.",
+    highlight: "Our stated value",
+  },
+  {
+    icon: GraduationCap,
+    title: "Continually Sharpening Expertise",
+    description:
+      "Certificate in Tax Law (UNISA), Certificate in Competition Law (UP), and an LLM in Taxation currently in progress at UKZN. The law moves — so does our founder's mastery of it.",
+    highlight: "LLM in progress",
+  },
+];
+
+export interface ProcessStep {
+  number: string;
+  title: string;
+  description: string;
+  duration: string;
+}
+
+export const PROCESS_STEPS: ProcessStep[] = [
+  {
+    number: "01",
+    title: "First Conversation",
+    description:
+      "You reach out by phone, email, WhatsApp or the form below. We listen to understand your matter — no jargon, no pressure, no obligation. Most first calls take fifteen minutes.",
+    duration: "Same day",
+  },
+  {
+    number: "02",
+    title: "Clear Scope & Quote",
+    description:
+      "We set out in writing exactly what we will do, what it will cost, and what you can expect at each stage. You decide whether to proceed — with full information, never in the dark.",
+    duration: "1–2 days",
+  },
+  {
+    number: "03",
+    title: "Diligent Handling",
+    description:
+      "Your matter is prepared with the rigour of a practitioner who has appeared at the Competition Tribunal. Every document checked, every deadline tracked, every step explained in plain language.",
+    duration: "Per matter",
+  },
+  {
+    number: "04",
+    title: "Resolution & Handover",
+    description:
+      "From registration at the Deeds Office to a signed will to a winding-up certificate — you receive the final deliverable, a clear record of what was done, and an open door for what comes next.",
+    duration: "Closure",
+  },
+];
+
+export interface FAQItem {
+  question: string;
+  answer: string;
+  category: "Property" | "Family & Wills" | "General";
+}
+
+// FAQ grounded in the long-tail SEO keyword opportunities flagged in the content scrape (Section 21)
+export const FAQ_ITEMS: FAQItem[] = [
+  {
+    category: "Property",
+    question: "How long does a property transfer take in South Africa?",
+    answer:
+      "A straightforward residential transfer typically takes 8 to 12 weeks from the moment the sale agreement is signed to registration at the Deeds Office. The timeline depends on the bond approval process, the municipal rates clearance (which can take 2–4 weeks alone), and whether there are existing bonds to cancel. We keep you updated at every milestone so you are never left wondering where your transfer stands.",
+  },
+  {
+    category: "Property",
+    question: "What costs are involved in transferring a property?",
+    answer:
+      "Beyond the purchase price, buyers should budget for transfer duty (payable to SARS on a sliding scale above R1.1 million), the conveyancer's professional fee (regulated by the Legal Practice Council tariff), Deeds Office registration fees, and post, petties and electronic generation fees. If you are financing with a bond, bond registration fees apply separately. We provide a written cost estimate before any work begins — transparently, line by line.",
+  },
+  {
+    category: "Family & Wills",
+    question: "What is the difference between an antenuptial and postnuptial contract?",
+    answer:
+      "An antenuptial contract (ANC) is signed before marriage and determines your marital property regime from day one — either excluding accrual (complete financial separation) or including accrual (sharing growth during the marriage). A postnuptial contract is entered into after marriage and, since a 2014 Constitutional Court ruling, can change an in-community marriage to out-of-community — but it requires a High Court application and is significantly more complex. As a Notary, Yolanda is qualified to draft and register both.",
+  },
+  {
+    category: "Family & Wills",
+    question: "Do I need a notary to draft my will?",
+    answer:
+      "No — any admitted attorney can draft a will. However, a will drafted without proper tax and estate-planning consideration can cost your heirs far more in estate duty and administrative friction than the drafting fee. Yolanda's tax-law grounding (UNISA certificate, LLM in Taxation in progress) means your will is drafted not just to be valid, but to be efficient — catching the structural issues most basic wills miss.",
+  },
+  {
+    category: "Family & Wills",
+    question: "How long does deceased estate administration take?",
+    answer:
+      "A straightforward estate typically takes 6 to 9 months from reporting to the Master of the High Court through to final distribution. Complex estates — those with disputes, offshore assets, or significant tax exposure — can take 12 to 18 months or longer. The Master's Office processing times, SARS estate tax compliance, and the required Liquidation & Distribution account laydown period (which allows objections) all factor in. We manage every step and keep executors informed throughout.",
+  },
+  {
+    category: "General",
+    question: "Why is transparent pricing so important for legal services?",
+    answer:
+      "Because unexpected legal bills erode trust — and trust is the foundation of any attorney-client relationship. We quote in writing before work begins, explain what each fee covers, and flag any change in scope before it happens. If a matter becomes more complex than first assessed, we tell you first. This is not a marketing line; it is how we choose to practise.",
+  },
 ];
