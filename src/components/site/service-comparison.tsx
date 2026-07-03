@@ -162,10 +162,36 @@ export function ServiceComparison() {
                     scope="row"
                     className="sticky left-0 z-10 bg-inherit px-5 py-4 text-left text-sm font-medium text-navy-deep sm:px-6"
                   >
-                    <span className="block">{row.need}</span>
-                    <span className="mt-0.5 block text-[0.65rem] font-normal uppercase tracking-wider text-gold/70">
-                      {row.category}
-                    </span>
+                    {/* Click the need label to open the most relevant service modal */}
+                    {(() => {
+                      const primarySlug =
+                        Object.entries(row.coverage).find(
+                          ([, c]) => c === "yes",
+                        )?.[0] ??
+                        Object.entries(row.coverage).find(
+                          ([, c]) => c === "partial",
+                        )?.[0];
+                      const label = (
+                        <>
+                          <span className="block">{row.need}</span>
+                          <span className="mt-0.5 block text-[0.65rem] font-normal uppercase tracking-wider text-gold/70">
+                            {row.category}
+                          </span>
+                        </>
+                      );
+                      if (primarySlug) {
+                        return (
+                          <button
+                            onClick={() => openServiceModal(primarySlug)}
+                            className="group -mx-1 -my-0.5 block rounded px-1 py-0.5 text-left transition-colors hover:bg-gold/5 focus-visible:bg-gold/5"
+                            aria-label={`Open ${SERVICES.find((s) => s.slug === primarySlug)?.shortTitle} details for: ${row.need}`}
+                          >
+                            <span className="group-hover:text-gold">{label}</span>
+                          </button>
+                        );
+                      }
+                      return label;
+                    })()}
                   </th>
                   {SERVICES.map((s) => {
                     const cov = row.coverage[s.slug];

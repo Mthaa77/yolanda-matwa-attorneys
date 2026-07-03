@@ -1,13 +1,17 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Facebook, MapPin, Phone, Mail, ArrowUpRight } from "lucide-react";
+import { Facebook, MapPin, Phone, Mail, ArrowUpRight, ArrowUp } from "lucide-react";
 import { FIRM, NAV_LINKS, SERVICES } from "@/lib/site-data";
 import { Logo } from "./logo";
 
 export function Footer() {
   const scrollTo = (href: string) => {
     document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const backToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const year = new Date().getFullYear();
@@ -139,6 +143,14 @@ export function Footer() {
               className="text-left text-cream/40 transition-colors hover:text-gold-light sm:text-left"
             >
               Privacy &amp; POPIA Notice
+            </button>
+            <button
+              onClick={backToTop}
+              className="group inline-flex items-center gap-1.5 text-cream/40 transition-colors hover:text-gold-light"
+              aria-label="Back to top"
+            >
+              <ArrowUp className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5" />
+              Back to top
             </button>
           </div>
           <p className="max-w-md leading-relaxed sm:text-right">

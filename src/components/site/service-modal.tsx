@@ -342,9 +342,13 @@ export function ServiceModal({ service, onClose, onNavigate }: ServiceModalProps
                     <span className="sm:hidden">Prev</span>
                   </button>
 
-                  {/* position indicator + keyboard hint */}
+                  {/* position indicator + breadcrumb + keyboard hint */}
                   <div className="flex flex-col items-center gap-1">
-                    <div className="flex items-center gap-1.5" aria-hidden="true">
+                    <div
+                      className="flex items-center gap-1.5"
+                      role="group"
+                      aria-label={`Service ${currentIdx + 1} of ${SERVICES.length}: ${service.shortTitle}`}
+                    >
                       {SERVICES.map((s, i) => (
                         <span
                           key={s.slug}
@@ -357,6 +361,9 @@ export function ServiceModal({ service, onClose, onNavigate }: ServiceModalProps
                         />
                       ))}
                     </div>
+                    <span className="text-[0.6rem] font-medium uppercase tracking-wider text-muted-foreground/60">
+                      {currentIdx + 1} / {SERVICES.length}
+                    </span>
                     <span className="hidden items-center gap-1 text-[0.6rem] text-muted-foreground/50 lg:flex">
                       <kbd className="rounded border border-border bg-white px-1 py-0.5 font-sans text-[0.55rem]">←</kbd>
                       <kbd className="rounded border border-border bg-white px-1 py-0.5 font-sans text-[0.55rem]">→</kbd>

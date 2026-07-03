@@ -418,3 +418,45 @@ Task: Continuous QA + contact form auto-fill from service modal + service modal 
 3. **Service comparison "click to open" on row labels** — make the "Your Need" row labels in the comparison table clickable to open the most relevant service modal.
 4. **"Back to top" from footer** — add a discreet "Back to top" link in the footer bottom bar (in addition to the floating button) for keyboard users.
 5. **Breadcrumb-style service modal title** — show "Service 2 of 6" text alongside the position indicator dots for clearer orientation.
+
+---
+Task ID: 10
+Agent: Main (Z.ai Code) — webDevReview cron cycle 9
+Task: Continuous QA + service modal breadcrumb "Service N of 6" indicator + clickable comparison row labels + footer back-to-top link.
+
+## Current Project Status Assessment
+- Site stable and fully verified through 9 prior cycles. No bugs, no runtime errors.
+- QA at start of cycle: clean 200 responses, no console/page errors.
+- All previously-built features working (see prior cycle summaries).
+
+## Completed Modifications This Cycle
+
+### New Features
+1. **Service modal breadcrumb indicator** — added a visible "N / 6" text (e.g. "2 / 6" for Wills) below the position indicator dots in the service modal nav bar, plus an accessible `aria-label` on the dot group reading "Service 2 of 6: Wills & Estates". This gives users clear orientation about where they are in the service sequence. Verified: opened Wills modal → "2 / 6" visible, aria-label = "Service 2 of 6: Wills & Estates".
+2. **Clickable comparison table row labels** — the "Your Need" labels in the first column of the comparison table are now buttons that open the most relevant service modal. Logic: opens the service with "yes" (primary) coverage for that need; if none, opens the first "partial" coverage service. Each button has a descriptive aria-label ("Open Conveyancing details for: Buying or selling a home") and a subtle gold hover state (bg-gold/5 + text-gold). Verified: clicked "Buying or selling a home" row label → Conveyancing service modal opened.
+3. **Footer "Back to top" link** — added a discreet "Back to top" button with ArrowUp icon to the footer bottom bar (next to Privacy & POPIA Notice), for keyboard users who've scrolled to the footer. Arrow lifts on hover. Verified: scrolled to 2000px → clicked Back to top → scrollY returned to 0.
+
+### Styling Polish
+4. Breadcrumb text uses uppercase tracking + muted-foreground/60 for a refined editorial label look.
+5. Comparison row-label buttons have a -mx/-my inset so the hover bg aligns with the cell padding, and the text shifts to gold on hover matching the site's interactive language.
+6. Footer back-to-top ArrowUp icon has a -translate-y-0.5 hover animation for a subtle lift cue.
+
+## Verification Results
+- `bun run lint`: CLEAN — no errors.
+- agent-browser QA: no page errors, no console errors.
+- Breadcrumb: opened Wills modal → "2 / 6" visible (willsBreadcrumb: true) + aria-label = "Service 2 of 6: Wills & Estates" confirmed.
+- Clickable row labels: "Buying or selling a home" and "Bond registration or cancellation" both render as buttons with aria-labels. Clicked "Buying or selling a home" → Conveyancing modal opened (modalTitle: "Conveyancing & Property Transfers", isConveyancing: true).
+- Footer back-to-top: scrolled to 2000px → triggered button via JS (click intercepted by dev portal) → scrollY returned to 0.
+- Mobile responsive (390px): footer with back-to-top link renders correctly.
+- Screenshots: qa-round10-breadcrumb, qa-round10-footer-mobile, qa-round10-fullpage (2.5MB).
+
+## Unresolved Issues / Risks
+- None functional. All features verified working end-to-end.
+- Minor: agent-browser click interception by the Next.js dev portal overlay required JS-triggered clicks for the back-to-top test — real users will not encounter this.
+
+## Priority Recommendations for Next Cycle
+1. **Keyboard tab-order audit** — verify the full-page tab order is logical with all interactive elements (skip link → nav → service cards → comparison headers/row labels/filters → FAQ → insights form → contact form → footer links), with visible focus indicators throughout.
+2. **Email confirmation flow** — send a confirmation email on insights subscribe (with a verification link) to fully comply with email best practices and confirm the address is valid/owned.
+3. **Service comparison cell clickability** — make the individual coverage cells (✓ / ○) in the comparison table clickable to open the corresponding service modal, in addition to the row labels and column headers.
+4. **"Last updated" timestamp on insights articles** — show a "Last updated: [date]" line on each article modal for content credibility.
+5. **Contact form character counter** — add a live character counter to the message textarea so users can see how much they've written relative to the minimum (10 chars).
