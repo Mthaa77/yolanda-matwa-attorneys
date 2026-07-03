@@ -565,3 +565,79 @@ Premium redesign of the welcome section:
 3. **Hero video background option** — for an even more cinematic feel, consider an optional muted looped video background (with image fallback) — though this would need a client-supplied asset.
 4. **Ticker "breaking news" mode** — allow the marquee to occasionally surface a "New article published" item when insights content is added.
 5. **Hero headline A/B variants** — the brief's tagline is fixed, but a future enhancement could rotate between 2-3 approved headline variants for testing.
+
+---
+Task ID: 13
+Agent: Main (Z.ai Code) — direct user request
+Task: Remove parallax from Hero, upgrade other sections with premium colours, interactive components, and typography.
+
+## Current Project Status Assessment
+- Site stable and fully verified. No bugs, no runtime errors.
+- QA at start of cycle: clean 200 responses, no console/page errors.
+
+## Completed Modifications This Cycle
+
+### 1. Removed parallax from Hero (`hero.tsx`)
+- Removed `useScroll`, `useTransform`, `useRef` imports and all parallax motion transforms (bgY, bgScale, contentY, contentOpacity).
+- Background image is now static (plain `<div>` wrapper instead of `<motion.div style={{y, scale}}>`).
+- Content container is now a plain `<div>` (removed the `style={{y, opacity}}` motion div).
+- Scroll cue no longer fades with contentOpacity (uses its own static initial/animate opacity).
+- All other cinematic features preserved: 3-layer color grades, radial vignette, filmic grain, animated gold shimmer sweep, decorative gold frame + corner ticks, animated eyebrow dot, headline gradient underline flourish, shimmer-sweep CTA buttons, floating glassmorphic credential badge with rotating dashed ring, cinematic scroll cue, bottom fade.
+
+### 2. Enhanced AboutFounder (`about-founder.tsx`)
+- **Premium double gold frame**: portrait now has double-layered gold corner frames (2px + 1px, different sizes) for depth.
+- **Cinematic name plate**: portrait now has a gradient name-plate overlay at the bottom showing "Yolanda Okharedia" + her title in gold-light — overlaps the image for a premium editorial look.
+- **Deeper portrait shadow**: upgraded from shadow-premium to shadow-navy-deep.
+- **Premium pull quote**: blockquote now has a rounded-xl card with gradient gold background, larger Quote watermark, and a footer attribution ("The firm's stated value" with Award icon).
+- **Enhanced credential pills**: each pill now has hover lift (-translate-y-0.5), gold border on hover, and icon scale-110 on hover.
+- **Refined typography**: bio text bumped from muted-foreground to foreground/75 for better contrast.
+- **Premium CTA button**: "Explore Her Full Credentials" is now a full pill button with border + shadow instead of plain text.
+- **Enhanced floating badge**: badge now has an icon circle (bg-gold/10) + Scale icon, rounded-xl shape.
+
+### 3. Enhanced WhyChooseUs (`why-choose-us.tsx`)
+- **Gradient background**: white → mist/50 vertical gradient instead of flat white.
+- **White cards with shadow**: cards now have bg-white + shadow-sm (was cream/40, no shadow) for premium depth.
+- **Top gradient accent line on hover**: new gold gradient line appears at the top of each card on hover (in addition to the existing bottom line).
+- **Larger faded numbers**: background numbers increased from 7rem to 8rem, now scale-105 on hover.
+- **Gradient icon backgrounds**: icon circles now use gradient-to-br from-gold/10 to-transparent (was flat bg-gold/5), with ring-pulse on hover.
+- **Interactive highlight badges**: the highlight pill changes from navy/5 to gold/10 + gold text on hover.
+- **Refined text contrast**: description text bumped from muted-foreground to foreground/70.
+- **Premium CTA button**: "See How This Applies" is now a navy-deep filled button with shadow-premium on hover (was a border-only outline button).
+
+### 4. Enhanced StatsStrip (`stats-strip.tsx`)
+- **Gradient navy background**: navy-deep → navy → navy-deep vertical gradient (was flat navy-deep).
+- **Doubled gold hairlines**: top + bottom now have double hairlines (a bold + a faint) for premium framing.
+- **Filmic grain**: added bg-grain overlay at 5% with mix-blend-overlay.
+- **Gold dot accent**: each stat now has a glowing gold dot above it (with shadow glow) that scales in on reveal.
+- **Larger values**: clamp increased from 2.5–4rem to 2.75–4.5rem, with group-hover:scale-105.
+- **Hover gold underline**: each stat now has a gold underline that widens (w-8 → w-12) and brightens on hover.
+- **Staggered delays**: each stat's dot + value now has incremental delays for a cascading reveal.
+- **Improved contrast**: sublabel bumped from cream/50 to cream/60.
+
+### 5. Enhanced ServicesGrid (`services-grid.tsx`)
+- **Premium background accents**: added gold + navy blurred orbs in the background.
+- **Rounded-2xl cards**: upgraded from rounded-xl to rounded-2xl for a softer premium feel.
+- **Deeper hover lift**: cards now lift -translate-y-2 on hover (was -1.5).
+- **Top gradient accent line on hover**: new gold gradient line appears at the top of each card on hover.
+- **Gradient icon backgrounds**: icon circles now use gradient-to-br backgrounds matching their accent color, with stronger hover border intensification.
+- **Icon scale on hover**: icons now scale-110 on hover (in addition to the container scaling).
+- **Refined text contrast**: description text bumped from muted-foreground to foreground/70, featured card list items to foreground/75.
+- **Premium CTA button**: "Start an Enquiry" is now a navy-deep filled button (was outline) with shadow-premium on hover.
+
+## Verification Results
+- `bun run lint`: CLEAN — no errors.
+- agent-browser QA: no page errors, no console errors.
+- Parallax removed: hero section has no transform/will-change style attributes (hasNoTransform: true, hasNoWillChange: true).
+- Enhanced sections confirmed present: AboutFounder (Yolanda Okharedia), WhyChooseUs (What Sets This Practice Apart), StatsStrip (Admitted as an Attorney), ServicesGrid (How We Can Help).
+- Mobile responsive (390px): about section renders correctly.
+- Screenshots: qa-hero-static, qa-about-enhanced, qa-stats-enhanced, qa-whychooseus-enhanced, qa-services-enhanced, qa-about-mobile, qa-fullpage-enhanced (2.5MB).
+
+## Unresolved Issues / Risks
+- None functional. All features verified working end-to-end.
+
+## Priority Recommendations for Next Cycle
+1. **Keyboard tab-order audit** — verify the full-page tab order with all enhanced interactive elements.
+2. **WCAG contrast check** — verify all new text tones (foreground/70, foreground/75, cream/60) meet 4.5:1.
+3. **Enhance remaining sections** — ProcessTimeline, FAQ, ContactSection, FinalCTA could receive the same premium treatment (gradient backgrounds, refined hover, gold accents).
+4. **Hero background video option** — for an even more cinematic feel, consider an optional muted looped video background.
+5. **Section transition animations** — add subtle entrance/exit transitions between sections for a more cohesive premium flow.

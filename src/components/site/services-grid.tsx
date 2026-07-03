@@ -30,8 +30,12 @@ export function ServicesGrid() {
   };
 
   return (
-    <section id="services" className="relative bg-mist py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
+    <section id="services" className="relative overflow-hidden bg-mist py-24 sm:py-32">
+      {/* premium background accents */}
+      <div className="pointer-events-none absolute -left-20 top-20 h-80 w-80 rounded-full bg-gold/[0.05] blur-3xl" />
+      <div className="pointer-events-none absolute -right-20 bottom-20 h-80 w-80 rounded-full bg-navy/[0.05] blur-3xl" />
+
+      <div className="relative mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <SectionHeading
             eyebrow="What We Do"
@@ -44,7 +48,7 @@ export function ServicesGrid() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
             onClick={scrollToContact}
-            className="group inline-flex items-center gap-2 self-start rounded-full border border-navy/15 bg-white px-5 py-3 text-sm font-semibold text-navy-deep shadow-sm transition-all hover:border-gold/50 hover:text-gold lg:self-auto"
+            className="group inline-flex items-center gap-2 self-start rounded-full bg-navy-deep px-5 py-3 text-sm font-semibold text-cream shadow-sm transition-all hover:bg-navy hover:shadow-premium lg:self-auto"
           >
             Start an Enquiry
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -58,26 +62,28 @@ export function ServicesGrid() {
               variants={staggerItem}
               onClick={() => setActive(service)}
               className={cn(
-                "group relative flex flex-col items-start overflow-hidden rounded-xl border border-border bg-white p-7 text-left shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:border-gold/40 hover:shadow-premium",
+                "group relative flex flex-col items-start overflow-hidden rounded-2xl border border-border bg-white p-7 text-left shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-gold/40 hover:shadow-premium",
                 service.featured && "lg:col-span-2 lg:row-span-1",
               )}
             >
               {/* hover gold wash */}
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-gold/0 to-gold/0 opacity-0 transition-opacity duration-500 group-hover:from-gold/[0.04] group-hover:to-transparent group-hover:opacity-100" />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-gold/0 to-gold/0 opacity-0 transition-opacity duration-500 group-hover:from-gold/[0.05] group-hover:to-transparent group-hover:opacity-100" />
+              {/* top gradient accent on hover */}
+              <span className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-gradient-to-r from-gold via-gold-light to-transparent transition-transform duration-500 group-hover:scale-x-100" />
 
               <div className="relative flex w-full items-start justify-between">
                 <span
                   className={cn(
-                    "flex h-14 w-14 items-center justify-center rounded-xl border transition-colors",
+                    "relative flex h-14 w-14 items-center justify-center rounded-xl border transition-all duration-300 group-hover:scale-110",
                     service.accent === "gold" &&
-                      "border-gold/30 bg-gold/5 text-gold",
+                      "border-gold/30 bg-gradient-to-br from-gold/10 to-transparent text-gold group-hover:border-gold/60",
                     service.accent === "navy" &&
-                      "border-navy/20 bg-navy/5 text-navy",
+                      "border-navy/20 bg-gradient-to-br from-navy/10 to-transparent text-navy group-hover:border-navy/40",
                     service.accent === "sage" &&
-                      "border-sage/30 bg-sage/5 text-sage",
+                      "border-sage/30 bg-gradient-to-br from-sage/10 to-transparent text-sage group-hover:border-sage/60",
                   )}
                 >
-                  <service.icon className="h-6 w-6" />
+                  <service.icon className="h-6 w-6 transition-transform group-hover:scale-110" />
                 </span>
                 <ArrowUpRight className="h-5 w-5 text-muted-foreground/40 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-gold" />
               </div>
@@ -100,7 +106,7 @@ export function ServicesGrid() {
                 {service.tagline}
               </p>
 
-              <p className="relative mt-3 text-sm leading-relaxed text-muted-foreground text-pretty">
+              <p className="relative mt-3 text-sm leading-relaxed text-foreground/70 text-pretty">
                 {service.description}
               </p>
 
@@ -109,7 +115,7 @@ export function ServicesGrid() {
                   {service.covers.slice(0, 4).map((c, i) => (
                     <li
                       key={i}
-                      className="flex items-center gap-2 text-sm text-foreground/70"
+                      className="flex items-center gap-2 text-sm text-foreground/75"
                     >
                       <span className="h-1.5 w-1.5 rounded-full bg-gold" />
                       {c}
@@ -124,7 +130,7 @@ export function ServicesGrid() {
               </span>
 
               {/* bottom gold line on hover */}
-              <span className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-gold transition-transform duration-500 group-hover:scale-x-100" />
+              <span className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-gradient-to-r from-gold to-gold-light transition-transform duration-500 group-hover:scale-x-100" />
             </motion.button>
           ))}
         </StaggerGroup>

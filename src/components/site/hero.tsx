@@ -1,9 +1,8 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowRight, Compass, ShieldCheck, Sparkles } from "lucide-react";
 import Image from "next/image";
-import { useRef } from "react";
 import { FIRM } from "@/lib/site-data";
 
 const container = {
@@ -20,32 +19,17 @@ const item = {
 };
 
 export function Hero() {
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
-  // Parallax: background drifts slower than content as you scroll
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "22%"]);
-  const bgScale = useTransform(scrollYProgress, [0, 1], [1.05, 1.18]);
-  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
-
   const scrollTo = (href: string) => {
     document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
     <section
-      ref={ref}
       id="home"
       className="relative min-h-screen overflow-hidden bg-navy-deep"
     >
-      {/* === Cinematic background layers === */}
-      <motion.div
-        style={{ y: bgY, scale: bgScale }}
-        className="absolute inset-0"
-      >
+      {/* === Cinematic background layers (static, no parallax) === */}
+      <div className="absolute inset-0">
         <Image
           src="/images/hero-office.png"
           alt="The Yolanda Matwa Attorneys office interior in Menlyn Maine"
@@ -54,7 +38,7 @@ export function Hero() {
           sizes="100vw"
           className="object-cover"
         />
-      </motion.div>
+      </div>
 
       {/* Cinematic color grades — three stacked gradients for depth */}
       <div className="absolute inset-0 bg-gradient-to-r from-navy-deep via-navy-deep/92 to-navy-deep/30" />
@@ -91,11 +75,8 @@ export function Hero() {
       <div className="pointer-events-none absolute left-[4.5rem] top-6 hidden h-px w-8 bg-gold/30 lg:block" />
       <div className="pointer-events-none absolute left-6 top-[4.5rem] hidden h-8 w-px bg-gold/30 lg:block" />
 
-      {/* === Content (parallax + fade on scroll) === */}
-      <motion.div
-        style={{ y: contentY, opacity: contentOpacity }}
-        className="relative mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-5 pt-28 pb-20 sm:px-8 lg:px-12"
-      >
+      {/* === Content === */}
+      <div className="relative mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-5 pt-28 pb-20 sm:px-8 lg:px-12">
         <motion.div
           variants={container}
           initial="hidden"
@@ -186,7 +167,7 @@ export function Hero() {
             </span>
           </motion.div>
         </motion.div>
-      </motion.div>
+      </div>
 
       {/* === Floating credential badge (cinematic, overlapping join) === */}
       <motion.div
@@ -225,7 +206,6 @@ export function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.4, duration: 0.8 }}
-        style={{ opacity: contentOpacity }}
         className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2.5 lg:flex"
       >
         <span className="text-[0.625rem] uppercase tracking-[0.25em] text-cream/40">
