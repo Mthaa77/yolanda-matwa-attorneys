@@ -190,3 +190,52 @@ Task: Continuous QA + new features (service mini-FAQs, stats strip, privacy/POPI
 3. **Service comparison table** — a premium touch: a sortable/filterable table comparing what each service covers, ideal for clients deciding between e.g. wills vs estate administration.
 4. **Multilingual teaser** — given the Pretoria market, a discreet "Afrikaans / isiZulu enquiries welcome" note (only if confirmed with client) could broaden accessibility.
 5. **Open Graph / social share image** — generate a branded OG image (navy + gold, YM monogram, tagline) so link previews on WhatsApp/Facebook look premium when the site is shared.
+
+---
+Task ID: 5
+Agent: Main (Z.ai Code) — webDevReview cron cycle 4
+Task: Continuous QA + accessibility (focus-trap, ARIA, skip link) + service comparison table + insights article modal + branded OG image.
+
+## Current Project Status Assessment
+- Site stable and fully verified through 4 prior cycles. No bugs, no runtime errors.
+- QA at start of cycle: clean 200 responses, no console/page errors.
+- All previously-built features working: Hero, TrustBar, AboutFounder, StatsStrip, WhyChooseUs, ServicesGrid+Modals (with What to Prepare + mini-FAQs), Competence, ProcessTimeline, FAQ, TestimonialsScaffold, LegalInsights, ContactSection (form→DB), FinalCTA, Footer, PrivacyModal, CookieConsent + global enhancements.
+
+## Completed Modifications This Cycle
+
+### Accessibility Enhancements
+1. **Focus-trap hook** (`use-focus-trap.ts`) — reusable hook that traps Tab/Shift+Tab focus inside a referenced container, moves focus to the first focusable element on activation, and restores focus to the previously-focused element (the trigger) on deactivation. Applied to ServiceModal, PrivacyModal, and ArticleModal.
+2. **ARIA roles on all modals** — all 3 modals (Service, Privacy, Article) now have `role="dialog"`, `aria-modal="true"`, `aria-labelledby` pointing to the title heading, and `aria-hidden="true"` on backdrop overlays. ServiceModal also has `aria-describedby`.
+3. **Skip-to-content link** — sr-only link at top of page that becomes visible on focus, allowing keyboard users to skip past the navbar directly to main content. Added `id="main-content"` to the main element.
+
+### New Features
+4. **Service comparison table** (`service-comparison.tsx`) — premium filterable matrix showing which of the 6 services handle which common client needs (10 rows: buying/selling, bonds, wills, estate planning, ANCs, deceased estates, commercial contracts, competition-law review, demand letters, summons). 3-tier coverage indicators (✓ primary / ○ partial / — n/a) with a legend. Category filter (All/Property/Family & Wills/Commercial/Disputes). Sticky first column, horizontal scroll on mobile, hover row highlighting, zebra striping. Placed between ServicesGrid and Competence.
+5. **Insights article modal** (`article-modal.tsx`) — Legal Insights cards are now clickable buttons that open a full article modal with: draft preview notice (honest about status), italic excerpt, full body paragraphs, "Ask Us Directly" CTA. 4 complete draft articles written reflecting the attorney's actual expertise (transfer costs, ANC accrual, DIY wills, cartel investigator lens on contracts). Focus-trapped, ARIA-compliant, Escape to close.
+6. **Branded Open Graph share image** — generated a premium navy + gold OG image (1152x864) with YM monogram and firm branding via `z-ai image` CLI. Added to layout.tsx `openGraph.images` and `twitter.images` so link previews on WhatsApp/Facebook/LinkedIn look premium when the site is shared.
+
+### Styling Polish
+7. Comparison table uses navy-deep header with gold-bordered icon circles, zebra-striped rows, hover highlighting, and a sticky first column for readability.
+8. Article modal has a distinct draft-notice callout (gold border + AlertCircle icon) to honestly mark content as draft/preview.
+9. Legal Insights cards now show "Read draft" on hover (replacing the generic "Soon" label), signaling clickability.
+
+## Verification Results
+- `bun run lint`: CLEAN — no errors.
+- agent-browser QA: no page errors, no console errors.
+- Comparison table: all 6 service column headers + 10 data rows render. Category filter tested — clicking "Disputes" filtered from 10 rows to 2 (Letter of demand, Summons & court representation). Mobile: table is horizontally scrollable (scrollWidth > 390px). Legend renders.
+- Article modal: clicked "How much does property transfer really cost?" card → modal opened with draft preview notice, transfer duty content, excerpt, and "Ask Us Directly" CTA. All content verified via body text check.
+- Focus-trap: modal has `role="dialog"`, `aria-modal="true"`, `aria-labelledby="article-modal-title"`, 3 focusable elements inside (focus trap active). Escape key closes modal.
+- Skip-to-content link: present in DOM (`a[href="#main-content"]`), sr-only by default, becomes visible on focus.
+- OG image: generated successfully (1152x864), added to openGraph + twitter metadata.
+- Mobile responsive (390px): comparison table scrolls horizontally, all sections render.
+- Screenshots: qa-round5-article-modal, qa-round5-comparison-mobile, qa-round5-fullpage (1.6MB).
+
+## Unresolved Issues / Risks
+- None functional. All features verified working.
+- Minor: the LegalInsights badge text "Drafts in progress" vs "Launching soon" was updated to reflect that articles are now readable as drafts — cosmetic change, no risk.
+
+## Priority Recommendations for Next Cycle
+1. **Keyboard tab-order audit** — verify the full-page tab order is logical (skip link → nav → CTAs → sections), and that the comparison table filter buttons and table cells are keyboard-accessible.
+2. **Color contrast verification** — run a WCAG AA contrast check on all text/background combinations (cream/70 on navy, gold on white, muted-foreground on cream, etc.) and adjust any that fall below 4.5:1.
+3. **"Insights" article sharing** — add social share buttons (WhatsApp, Facebook, copy-link) to the article modal so readers can share draft articles.
+4. **Service comparison "learn more" links** — make the column header icons in the comparison table clickable to open the corresponding service modal directly.
+5. **Structured data for FAQ** — add JSON-LD `FAQPage` schema for the main FAQ section and service mini-FAQs to earn rich snippets in Google search results.

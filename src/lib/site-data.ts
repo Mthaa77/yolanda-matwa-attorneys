@@ -384,6 +384,147 @@ export const SERVICES: ServiceDetail[] = [
   },
 ];
 
+// Comparison matrix: rows = common client needs, columns = service slugs.
+// "yes" = primary coverage, "partial" = tangentially covered, "no" = not applicable.
+export type Coverage = "yes" | "partial" | "no";
+
+export interface ComparisonRow {
+  need: string;
+  category: "Property" | "Family & Wills" | "Commercial" | "Disputes";
+  coverage: Record<string, Coverage>;
+}
+
+export const COMPARISON_ROWS: ComparisonRow[] = [
+  {
+    need: "Buying or selling a home",
+    category: "Property",
+    coverage: {
+      conveyancing: "yes",
+      "wills-estates": "no",
+      "antenuptial-contracts": "no",
+      "deceased-estates": "partial",
+      "commercial-contracts": "partial",
+      litigation: "no",
+    },
+  },
+  {
+    need: "Bond registration or cancellation",
+    category: "Property",
+    coverage: {
+      conveyancing: "yes",
+      "wills-estates": "no",
+      "antenuptial-contracts": "no",
+      "deceased-estates": "partial",
+      "commercial-contracts": "no",
+      litigation: "no",
+    },
+  },
+  {
+    need: "Drafting your will",
+    category: "Family & Wills",
+    coverage: {
+      conveyancing: "no",
+      "wills-estates": "yes",
+      "antenuptial-contracts": "no",
+      "deceased-estates": "partial",
+      "commercial-contracts": "no",
+      litigation: "no",
+    },
+  },
+  {
+    need: "Estate planning & trusts",
+    category: "Family & Wills",
+    coverage: {
+      conveyancing: "partial",
+      "wills-estates": "yes",
+      "antenuptial-contracts": "no",
+      "deceased-estates": "yes",
+      "commercial-contracts": "partial",
+      litigation: "no",
+    },
+  },
+  {
+    need: "Antenuptial / postnuptial contract",
+    category: "Family & Wills",
+    coverage: {
+      conveyancing: "no",
+      "wills-estates": "no",
+      "antenuptial-contracts": "yes",
+      "deceased-estates": "no",
+      "commercial-contracts": "no",
+      litigation: "no",
+    },
+  },
+  {
+    need: "Winding up a loved one's estate",
+    category: "Family & Wills",
+    coverage: {
+      conveyancing: "partial",
+      "wills-estates": "yes",
+      "antenuptial-contracts": "no",
+      "deceased-estates": "yes",
+      "commercial-contracts": "no",
+      litigation: "partial",
+    },
+  },
+  {
+    need: "Commercial / lease / employment contract",
+    category: "Commercial",
+    coverage: {
+      conveyancing: "partial",
+      "wills-estates": "no",
+      "antenuptial-contracts": "no",
+      "deceased-estates": "no",
+      "commercial-contracts": "yes",
+      litigation: "partial",
+    },
+  },
+  {
+    need: "Competition-law compliance review",
+    category: "Commercial",
+    coverage: {
+      conveyancing: "no",
+      "wills-estates": "no",
+      "antenuptial-contracts": "no",
+      "deceased-estates": "no",
+      "commercial-contracts": "yes",
+      litigation: "partial",
+    },
+  },
+  {
+    need: "Letter of demand / dispute resolution",
+    category: "Disputes",
+    coverage: {
+      conveyancing: "partial",
+      "wills-estates": "no",
+      "antenuptial-contracts": "no",
+      "deceased-estates": "partial",
+      "commercial-contracts": "partial",
+      litigation: "yes",
+    },
+  },
+  {
+    need: "Summons & court representation",
+    category: "Disputes",
+    coverage: {
+      conveyancing: "no",
+      "wills-estates": "no",
+      "antenuptial-contracts": "no",
+      "deceased-estates": "partial",
+      "commercial-contracts": "no",
+      litigation: "yes",
+    },
+  },
+];
+
+export const COMPARISON_CATEGORIES = [
+  "All",
+  "Property",
+  "Family & Wills",
+  "Commercial",
+  "Disputes",
+] as const;
+
 export const NAV_LINKS = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
@@ -392,6 +533,84 @@ export const NAV_LINKS = [
   { label: "FAQ", href: "#faq" },
   { label: "Contact", href: "#contact" },
 ];
+
+export interface InsightArticle {
+  slug: string;
+  topic: string;
+  question: string;
+  readTime: string;
+  status: "drafting" | "planned";
+  excerpt: string;
+  body: string[];
+}
+
+// Draft preview content — reflects the attorney's actual expertise.
+// Marked "Drafting"/"Planned" so readers understand these are not yet final published articles.
+export const INSIGHT_ARTICLES: InsightArticle[] = [
+  {
+    slug: "transfer-costs-pretoria",
+    topic: "Property Law",
+    question: "How much does property transfer really cost in Pretoria?",
+    readTime: "6 min read",
+    status: "drafting",
+    excerpt:
+      "Beyond the purchase price, buyers face transfer duty, conveyancer fees, Deeds Office charges, and — if bonded — bond registration fees. Here is what each one actually is, and why a written quote matters before you commit.",
+    body: [
+      "When you buy a property in South Africa, the purchase price is only the beginning. The law requires a conveyancer — an attorney with the additional conveyancing qualification — to handle the transfer of ownership from seller to buyer at the Deeds Office. That professional service carries a fee, and several statutory costs apply on top.",
+      "Transfer duty is the tax paid to SARS on the acquisition of immovable property. It operates on a sliding scale: properties below R1.1 million are exempt, and the rate steps up progressively above that threshold. The duty is calculated on the purchase price (or market value, if higher), and the conveyancer pays it over to SARS on your behalf and obtains a transfer duty receipt before lodgement.",
+      "The conveyancer's professional fee is regulated by the Legal Practice Council tariff guidelines, which means fees are broadly consistent across firms for a given property value — but the service and communication you receive can vary enormously. This is where choosing your own conveyancer (which you have the legal right to do, even when the bank finances the bond) genuinely matters.",
+      "Deeds Office registration fees are relatively modest statutory charges. Post, petties and electronic generation fees cover the administrative cost of lodging documents electronically and physically. If you are financing with a bond, the bank's bond registration attorney charges a separate fee for registering the mortgage — and again, the fee is tariff-guideline based.",
+      "The practical takeaway: always ask for a written, line-by-line cost estimate before instructing a conveyancer. A transparent practice will provide one without hesitation. If a firm is reluctant to put fees in writing, that reluctance is itself information.",
+    ],
+  },
+  {
+    slug: "anc-accrual",
+    topic: "Family Law",
+    question: "ANC with or without accrual: which actually protects you?",
+    readTime: "5 min read",
+    status: "drafting",
+    excerpt:
+      "An antenuptial contract can include or exclude accrual — and the choice shapes your entire financial life during the marriage and at its end. Here is what each option genuinely means, beyond the textbook definition.",
+    body: [
+      "An antenuptial contract (ANC) is signed before marriage to determine your marital property regime — in other words, how your assets and liabilities are treated during the marriage and if it ends. South African law recognises three regimes: in community of property, out of community with accrual, and out of community without accrual.",
+      "An ANC without accrual means complete financial separation. Each spouse owns and controls their own assets and is responsible for their own debts. Growth during the marriage stays with the spouse who generated it. This offers the strongest protection for a spouse bringing significant pre-marital assets or business interests — but it can produce harsh outcomes where one spouse has sacrificed career to raise a family.",
+      "An ANC with accrual means each spouse retains their own assets during the marriage, but at its end (by death or divorce), the growth in each estate is shared. The spouse whose estate grew less receives a share of the growth in the other's estate. The Constitutional Court has described accrual as the fairer default for most modern marriages, because it recognises indirect contributions to a household's prosperity.",
+      "The choice is not abstract. It affects bond applications, business risk, estate duty planning, and the position of creditors. As a Notary of the High Court, Yolanda is one of the few practitioners legally empowered to draft and register an ANC — and the registration (at the Deeds Office) is what makes the contract effective against third parties. An ANC that is signed but never registered does not take effect.",
+      "The practical rule: decide at least two to three weeks before your wedding date. An ANC signed even one day after the marriage does not take effect, and changing your regime afterwards requires a full postnuptial High Court application — far more complex and costly.",
+    ],
+  },
+  {
+    slug: "diy-wills-fail",
+    topic: "Estates",
+    question: "Why most DIY wills fail at the Master's Office",
+    readTime: "7 min read",
+    status: "planned",
+    excerpt:
+      "A will written on a napkin can be valid. A will printed from a template website can be invalid. The difference is not the paper — it is the formalities, the clarity, and the estate-planning thought that should sit behind the words.",
+    body: [
+      "The Wills Act 7 of 1953 sets out strict formalities for a valid will: it must be in writing, signed at the end by the testator (or someone in their presence and by their direction), and the signature must be made in the presence of two competent witnesses present at the same time. Each page other than the last must be signed. The witnesses must not be beneficiaries or spouses of beneficiaries.",
+      "These formalities trip up DIY wills constantly. A will signed by only one witness is invalid. A will where a beneficiary also acted as witness disqualifies that beneficiary. A will with pages not initialled can be rejected. The Master of the High Court will examine every page — and a single defect can void the entire document.",
+      "Beyond formalities, a will that is technically valid but poorly drafted can cause enormous friction. Ambiguous bequests, failure to nominate an executor, failure to provide for minor children through a trust, and no thought to estate duty — these are the gaps that turn a 'simple' will into a protracted, expensive estate administration.",
+      "This article is being drafted. It will cover the most common defects we see in DIY wills, the Master's acceptance process, and why a will drafted with tax and estate-planning consideration costs less than the friction it prevents.",
+    ],
+  },
+  {
+    slug: "cartel-investigator-contracts",
+    topic: "Competition Law",
+    question: "What a cartel investigator looks for in your commercial contract",
+    readTime: "8 min read",
+    status: "planned",
+    excerpt:
+      "Yolanda investigated cartel cases and assessed the public-interest impact of mergers at the Competition Commission. That lens — trained to spot anti-competitive risk — now reads every commercial contract this firm drafts.",
+    body: [
+      "Most boutique conveyancers draft commercial contracts from templates. The risk is that a template, however well-structured, is blind to the competition-law exposure buried in its terms. A clause that looks standard can be a prohibited vertical restraint. A market-definition that looks reasonable can be an abuse of dominance.",
+      "During her time at the Competition Commission of South Africa (CCSA), Yolanda investigated cartel cases, conducted dawn raids, negotiated settlement agreements and appeared at the Competition Tribunal. She also analysed the competition-law and public-interest impact of mergers and acquisitions, including drafting conditions for mergers approved with conditions.",
+      "That training reads contracts differently. Where a template sees 'exclusivity', the competition lens asks: for how long, in what geographic market, and does it foreclose competitors? Where a template sees 'most-favoured-nation pricing', the lens asks: does this facilitate information exchange or price coordination? Where a template sees a non-compete, the lens asks: is it reasonably necessary to protect a legitimate interest, or is it a naked restraint?",
+      "This article is being drafted. It will set out the practical competition-law checks that should sit behind every commercial contract — drawn from the perspective of someone who has been on the enforcement side of the table.",
+    ],
+  },
+];
+
 
 export interface ValueProp {
   icon: LucideIcon;

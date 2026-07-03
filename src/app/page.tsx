@@ -5,6 +5,7 @@ import { AboutFounder } from "@/components/site/about-founder";
 import { StatsStrip } from "@/components/site/stats-strip";
 import { WhyChooseUs } from "@/components/site/why-choose-us";
 import { ServicesGrid } from "@/components/site/services-grid";
+import { ServiceComparison } from "@/components/site/service-comparison";
 import { Competence } from "@/components/site/competence";
 import { ProcessTimeline } from "@/components/site/process-timeline";
 import { FAQSection } from "@/components/site/faq-section";
@@ -27,10 +28,17 @@ export default function Home() {
   return (
     <PrivacyProvider>
       <div className="flex min-h-screen flex-col bg-cream">
+        {/* Skip to content — keyboard accessibility */}
+        <a
+          href="#main-content"
+          className="sr-only z-[100] rounded-full bg-navy-deep px-5 py-3 text-sm font-semibold text-cream focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:shadow-premium"
+        >
+          Skip to content
+        </a>
         <LoadingScreen />
         <ScrollProgress />
         <Navbar />
-        <main className="flex-1">
+        <main id="main-content" className="flex-1">
           <Hero />
           <TrustBar />
           <AboutFounder />
@@ -38,6 +46,7 @@ export default function Home() {
           <StatsStrip />
           <WhyChooseUs />
           <ServicesGrid />
+          <ServiceComparison />
           <Competence />
           <ProcessTimeline />
           <SectionDivider />

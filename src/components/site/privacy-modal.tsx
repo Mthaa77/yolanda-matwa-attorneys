@@ -2,8 +2,9 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ShieldCheck, FileLock2, Mail, Eye } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { FIRM } from "@/lib/site-data";
+import { useFocusTrap } from "@/hooks/use-focus-trap";
 
 interface PrivacyModalProps {
   open: boolean;
@@ -34,6 +35,9 @@ const SECTIONS = [
 ];
 
 export function PrivacyModal({ open, onClose }: PrivacyModalProps) {
+  const modalRef = useRef<HTMLDivElement>(null);
+  useFocusTrap(modalRef, open);
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -59,8 +63,13 @@ export function PrivacyModal({ open, onClose }: PrivacyModalProps) {
             transition={{ duration: 0.3 }}
             onClick={onClose}
             className="absolute inset-0 bg-navy-deep/70 backdrop-blur-sm"
+            aria-hidden="true"
           />
           <motion.div
+            ref={modalRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="privacy-modal-title"
             initial={{ opacity: 0, y: 40, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 30, scale: 0.98 }}
@@ -79,7 +88,7 @@ export function PrivacyModal({ open, onClose }: PrivacyModalProps) {
                     <p className="mb-1 text-[0.65rem] font-medium uppercase tracking-[0.2em] text-gold-light/80">
                       POPIA Compliance
                     </p>
-                    <h3 className="font-display text-2xl font-bold leading-tight text-cream sm:text-3xl">
+                    <h3 id="privacy-modal-title" className="font-display text-2xl font-bold leading-tight text-cream sm:text-3xl">
                       Privacy &amp; Personal Information
                     </h3>
                   </div>

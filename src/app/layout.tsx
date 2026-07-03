@@ -54,12 +54,21 @@ export const metadata: Metadata = {
     siteName: "Yolanda Matwa Attorneys",
     type: "website",
     locale: "en_ZA",
+    images: [
+      {
+        url: "/images/og-share.png",
+        width: 1152,
+        height: 864,
+        alt: "Yolanda Matwa Attorneys — Attorneys, Notaries & Conveyancers, Menlyn Maine Pretoria",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Yolanda Matwa Attorneys | Conveyancing & Notary — Menlyn Maine",
     description:
       "Boutique conveyancing, notarial and family-law practice in Menlyn Maine, Pretoria East.",
+    images: ["/images/og-share.png"],
   },
   robots: {
     index: true,
