@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/site/navbar";
 import { Hero } from "@/components/site/hero";
+import { LiveTicker } from "@/components/site/live-ticker";
 import { TrustBar } from "@/components/site/trust-bar";
 import { AboutFounder } from "@/components/site/about-founder";
 import { StatsStrip } from "@/components/site/stats-strip";
@@ -40,6 +41,7 @@ export default function Home() {
         <Navbar />
         <main id="main-content" className="flex-1">
           <Hero />
+          <LiveTicker />
           <TrustBar />
           <AboutFounder />
           <SectionDivider />

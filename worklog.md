@@ -501,3 +501,67 @@ Task: Continuous QA + contact form character counter + insights article "Last up
 3. **Contact form save-draft** — auto-save form progress to localStorage so a user who accidentally navigates away doesn't lose their input.
 4. **Service modal "share" button** — add a share button to the service modal (copy link / WhatsApp) so a user can share a specific service's info.
 5. **Insights article reading-progress bar** — add a thin progress bar at the top of the article modal showing scroll position through the article.
+
+---
+Task ID: 12
+Agent: Main (Z.ai Code) — direct user request
+Task: Upgrade hero to ultra-cinematic premium design, add live ticker under hero, enhance welcome (TrustBar) section.
+
+## Current Project Status Assessment
+- Site stable and fully verified through 10 prior cycles. No bugs, no runtime errors.
+- QA at start of cycle: clean 200 responses, no console/page errors.
+- All previously-built features working.
+
+## Completed Modifications This Cycle
+
+### 1. Ultra-cinematic Hero redesign (`hero.tsx`)
+Complete rewrite with cinematic premium design language:
+- **Parallax scrolling**: background image drifts (y: 0%→22%) + scales (1.05→1.18) as user scrolls, content moves up (0%→40%) and fades (1→0 at 70% scroll). Uses framer-motion `useScroll` + `useTransform` with target ref + offset.
+- **Layered cinematic color grades**: 3 stacked gradients (left-to-right navy, bottom-to-top navy, radial vignette at 30%/50%) for genuine filmic depth + focus.
+- **Filmic grain texture**: bg-grain overlay at 8% opacity with mix-blend-overlay for authentic cinema-film texture.
+- **Animated gold shimmer sweep**: a slow (7s) blurred gold light band sweeps across the hero, repeating with a 4s delay — cinematic "light through window" effect.
+- **Refined headline**: "Our Clients" gets an animated gold-gradient underline flourish that scales in (0→1) at 1s delay. Italic gradient-gold text.
+- **Animated eyebrow**: replaced static gold line with a pulsing gold dot (animate-ping) + gradient line.
+- **Premium CTA buttons**: primary gold button has a shimmer sweep on hover (via-white/40 translate). Ghost button has backdrop-blur.
+- **Floating credential badge**: a glassmorphic card (right side, desktop) with Sparkles icon, "Notary & Conveyancer / High Court of South Africa", surrounded by a slowly rotating (24s) dashed gold ring + gold glow. Overlaps the cinematic space.
+- **Enhanced scroll cue**: "Scroll to explore" with a gold-to-gold/30 gradient line, fades out on scroll.
+- **Bottom fade**: gradient into the next section for seamless transition.
+- **Additional corner ticks**: extra gold accent lines at the top-left corner frame for more premium detail.
+
+### 2. Live Ticker (`live-ticker.tsx`) — new section under hero
+A premium two-part strip directly beneath the hero:
+- **Studio bar (top)**: live Menlyn Maine local time (Africa/Johannesburg, ticking every second, tabular-nums) with SAST label + location "Pretoria East, Gauteng" + an open/closed pill that computes from real office hours (Mon–Fri 09:00–17:00 SAST). The "Open now" pill has a sage ping dot; "Closed now" is muted cream.
+- **Infinite credentials marquee (bottom)**: a seamless infinite-scroll marquee (38s linear, pauses on hover) of 8 verified credentials (Notary & Conveyancer, Admitted 2013, LLM Taxation UKZN, Former CCSA Investigator, Competition Tribunal experience, Cert Competition Law UP, Cert Tax Law UNISA, Pegasus Building Menlyn Maine). Each item has a gold icon + a gold dot separator. Edge fades on both sides for cinematic polish.
+- print:hidden so it doesn't appear in print output.
+- Fixed the react-hooks/set-state-in-effect lint error by deferring the initial `setNow` into a setTimeout.
+
+### 3. Enhanced TrustBar (welcome section) (`trust-bar.tsx`)
+Premium redesign of the welcome section:
+- **"Welcome to the practice" eyebrow**: centered gold-flanked label at the top with staggered fade-in.
+- **Gradient background**: navy-deep → navy vertical gradient (instead of flat navy) for depth.
+- **Gold hairline borders**: top + bottom gradient gold hairlines for premium framing.
+- **Enhanced icon circles**: larger (h-12 w-12), with a ring-pulse on hover (border scales 125% + fades in) + icon scales 110%.
+- **Hover lift**: each marker card lifts -translate-y-0.5 on hover.
+- **Refined text contrast**: bumped value text from cream/55 to cream/60 for WCAG.
+
+## Verification Results
+- `bun run lint`: CLEAN — no errors (fixed one set-state-in-effect error via setTimeout deferral).
+- agent-browser QA: no page errors, no console errors.
+- Live ticker: Menlyn Maine location ✓, SAST time ✓, open/closed pill ✓, credentials marquee present ✓.
+- Live clock ticking: 09:17:26 → 09:17:28 (2s elapsed) — confirmed updating every second.
+- Floating credential badge: present with Sparkles icon ✓.
+- Hero parallax: useScroll/useTransform wired ✓.
+- Welcome eyebrow: "Welcome to the practice" present in TrustBar.
+- Mobile responsive (390px): hero + ticker render correctly.
+- Screenshots: qa-hero-cinematic, qa-ticker, qa-hero-mobile, qa-ticker-mobile, qa-hero-fullpage.
+
+## Unresolved Issues / Risks
+- None functional. All features verified working end-to-end.
+- The live clock uses `Africa/Johannesburg` timeZone in toLocaleTimeString, so it displays correct SAST time regardless of the visitor's timezone — verified showing 09:17 (matches Pretoria local time).
+
+## Priority Recommendations for Next Cycle
+1. **Keyboard tab-order audit** — verify the full-page tab order with all new interactive elements (hero CTAs, ticker — though ticker is non-interactive, trust bar markers).
+2. **WCAG contrast check** — verify the new ticker text (cream/65, cream/50) and hero cream/75 meet 4.5:1 on navy.
+3. **Hero video background option** — for an even more cinematic feel, consider an optional muted looped video background (with image fallback) — though this would need a client-supplied asset.
+4. **Ticker "breaking news" mode** — allow the marquee to occasionally surface a "New article published" item when insights content is added.
+5. **Hero headline A/B variants** — the brief's tagline is fixed, but a future enhancement could rotate between 2-3 approved headline variants for testing.
