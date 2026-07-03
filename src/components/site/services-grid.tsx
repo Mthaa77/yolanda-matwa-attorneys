@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowUpRight, ArrowRight } from "lucide-react";
+import Image from "next/image";
 import { SERVICES, type ServiceDetail } from "@/lib/site-data";
 import { SectionHeading } from "./section-heading";
 import { StaggerGroup, staggerItem } from "./scroll-reveal";
@@ -36,6 +37,32 @@ export function ServicesGrid() {
       <div className="pointer-events-none absolute -right-20 bottom-20 h-80 w-80 rounded-full bg-navy/[0.05] blur-3xl" />
 
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
+        {/* Firm logo — premium centered badge */}
+        <motion.div
+          initial={{ opacity: 0, y: -16, scale: 0.95 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-10 flex flex-col items-center"
+        >
+          <div className="relative">
+            {/* glow */}
+            <div className="absolute -inset-3 rounded-full bg-gold/10 blur-2xl" />
+            <div className="relative overflow-hidden rounded-full border border-gold/30 bg-white p-1.5 shadow-premium">
+              <Image
+                src="/images/logo.png"
+                alt="Yolanda Matwa Attorneys — For All Your Legal Needs"
+                width={72}
+                height={72}
+                className="h-16 w-16 rounded-full object-cover sm:h-20 sm:w-20"
+              />
+            </div>
+          </div>
+          <p className="mt-4 text-[0.65rem] font-semibold uppercase tracking-[0.22em] text-gold">
+            For All Your Legal Needs
+          </p>
+        </motion.div>
+
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <SectionHeading
             eyebrow="What We Do"

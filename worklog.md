@@ -641,3 +641,52 @@ Task: Remove parallax from Hero, upgrade other sections with premium colours, in
 3. **Enhance remaining sections** — ProcessTimeline, FAQ, ContactSection, FinalCTA could receive the same premium treatment (gradient backgrounds, refined hover, gold accents).
 4. **Hero background video option** — for an even more cinematic feel, consider an optional muted looped video background.
 5. **Section transition animations** — add subtle entrance/exit transitions between sections for a more cohesive premium flow.
+
+---
+Task ID: 14
+Agent: Main (Z.ai Code) — direct user request
+Task: Replace founder image with actual photo, add firm logo to services section, use real logo in navbar/footer, upgrade each remaining section.
+
+## Current Project Status Assessment
+- Site stable and fully verified. No bugs, no runtime errors.
+- QA at start of cycle: clean 200 responses, no console/page errors.
+
+## Completed Modifications This Cycle
+
+### Image Assets (3 uploaded files identified via VLM + copied to /public/images)
+1. **`logo.png`** (was `Yolanda matwa attorneys logo.png`) — the actual firm logo: gold geometric emblem + "YOLANDA MATWA ATTORNEYS" + "FOR ALL YOUR LEGAL NEEDS" tagline on dark background.
+2. **`founder-real.png`** (was `Yolanda matwa attorneys.png`) — the actual founder portrait: Yolanda Matwa, braided hair, dark blazer, with branding text "FOUNDER & PRINCIPAL ATTORNEY" / "TRANSFORMATIONAL LEADERSHIP".
+3. **`legal-scene.jpg`** (was `pexels-sora-shimazaki-5669619-scaled.jpg`) — a premium legal workspace scene: brass balance scale + gavel + stacked books. Used as the FinalCTA background.
+
+### Founder Image Replacement
+- **AboutFounder**: replaced `founder-portrait.png` (AI-generated) with `founder-real.png` (actual founder). Added `object-top` to the image so Yolanda's face stays centered despite the promotional graphic's lower text. Preserved the premium double gold frame, cinematic name-plate overlay, and floating credential badge.
+
+### Logo Integration (replaced YM monogram with real logo)
+- **Navbar**: replaced the SVG `Logo` component with a real `<Image src="/images/logo.png">` in a rounded-full container with gold ring (when scrolled) / cream ring (over hero). Applied to both the desktop nav and the mobile overlay menu. Removed the now-unused `Logo` import.
+- **Services section**: added a premium centered logo badge above the section heading — the logo in a rounded-full white container with gold border, gold glow halo, and a "FOR ALL YOUR LEGAL NEEDS" tagline below. Animated scale-in on scroll.
+- **Footer**: replaced the SVG `Logo` with the real `<Image>` in a rounded-full container with gold ring. Removed the unused `Logo` import.
+
+### Section Upgrades (premium polish)
+- **Competence section**: gradient navy background (navy-deep→navy→navy-deep), filmic grain, centered gold glow, doubled gold corner accents (bold + faint), "A Rare Distinction" gold eyebrow, larger quote mark (7xl), YM monogram center divider (gold-flanked), and upgraded credential cards (rounded-xl, border, backdrop-blur, hover lift + top gold accent + gradient-gold years).
+- **FinalCTA**: replaced office-exterior background with the premium `legal-scene.jpg` (balance scale/gavel), added filmic grain, centered gold glow, top+bottom gold hairlines, decorative gold corner accents, animated gold dot in the eyebrow, gradient-gold underline flourish on "what you need", shimmer-sweep on the Book a Consultation button, and backdrop-blur on the ghost phone button.
+
+## Verification Results
+- `bun run lint`: CLEAN — no errors.
+- agent-browser QA: no page errors, no console errors.
+- Navbar logo: `/images/logo.png` confirmed loaded (naturalWidth > 0).
+- Founder image: `/images/founder-real.png` confirmed loaded in AboutFounder, alt text correct.
+- Services logo: confirmed found + loaded after scroll (naturalWidth: 96).
+- Footer logo: confirmed found in the main page footer (logoFound: true).
+- Mobile responsive (390px): about section with real founder renders correctly.
+- Screenshots: qa-navbar-logo, qa-about-real-founder, qa-services-logo, qa-competence-upgraded, qa-finalcta-upgraded, qa-footer-logo, qa-about-mobile-real, qa-fullpage-real (4.2MB).
+
+## Unresolved Issues / Risks
+- None functional. All features verified working end-to-end.
+- Note: the founder image (`founder-real.png`) is a promotional graphic that includes branding text ("FOUNDER & PRINCIPAL ATTORNEY", "TRANSFORMATIONAL LEADERSHIP") at the bottom. The `object-top` positioning keeps Yolanda's face centered, and the cinematic name-plate overlay sits below. If the client wants a clean headshot without the graphic text, they should supply one.
+
+## Priority Recommendations for Next Cycle
+1. **Keyboard tab-order audit** — verify the full-page tab order with all the new logo image elements.
+2. **WCAG contrast check** — verify all new text tones in upgraded sections meet 4.5:1.
+3. **Logo favicon** — the favicon.svg (YM monogram) could be replaced with a favicon derived from the real logo for brand consistency.
+4. **Logo in loading screen** — the LoadingScreen currently uses a "YM" text monogram; could use the real logo image.
+5. **OG image refresh** — regenerate the OG share image using the real logo + founder photo for authentic branding.

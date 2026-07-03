@@ -32,16 +32,16 @@ export function AboutFounder() {
               <div className="relative overflow-hidden rounded-sm shadow-navy-deep">
                 <div className="aspect-[4/5] overflow-hidden">
                   <Image
-                    src="/images/founder-portrait.png"
+                    src="/images/founder-real.png"
                     alt={`${FOUNDER_BIO.name}, ${FOUNDER_BIO.title}`}
                     width={768}
                     height={960}
                     loading="lazy"
-                    className="h-full w-full object-cover"
+                    className="h-full w-full object-cover object-top"
                   />
                 </div>
                 {/* gradient overlay for cinematic depth */}
-                <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/40 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/30 via-transparent to-transparent" />
                 {/* name plate overlay at bottom of portrait */}
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-navy-deep via-navy-deep/80 to-transparent p-5 pt-12">
                   <p className="font-display text-lg font-bold text-cream">

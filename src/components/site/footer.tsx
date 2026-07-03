@@ -2,8 +2,8 @@
 
 import { motion } from "framer-motion";
 import { Facebook, MapPin, Phone, Mail, ArrowUpRight, ArrowUp } from "lucide-react";
+import Image from "next/image";
 import { FIRM, NAV_LINKS, SERVICES } from "@/lib/site-data";
-import { Logo } from "./logo";
 
 export function Footer() {
   const scrollTo = (href: string) => {
@@ -25,7 +25,15 @@ export function Footer() {
           {/* Brand */}
           <div className="lg:col-span-4">
             <div className="flex items-center gap-3">
-              <Logo className="h-11 w-11 text-cream" />
+              <div className="h-12 w-12 overflow-hidden rounded-full ring-1 ring-gold/30">
+                <Image
+                  src="/images/logo.png"
+                  alt="Yolanda Matwa Attorneys logo"
+                  width={48}
+                  height={48}
+                  className="h-full w-full object-cover"
+                />
+              </div>
               <div className="leading-none">
                 <p className="font-display text-lg font-bold text-cream">
                   Yolanda Matwa

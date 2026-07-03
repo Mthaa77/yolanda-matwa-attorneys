@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Phone } from "lucide-react";
+import Image from "next/image";
 import { NAV_LINKS, FIRM } from "@/lib/site-data";
 import { cn } from "@/lib/utils";
-import { Logo } from "./logo";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -68,12 +68,22 @@ export function Navbar() {
             className="group flex items-center gap-3"
             aria-label="Go to top"
           >
-            <Logo
+            <div
               className={cn(
-                "h-11 w-11 transition-colors",
-                scrolled ? "text-navy-deep" : "text-cream",
+                "overflow-hidden rounded-full transition-all duration-300",
+                scrolled
+                  ? "h-11 w-11 ring-1 ring-gold/30"
+                  : "h-11 w-11 ring-1 ring-cream/20",
               )}
-            />
+            >
+              <Image
+                src="/images/logo.png"
+                alt="Yolanda Matwa Attorneys logo"
+                width={44}
+                height={44}
+                className="h-full w-full object-cover"
+              />
+            </div>
             <span className="hidden flex-col items-start leading-none sm:flex">
               <span
                 className={cn(
@@ -173,7 +183,15 @@ export function Navbar() {
             className="fixed inset-0 z-[60] bg-navy-deep lg:hidden"
           >
             <div className="flex h-20 items-center justify-between px-5 sm:px-8">
-              <Logo className="h-11 w-11 text-cream" />
+              <div className="h-11 w-11 overflow-hidden rounded-full ring-1 ring-cream/20">
+                <Image
+                  src="/images/logo.png"
+                  alt="Yolanda Matwa Attorneys logo"
+                  width={44}
+                  height={44}
+                  className="h-full w-full object-cover"
+                />
+              </div>
               <button
                 onClick={() => setOpen(false)}
                 className="flex h-10 w-10 items-center justify-center rounded-full text-cream hover:bg-cream/10"
