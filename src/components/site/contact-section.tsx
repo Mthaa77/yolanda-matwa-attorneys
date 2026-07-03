@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -19,6 +19,7 @@ import {
   Navigation,
 } from "lucide-react";
 import { FIRM, SERVICES } from "@/lib/site-data";
+import { PREFILL_SERVICE_EVENT_NAME } from "@/lib/contact-events";
 import { SectionHeading } from "./section-heading";
 import { cn } from "@/lib/utils";
 
@@ -37,16 +38,36 @@ type FormValues = z.infer<typeof schema>;
 
 export function ContactSection() {
   const [submitting, setSubmitting] = useState(false);
+  const [prefilledService, setPrefilledService] = useState<string | null>(null);
 
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: { name: "", email: "", phone: "", service: "", message: "" },
   });
+
+  // Listen for service-modal "Start Your Enquiry" prefill requests.
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const serviceTitle = (e as CustomEvent<string>).detail;
+      // Match the title against the dropdown options (exact title).
+      const match = SERVICES.find((s) => s.title === serviceTitle);
+      if (match) {
+        setValue("service", match.title);
+        setPrefilledService(match.title);
+        // Auto-clear the "prefilled" highlight after a few seconds.
+        setTimeout(() => setPrefilledService(null), 4000);
+      }
+    };
+    window.addEventListener(PREFILL_SERVICE_EVENT_NAME, handler);
+    return () =>
+      window.removeEventListener(PREFILL_SERVICE_EVENT_NAME, handler);
+  }, [setValue]);
 
   const onSubmit = async (values: FormValues) => {
     setSubmitting(true);
@@ -212,6 +233,7 @@ export function ContactSection() {
                         fieldClass,
                         "appearance-none pr-10",
                         errors.service && "border-destructive focus:border-destructive",
+                        prefilledService && "border-gold ring-2 ring-gold/20",
                       )}
                       {...register("service")}
                     >
@@ -225,6 +247,16 @@ export function ContactSection() {
                     </select>
                     <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                   </div>
+                  {prefilledService && (
+                    <motion.span
+                      initial={{ opacity: 0, y: -4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="inline-flex items-center gap-1.5 text-xs text-gold"
+                    >
+                      <span className="h-1.5 w-1.5 rounded-full bg-gold" />
+                      Pre-selected from the service you were viewing
+                    </motion.span>
+                  )}
                   {errors.service && (
                     <span className="text-xs text-destructive">
                       {errors.service.message}

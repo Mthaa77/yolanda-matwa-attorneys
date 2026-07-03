@@ -131,6 +131,7 @@ export interface ServiceDetail {
   approach: string;
   prepare: string[];
   faqs: ServiceFAQ[];
+  related: string[]; // slugs of related services
   accent: "navy" | "gold" | "sage";
 }
 
@@ -176,6 +177,7 @@ export const SERVICES: ServiceDetail[] = [
         a: "Beyond the purchase price: SARS transfer duty (on a sliding scale above R1.1m), the conveyancer's professional fee (LPC-regulated tariff), Deeds Office registration fees, and post/petties. Bond registration fees apply separately if financed. We provide a written, line-by-line estimate before you commit.",
       },
     ],
+    related: ["commercial-contracts", "wills-estates"],
   },
   {
     slug: "wills-estates",
@@ -217,6 +219,7 @@ export const SERVICES: ServiceDetail[] = [
         a: "Your estate is distributed according to the Intestate Succession Act — a fixed formula that may not match your wishes, can delay administration, and may impose guardianship arrangements you would not have chosen. A valid will is one of the most meaningful things you can leave behind.",
       },
     ],
+    related: ["deceased-estates", "antenuptial-contracts"],
   },
   {
     slug: "antenuptial-contracts",
@@ -258,6 +261,7 @@ export const SERVICES: ServiceDetail[] = [
         a: "Strictly before the marriage is solemnised. An ANC signed even one day after the wedding does not take effect — the marriage is then automatically in community of property, and changing it requires the full postnuptial court process. Plan the ANC at least two to three weeks before your date.",
       },
     ],
+    related: ["wills-estates", "commercial-contracts"],
   },
   {
     slug: "deceased-estates",
@@ -299,6 +303,7 @@ export const SERVICES: ServiceDetail[] = [
         a: "Estate duty is levied at 20% on the dutiable estate above the primary abatement (currently R3.5 million), with a possible spousal rollover. Many estates fall below the threshold and pay nothing, but life policies, retirement interests, and property valuations all affect the calculation. Proper estate planning can materially reduce the duty your heirs pay.",
       },
     ],
+    related: ["wills-estates", "conveyancing"],
   },
   {
     slug: "commercial-contracts",
@@ -340,6 +345,7 @@ export const SERVICES: ServiceDetail[] = [
         a: "We assess your commercial agreements and practices for exposure under the Competition Act — prohibited horizontal and vertical arrangements, abuse of dominance, and merger notification thresholds. For most SME clients this is a focused, fixed-fee review; for larger or regulated clients it can form part of a broader compliance programme.",
       },
     ],
+    related: ["conveyancing", "litigation"],
   },
   {
     slug: "litigation",
@@ -381,6 +387,7 @@ export const SERVICES: ServiceDetail[] = [
         a: "An unopposed motion can be resolved in 2 to 4 months. An opposed application typically runs 6 to 12 months. A full trial, with pleadings, discovery, and witnesses, can take 18 to 36 months in the High Court roll. We give you a realistic timeline up front and update it as the matter progresses.",
       },
     ],
+    related: ["commercial-contracts", "deceased-estates"],
   },
 ];
 

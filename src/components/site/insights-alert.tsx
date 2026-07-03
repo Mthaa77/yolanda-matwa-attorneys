@@ -110,7 +110,7 @@ export function InsightsAlert() {
           </p>
           {/* Real subscriber count — only shown when > 0 (never fabricated) */}
           {readerCount !== null && readerCount > 0 && (
-            <p className="mt-3 inline-flex items-center gap-1.5 text-xs text-cream/45">
+            <p className="mt-3 inline-flex items-center gap-1.5 text-xs text-cream/65">
               <Users className="h-3.5 w-3.5 text-gold/70" />
               Join{" "}
               <span className="font-semibold text-gold-light">
@@ -141,7 +141,7 @@ export function InsightsAlert() {
             {subscribedEmail && (
               <button
                 onClick={unsubscribe}
-                className="self-start text-xs text-cream/50 underline underline-offset-2 transition-colors hover:text-gold-light"
+                className="self-start text-xs text-cream/70 underline underline-offset-2 transition-colors hover:text-gold-light"
               >
                 Undo — unsubscribe
               </button>
@@ -189,7 +189,7 @@ export function InsightsAlert() {
               >
                 {consent && <Check className="h-3 w-3" />}
               </button>
-              <span className="text-xs leading-relaxed text-cream/55">
+              <span className="text-xs leading-relaxed text-cream/70">
                 I consent to Yolanda Matwa Attorneys storing my email to send
                 insight notifications, per the{" "}
                 <button

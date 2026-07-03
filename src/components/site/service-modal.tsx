@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import { type ServiceDetail, FIRM, SERVICES } from "@/lib/site-data";
 import { cn } from "@/lib/utils";
 import { useFocusTrap } from "@/hooks/use-focus-trap";
+import { prefillContactService } from "@/lib/contact-events";
 
 interface ServiceModalProps {
   service: ServiceDetail | null;
@@ -94,6 +95,11 @@ export function ServiceModal({ service, onClose, onNavigate }: ServiceModalProps
   }, [service, onClose, onNavigate]);
 
   const scrollToContact = () => {
+    if (service) {
+      // Pre-fill the contact form's service dropdown with this service
+      // so the user doesn't have to re-select it after scrolling down.
+      prefillContactService(service.title);
+    }
     onClose();
     setTimeout(() => {
       document
@@ -283,6 +289,41 @@ export function ServiceModal({ service, onClose, onNavigate }: ServiceModalProps
                   })}
                 </div>
               </div>
+
+              {/* Related services */}
+              {service.related.length > 0 && onNavigate && (
+                <div className="mt-8">
+                  <h4 className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-gold">
+                    You May Also Need
+                  </h4>
+                  <div className="grid gap-2.5 sm:grid-cols-2">
+                    {service.related.map((slug) => {
+                      const rel = SERVICES.find((s) => s.slug === slug);
+                      if (!rel) return null;
+                      return (
+                        <button
+                          key={slug}
+                          onClick={() => onNavigate(rel)}
+                          className="group flex items-center gap-3 rounded-lg border border-border bg-white p-3 text-left transition-all hover:border-gold/40 hover:shadow-sm"
+                        >
+                          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-navy/10 bg-navy/5 text-navy transition-colors group-hover:border-gold/40 group-hover:bg-gold/10 group-hover:text-gold">
+                            <rel.icon className="h-4 w-4" />
+                          </span>
+                          <span className="min-w-0 flex-1">
+                            <span className="block text-sm font-semibold text-navy-deep">
+                              {rel.shortTitle}
+                            </span>
+                            <span className="block truncate text-xs text-muted-foreground">
+                              {rel.tagline}
+                            </span>
+                          </span>
+                          <ArrowRight className="h-3.5 w-3.5 shrink-0 text-muted-foreground/40 transition-all group-hover:translate-x-0.5 group-hover:text-gold" />
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Prev / Next service navigation */}

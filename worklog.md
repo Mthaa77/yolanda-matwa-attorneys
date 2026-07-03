@@ -374,3 +374,47 @@ Task: Continuous QA + service modal keyboard shortcuts + insights unsubscribe fl
 3. **Email confirmation flow** — send a confirmation email on subscribe (with a verification link) to fully comply with email best practices and confirm the address is valid/owned.
 4. **Service modal "related services" suggestions** — at the bottom of each service modal, suggest 1-2 related services (e.g. Wills → Deceased Estates) to encourage exploration.
 5. **Contact form auto-fill from service modal** — when a user clicks "Start Your Enquiry" in a service modal, pre-fill the contact form's service dropdown with that service.
+
+---
+Task ID: 9
+Agent: Main (Z.ai Code) — webDevReview cron cycle 8
+Task: Continuous QA + contact form auto-fill from service modal + service modal "Related Services" suggestions + WCAG contrast fixes.
+
+## Current Project Status Assessment
+- Site stable and fully verified through 8 prior cycles. No bugs, no runtime errors.
+- QA at start of cycle: clean 200 responses, no console/page errors.
+- All previously-built features working (see prior cycle summaries).
+
+## Completed Modifications This Cycle
+
+### New Features
+1. **Contact form auto-fill from service modal** (`contact-events.ts` + ServiceModal + ContactSection wiring) — when a user clicks "Start Your Enquiry" in any service modal, the contact form's service dropdown is now pre-filled with that service's title. Built a lightweight `yma:prefill-service` CustomEvent bus (same pattern as the privacy/service-modal event buses). The ServiceModal's `scrollToContact` dispatches the event with the service title before closing + scrolling. The ContactSection listens for the event, calls `setValue("service", match.title)`, and shows a gold highlight ring on the dropdown + a "Pre-selected from the service you were viewing" hint with a gold dot (auto-clears after 4 seconds). Verified end-to-end: opened Wills modal → clicked Start Your Enquiry → contact form dropdown = "Wills & Estate Planning" + hint visible.
+2. **Service modal "Related Services" suggestions** — added a `related: string[]` field (slugs) to all 6 services in site-data.ts, with thoughtfully chosen pairings: Conveyancing→[Commercial Contracts, Wills & Estates], Wills→[Deceased Estates, Antenuptial Contracts], Antenuptial→[Wills & Estates, Commercial Contracts], Deceased Estates→[Wills & Estates, Conveyancing], Commercial→[Conveyancing, Litigation], Litigation→[Commercial Contracts, Deceased Estates]. The ServiceModal now renders a "You May Also Need" section after the mini-FAQs with 2 related-service cards (icon, short title, tagline, arrow). Clicking a related card navigates the modal to that service via onNavigate. Verified: opened Conveyancing modal → "YOU MAY ALSO NEED" heading + Commercial Contracts + Wills & Estates cards present → clicked Commercial Contracts → modal title changed to "Commercial Contracts".
+
+### Accessibility (WCAG Contrast)
+3. **Lightened low-contrast text on navy** — the InsightsAlert had several text tones below WCAG AA (4.5:1) on the navy-deep background: `cream/45` (subscriber count), `cream/50` (unsubscribe link), `cream/55` (consent text). Bumped all three: subscriber count → `cream/65`, unsubscribe link → `cream/70`, consent text → `cream/70`. Verified via className inspection that the new tones are applied.
+
+### Styling Polish
+4. Related-service cards use a 2-column grid with icon circles that transition from navy to gold on hover, matching the premium interactive language of the rest of the site.
+5. Contact form prefill hint uses a gold dot + gold text with a subtle fade-in animation (framer-motion).
+6. Prefilled dropdown gets a gold border + gold ring (ring-2 ring-gold/20) to draw the eye.
+
+## Verification Results
+- `bun run lint`: CLEAN — no errors.
+- agent-browser QA: no page errors, no console errors.
+- Contact form prefill: opened Wills modal → clicked "Start Your Enquiry" (via JS, click intercepted by overlay in agent-browser) → contact form #service dropdown value = "Wills & Estate Planning" (isWills: true) → "Pre-selected from the service you were viewing" hint visible (hasHint: true). Gold border + ring applied to the dropdown.
+- Related services: opened Conveyancing modal → "YOU MAY ALSO NEED" heading + 2 related cards (Commercial Contracts, Wills & Estates) present → clicked Commercial Contracts related card → modal title changed to "Commercial Contracts" (navigation confirmed). Also verified Wills modal shows Deceased Estates + Antenuptial Contracts.
+- WCAG contrast: subscriber count text = cream/65, consent text = cream/70, unsubscribe link = cream/70 — all confirmed via className inspection.
+- Mobile responsive (390px): insights alert renders correctly with improved contrast.
+- Screenshots: qa-round9-contact-prefill, qa-round9-insights-mobile, qa-round9-fullpage (2.3MB).
+
+## Unresolved Issues / Risks
+- None functional. All features verified working end-to-end.
+- Minor: agent-browser click interception by overlays (a recurring dev-environment artifact) required JS-triggered clicks for some tests — real users will not encounter this.
+
+## Priority Recommendations for Next Cycle
+1. **Keyboard tab-order audit** — verify the full-page tab order is logical with all interactive elements (skip link → nav → service cards → comparison headers/filters → FAQ → insights form → contact form → footer), with visible focus indicators throughout.
+2. **Email confirmation flow** — send a confirmation email on insights subscribe (with a verification link) to fully comply with email best practices and confirm the address is valid/owned.
+3. **Service comparison "click to open" on row labels** — make the "Your Need" row labels in the comparison table clickable to open the most relevant service modal.
+4. **"Back to top" from footer** — add a discreet "Back to top" link in the footer bottom bar (in addition to the floating button) for keyboard users.
+5. **Breadcrumb-style service modal title** — show "Service 2 of 6" text alongside the position indicator dots for clearer orientation.
