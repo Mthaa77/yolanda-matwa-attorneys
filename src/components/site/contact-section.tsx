@@ -16,6 +16,7 @@ import {
   MessageCircle,
   ExternalLink,
   ChevronDown,
+  Navigation,
 } from "lucide-react";
 import { FIRM, SERVICES } from "@/lib/site-data";
 import { SectionHeading } from "./section-heading";
@@ -372,15 +373,34 @@ export function ContactSection() {
 
               {/* Map */}
               <div className="overflow-hidden rounded-xl border border-border shadow-sm">
-                <iframe
-                  src={FIRM.mapsEmbed}
-                  width="100%"
-                  height="240"
-                  style={{ border: 0 }}
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="Yolanda Matwa Attorneys — Menlyn Maine office location"
-                />
+                <div className="relative">
+                  <iframe
+                    src={FIRM.mapsEmbed}
+                    width="100%"
+                    height="240"
+                    style={{ border: 0 }}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Yolanda Matwa Attorneys — Menlyn Maine office location"
+                  />
+                  {/* gradient + directions overlay */}
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy-deep/40 via-transparent to-transparent" />
+                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-2">
+                    <span className="pointer-events-none inline-flex items-center gap-1.5 rounded-full bg-navy-deep/85 px-3 py-1.5 text-xs font-medium text-cream backdrop-blur-sm">
+                      <MapPin className="h-3.5 w-3.5 text-gold" />
+                      Pegasus Building, Menlyn Maine
+                    </span>
+                    <a
+                      href={FIRM.mapsLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group inline-flex items-center gap-1.5 rounded-full bg-gold px-3.5 py-1.5 text-xs font-semibold text-navy-deep shadow-premium transition-all hover:bg-gold-light hover:shadow-lg"
+                    >
+                      <Navigation className="h-3.5 w-3.5" />
+                      Directions
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </motion.div>

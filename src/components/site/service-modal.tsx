@@ -2,26 +2,38 @@
 
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ArrowRight, Check, ClipboardList, Plus } from "lucide-react";
+import {
+  X,
+  ArrowRight,
+  ArrowLeft,
+  Check,
+  ClipboardList,
+  Plus,
+} from "lucide-react";
 import { useEffect } from "react";
-import { type ServiceDetail, FIRM } from "@/lib/site-data";
+import { type ServiceDetail, FIRM, SERVICES } from "@/lib/site-data";
 import { cn } from "@/lib/utils";
 import { useFocusTrap } from "@/hooks/use-focus-trap";
 
 interface ServiceModalProps {
   service: ServiceDetail | null;
   onClose: () => void;
+  onNavigate?: (service: ServiceDetail) => void;
 }
 
-export function ServiceModal({ service, onClose }: ServiceModalProps) {
+export function ServiceModal({ service, onClose, onNavigate }: ServiceModalProps) {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const modalRef = useRef<HTMLDivElement>(null);
+  const bodyRef = useRef<HTMLDivElement>(null);
   useFocusTrap(modalRef, !!service);
 
-  // Reset the open FAQ whenever a different service opens.
+  // Reset the open FAQ + scroll to top whenever a different service opens.
   // Defer into a timeout to avoid synchronous setState-in-effect cascading renders.
   useEffect(() => {
-    const t = setTimeout(() => setOpenFaq(0), 0);
+    const t = setTimeout(() => {
+      setOpenFaq(0);
+      bodyRef.current?.scrollTo({ top: 0 });
+    }, 0);
     return () => clearTimeout(t);
   }, [service?.slug]);
 
@@ -47,6 +59,17 @@ export function ServiceModal({ service, onClose }: ServiceModalProps) {
         ?.scrollIntoView({ behavior: "smooth" });
     }, 200);
   };
+
+  // Prev/next navigation within the SERVICES array (wraps around)
+  const navigate = (dir: -1 | 1) => {
+    if (!service || !onNavigate) return;
+    const idx = SERVICES.findIndex((s) => s.slug === service.slug);
+    const nextIdx = (idx + dir + SERVICES.length) % SERVICES.length;
+    onNavigate(SERVICES[nextIdx]);
+  };
+  const currentIdx = service
+    ? SERVICES.findIndex((s) => s.slug === service.slug)
+    : -1;
 
   return (
     <AnimatePresence>
@@ -114,7 +137,10 @@ export function ServiceModal({ service, onClose }: ServiceModalProps) {
             </div>
 
             {/* Body — scrollable */}
-            <div className="scrollbar-premium flex-1 overflow-y-auto px-6 py-7 sm:px-9 sm:py-9">
+            <div
+              ref={bodyRef}
+              className="scrollbar-premium flex-1 overflow-y-auto px-6 py-7 sm:px-9 sm:py-9"
+            >
               <div>
                 <h4 className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-gold">
                   What This Covers
@@ -227,6 +253,52 @@ export function ServiceModal({ service, onClose }: ServiceModalProps) {
                 </div>
               </div>
             </div>
+
+            {/* Prev / Next service navigation */}
+            {onNavigate && currentIdx >= 0 && (
+              <div className="shrink-0 border-t border-border bg-mist/50 px-6 py-4 sm:px-9">
+                <div className="flex items-center justify-between gap-3">
+                  <button
+                    onClick={() => navigate(-1)}
+                    className="group inline-flex items-center gap-2 rounded-full border border-border bg-white px-3 py-2 text-xs font-medium text-navy-deep transition-all hover:border-gold/50 hover:text-gold sm:px-4"
+                    aria-label={`Previous service: ${SERVICES[(currentIdx - 1 + SERVICES.length) % SERVICES.length].shortTitle}`}
+                  >
+                    <ArrowLeft className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-0.5" />
+                    <span className="hidden sm:inline">
+                      {SERVICES[(currentIdx - 1 + SERVICES.length) % SERVICES.length].shortTitle}
+                    </span>
+                    <span className="sm:hidden">Prev</span>
+                  </button>
+
+                  {/* position indicator */}
+                  <div className="flex items-center gap-1.5" aria-hidden="true">
+                    {SERVICES.map((s, i) => (
+                      <span
+                        key={s.slug}
+                        className={cn(
+                          "h-1.5 rounded-full transition-all",
+                          i === currentIdx
+                            ? "w-5 bg-gold"
+                            : "w-1.5 bg-navy/15",
+                        )}
+                      />
+                    ))}
+                  </div>
+
+                  <button
+                    onClick={() => navigate(1)}
+                    className="group inline-flex items-center gap-2 rounded-full border border-border bg-white px-3 py-2 text-xs font-medium text-navy-deep transition-all hover:border-gold/50 hover:text-gold sm:px-4"
+                    aria-label={`Next service: ${SERVICES[(currentIdx + 1) % SERVICES.length].shortTitle}`}
+                  >
+                    <span className="hidden sm:inline">
+                      {SERVICES[(currentIdx + 1) % SERVICES.length].shortTitle}
+                    </span>
+                    <span className="sm:hidden">Next</span>
+                    <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                  </button>
+                </div>
+              </div>
+            )}
 
             {/* Footer CTA */}
             <div className="shrink-0 border-t border-border bg-white px-6 py-5 sm:px-9">

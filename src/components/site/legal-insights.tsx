@@ -7,6 +7,7 @@ import { INSIGHT_ARTICLES, type InsightArticle } from "@/lib/site-data";
 import { SectionHeading } from "./section-heading";
 import { StaggerGroup, staggerItem } from "./scroll-reveal";
 import { ArticleModal } from "./article-modal";
+import { InsightsAlert } from "./insights-alert";
 
 export function LegalInsights() {
   const [active, setActive] = useState<InsightArticle | null>(null);
@@ -104,6 +105,11 @@ export function LegalInsights() {
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </button>
         </motion.div>
+
+        {/* Insights alert email signup */}
+        <div className="mt-8">
+          <InsightsAlert />
+        </div>
       </div>
 
       <ArticleModal article={active} onClose={() => setActive(null)} />

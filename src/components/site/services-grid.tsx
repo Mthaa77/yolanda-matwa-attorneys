@@ -130,7 +130,11 @@ export function ServicesGrid() {
         </StaggerGroup>
       </div>
 
-      <ServiceModal service={active} onClose={() => setActive(null)} />
+      <ServiceModal
+        service={active}
+        onClose={() => setActive(null)}
+        onNavigate={setActive}
+      />
     </section>
   );
 }

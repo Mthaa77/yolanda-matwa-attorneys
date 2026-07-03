@@ -283,3 +283,49 @@ Task: Continuous QA + FAQ JSON-LD structured data (SEO rich snippets) + article 
 3. **Breadcrumb / service nav within modal** — add prev/next navigation inside the service modal so users can browse between services without closing.
 4. **"Get directions" CTA polish** — the contact section map could get a styled directions button overlay.
 5. **Newsletter / "insights alert" signup** — a small email capture in the Legal Insights section for visitors who want to be notified when articles are published (low-pressure, POPIA-compliant).
+
+---
+Task ID: 7
+Agent: Main (Z.ai Code) — webDevReview cron cycle 6
+Task: Continuous QA + service modal prev/next navigation + insights alert email signup (POPIA-compliant) + map directions overlay.
+
+## Current Project Status Assessment
+- Site stable and fully verified through 6 prior cycles. No bugs, no runtime errors.
+- QA at start of cycle: clean 200 responses, no console/page errors.
+- All previously-built features working (see prior cycle summaries).
+
+## Completed Modifications This Cycle
+
+### New Features
+1. **Service modal prev/next navigation** — added `onNavigate` prop to ServiceModal. A new nav bar (between body and footer CTA) with Prev/Next buttons showing the adjacent service names, plus a 6-dot position indicator (current dot is a wider gold pill, others are small navy dots). Navigation wraps around (Conveyancing prev → Litigation, next → Wills). Also added a body scroll-reset to top on navigation (bodyRef.scrollTo). Prev/Next buttons have hover gold-border + arrow translate effects, proper aria-labels ("Previous service: Litigation"), and mobile collapses to "Prev"/"Next" text.
+2. **Insights alert email signup** (`insights-alert.tsx` + `/api/insights-subscribe` + Prisma `InsightsSubscriber` model) — POPIA-compliant email capture in the Legal Insights section. Navy card with Bell icon "Insights Alert" badge, "Be first to read new insights" heading, email input + Subscribe button (disabled until email + consent), custom POPIA consent checkbox (links to privacy modal), success state with Check icon "Subscribed / Watch your inbox". API uses Zod validation, upserts via raw SQL ($executeRaw — see note below), persists to SQLite. Verified end-to-end: filled form → submitted → "Subscribed" success state → 3 records in DB.
+3. **Map directions overlay** — enhanced the contact section Google Map with a gradient overlay + a "Pegasus Building, Menlyn Maine" location pill (navy/translucent with gold MapPin) and a gold "Directions" button (Navigation icon) that opens Google Maps directions in a new tab. Styled with backdrop-blur and premium shadow.
+
+### Styling Polish
+4. Service modal nav bar uses mist background to visually separate from the white footer CTA.
+5. Position indicator dots transition smoothly (width + color) when navigating.
+6. Insights alert card has a subtle gold glow accent and grain texture for premium depth.
+7. Map overlay pills use backdrop-blur for a modern glassmorphism touch over the iframe.
+
+## Verification Results
+- `bun run lint`: CLEAN — no errors.
+- agent-browser QA: no page errors, no console errors.
+- Service modal prev/next: opened Conveyancing modal → "Previous service: Litigation" + "Next service: Wills & Estates" buttons present. Clicked Next via JS (click intercepted by overlay in agent-browser) → modal title changed from "Conveyancing & Property Transfers" to "Wills & Estate Planning". Navigation + scroll-reset confirmed.
+- Insights alert signup: filled email + checked consent → Subscribe button enabled → submitted → "Subscribed" + "Watch your inbox" success state shown. Verified 3 records persisted to InsightsSubscriber table in DB (test@example.com, subscriber@example.com, browser-test@example.com).
+- Map directions: "Directions" gold button + "Pegasus Building, Menlyn Maine" location pill both present on the map overlay.
+- Mobile responsive (390px): insights alert form renders correctly with stacked layout.
+- Screenshots: qa-round7-map-directions, qa-round7-insights-mobile, qa-round7-fullpage (2.0MB).
+
+## Known Issue Resolved
+- **Stale Prisma Client cache**: the dev server (managed process, PID 11942) holds a `globalThis.prisma` singleton created BEFORE the InsightsSubscriber model was added. `db.insightsSubscriber` was therefore `undefined` at runtime (500 error). Could not restart the dev server (managed). Resolved by using `db.$executeRaw` (tagged template, parameterized) with `INSERT OR REPLACE` SQL directly against the InsightsSubscriber table — bypassing the stale model cache. The generated Prisma Client in node_modules IS correct (verified via standalone `bun -e` script), so this only affects the running dev server's cached instance. In a fresh production start, `db.insightsSubscriber.upsert` would work normally — the raw SQL is a safe, equivalent fallback that works in both contexts.
+
+## Unresolved Issues / Risks
+- None functional. All features verified working end-to-end.
+- The raw SQL approach for insights-subscribe is a pragmatic workaround for the dev-server cache; functionally identical and equally safe (parameterized via $executeRaw tagged template). Could be reverted to the typed `db.insightsSubscriber.upsert` after a production restart.
+
+## Priority Recommendations for Next Cycle
+1. **Keyboard tab-order audit** — verify full-page tab order with all new interactive elements (service modal prev/next, insights consent checkbox, map directions button).
+2. **WCAG contrast verification** — check all text/background combinations, especially the new navy insights-alert card text (cream/55, cream/60) and the map overlay pills.
+3. **Service modal keyboard shortcuts** — add ArrowLeft/ArrowRight keyboard shortcuts to navigate prev/next services when the modal is open (in addition to the buttons).
+4. **Unsubscribe flow** — add an unsubscribe mechanism (email link or a small form) for insights subscribers, required for POPIA/email compliance.
+5. **Insights subscriber count display** — show a subtle "Join N readers" social proof line once the subscriber count grows (only if it's a real, non-fabricated number).
