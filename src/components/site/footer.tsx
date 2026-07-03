@@ -129,10 +129,18 @@ export function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-14 flex flex-col gap-4 border-t border-cream/10 pt-8 text-xs text-cream/40 sm:flex-row sm:items-center sm:justify-between">
-          <p>
-            © {year} Yolanda Matwa Attorneys / Matwa Nongogo Incorporated. All
-            rights reserved.
-          </p>
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
+            <p>
+              © {year} Yolanda Matwa Attorneys / Matwa Nongogo Incorporated.
+              All rights reserved.
+            </p>
+            <button
+              onClick={() => import("./privacy-provider").then((m) => m.openPrivacyModal())}
+              className="text-left text-cream/40 transition-colors hover:text-gold-light sm:text-left"
+            >
+              Privacy &amp; POPIA Notice
+            </button>
+          </div>
           <p className="max-w-md leading-relaxed sm:text-right">
             Information on this site does not constitute legal advice. An
             attorney-client relationship is formed only upon formal engagement.

@@ -18,6 +18,7 @@ export function FinalCTA() {
           alt=""
           fill
           sizes="100vw"
+          loading="lazy"
           className="object-cover opacity-15"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-navy-deep via-navy-deep/90 to-navy-deep/70" />

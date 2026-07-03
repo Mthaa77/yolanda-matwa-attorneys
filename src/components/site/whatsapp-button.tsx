@@ -23,7 +23,7 @@ export function WhatsAppButton() {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.5, y: 20 }}
           transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed bottom-5 right-5 z-50 flex items-center gap-2 sm:bottom-6 sm:right-6"
+          className="fixed bottom-5 right-5 z-50 flex items-center gap-2 print:hidden sm:bottom-6 sm:right-6"
           onMouseEnter={() => setExpanded(true)}
           onMouseLeave={() => setExpanded(false)}
         >

@@ -41,7 +41,7 @@ export function CookieConsent() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 30 }}
           transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed inset-x-4 bottom-4 z-[80] mx-auto max-w-3xl sm:inset-x-6 sm:bottom-6"
+          className="fixed inset-x-4 bottom-4 z-[80] mx-auto max-w-3xl print:hidden sm:inset-x-6 sm:bottom-6"
           role="dialog"
           aria-label="Cookie and privacy notice"
           aria-live="polite"
@@ -70,9 +70,9 @@ export function CookieConsent() {
                   visitors most. We never sell your data. See our approach to{" "}
                   <button
                     onClick={() =>
-                      document
-                        .getElementById("contact")
-                        ?.scrollIntoView({ behavior: "smooth" })
+                      import("./privacy-provider").then((m) =>
+                        m.openPrivacyModal(),
+                      )
                     }
                     className="font-medium text-gold-light underline underline-offset-2 transition-colors hover:text-gold"
                   >

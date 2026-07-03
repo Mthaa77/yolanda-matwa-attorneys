@@ -2,6 +2,7 @@ import { Navbar } from "@/components/site/navbar";
 import { Hero } from "@/components/site/hero";
 import { TrustBar } from "@/components/site/trust-bar";
 import { AboutFounder } from "@/components/site/about-founder";
+import { StatsStrip } from "@/components/site/stats-strip";
 import { WhyChooseUs } from "@/components/site/why-choose-us";
 import { ServicesGrid } from "@/components/site/services-grid";
 import { Competence } from "@/components/site/competence";
@@ -20,33 +21,37 @@ import {
   LoadingScreen,
 } from "@/components/site/site-enhancements";
 import { CookieConsent } from "@/components/site/cookie-consent";
+import { PrivacyProvider } from "@/components/site/privacy-provider";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col bg-cream">
-      <LoadingScreen />
-      <ScrollProgress />
-      <Navbar />
-      <main className="flex-1">
-        <Hero />
-        <TrustBar />
-        <AboutFounder />
-        <SectionDivider />
-        <WhyChooseUs />
-        <ServicesGrid />
-        <Competence />
-        <ProcessTimeline />
-        <SectionDivider />
-        <FAQSection />
-        <TestimonialsScaffold />
-        <LegalInsights />
-        <ContactSection />
-        <FinalCTA />
-      </main>
-      <Footer />
-      <WhatsAppButton />
-      <BackToTop />
-      <CookieConsent />
-    </div>
+    <PrivacyProvider>
+      <div className="flex min-h-screen flex-col bg-cream">
+        <LoadingScreen />
+        <ScrollProgress />
+        <Navbar />
+        <main className="flex-1">
+          <Hero />
+          <TrustBar />
+          <AboutFounder />
+          <SectionDivider />
+          <StatsStrip />
+          <WhyChooseUs />
+          <ServicesGrid />
+          <Competence />
+          <ProcessTimeline />
+          <SectionDivider />
+          <FAQSection />
+          <TestimonialsScaffold />
+          <LegalInsights />
+          <ContactSection />
+          <FinalCTA />
+        </main>
+        <Footer />
+        <WhatsAppButton />
+        <BackToTop />
+        <CookieConsent />
+      </div>
+    </PrivacyProvider>
   );
 }

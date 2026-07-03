@@ -244,3 +244,83 @@
     background: linear-gradient(90deg, transparent, var(--gold) 50%, transparent);
   }
 }
+
+/* ============================================================
+   Print stylesheet — clean, professional output for clients
+   who want to print service info or the "What to Prepare" list.
+   ============================================================ */
+@media print {
+  /* Force light theme + black-on-white */
+  html {
+    scroll-behavior: auto;
+    scroll-padding-top: 0;
+  }
+  body {
+    background: #ffffff !important;
+    color: #0F1F38 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Hide all interactive / decorative-only chrome */
+  nav,
+  footer,
+  .print\:hidden,
+  [aria-label="Open menu"],
+  [aria-label="Close menu"],
+  [aria-label="Back to top"],
+  [aria-label="Chat on WhatsApp"],
+  [data-print-hide] {
+    display: none !important;
+  }
+
+  /* Collapse animations for instant print */
+  * {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* Ensure headings keep their hierarchy but print crisply */
+  h1, h2, h3, h4 {
+    color: #0F1F38 !important;
+    page-break-after: avoid;
+  }
+
+  /* Keep section content together where possible */
+  section {
+    page-break-inside: avoid;
+  }
+
+  /* Remove decorative blurs/glows that waste ink */
+  [class*="blur-3xl"],
+  [class*="bg-grain"] {
+    display: none !important;
+  }
+
+  /* Print URLs after links for reference */
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #555;
+  }
+
+  /* Force dark text on navy backgrounds to remain legible */
+  [class*="bg-navy"],
+  [class*="bg-navy-deep"] {
+    background: #ffffff !important;
+    color: #0F1F38 !important;
+  }
+  [class*="bg-navy"] *,
+  [class*="bg-navy-deep"] * {
+    color: #0F1F38 !important;
+  }
+
+  /* Gold accents become dark grey for ink efficiency */
+  [class*="text-gold"],
+  [class*="text-gradient-gold"] {
+    color: #6b5320 !important;
+    -webkit-text-fill-color: #6b5320 !important;
+  }
+}

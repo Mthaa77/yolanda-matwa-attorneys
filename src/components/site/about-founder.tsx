@@ -32,6 +32,7 @@ export function AboutFounder() {
                     alt={`${FOUNDER_BIO.name}, ${FOUNDER_BIO.title}`}
                     width={768}
                     height={960}
+                    loading="lazy"
                     className="h-full w-full object-cover"
                   />
                 </div>

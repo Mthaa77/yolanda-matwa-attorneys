@@ -1,7 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ArrowRight, Check, ClipboardList } from "lucide-react";
+import { X, ArrowRight, Check, ClipboardList, Plus } from "lucide-react";
 import { useEffect } from "react";
 import { type ServiceDetail, FIRM } from "@/lib/site-data";
 import { cn } from "@/lib/utils";
@@ -12,6 +13,15 @@ interface ServiceModalProps {
 }
 
 export function ServiceModal({ service, onClose }: ServiceModalProps) {
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
+
+  // Reset the open FAQ whenever a different service opens.
+  // Defer into a timeout to avoid synchronous setState-in-effect cascading renders.
+  useEffect(() => {
+    const t = setTimeout(() => setOpenFaq(0), 0);
+    return () => clearTimeout(t);
+  }, [service?.slug]);
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -137,6 +147,69 @@ export function ServiceModal({ service, onClose }: ServiceModalProps) {
                     </li>
                   ))}
                 </ul>
+              </div>
+
+              {/* Common Questions — mini-FAQ accordion */}
+              <div className="mt-8">
+                <h4 className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-gold">
+                  Common Questions
+                </h4>
+                <div className="space-y-2.5">
+                  {service.faqs.map((faq, i) => {
+                    const isOpen = openFaq === i;
+                    return (
+                      <div
+                        key={i}
+                        className={cn(
+                          "overflow-hidden rounded-lg border bg-white transition-colors",
+                          isOpen
+                            ? "border-gold/40"
+                            : "border-border hover:border-gold/30",
+                        )}
+                      >
+                        <button
+                          onClick={() => setOpenFaq(isOpen ? null : i)}
+                          className="flex w-full items-center justify-between gap-3 px-4 py-3.5 text-left"
+                          aria-expanded={isOpen}
+                        >
+                          <span className="text-sm font-medium text-navy-deep">
+                            {faq.q}
+                          </span>
+                          <motion.span
+                            animate={{ rotate: isOpen ? 45 : 0 }}
+                            transition={{ duration: 0.2 }}
+                            className={cn(
+                              "flex h-6 w-6 shrink-0 items-center justify-center rounded-full transition-colors",
+                              isOpen
+                                ? "bg-gold/10 text-gold"
+                                : "text-muted-foreground",
+                            )}
+                          >
+                            <Plus className="h-3.5 w-3.5" />
+                          </motion.span>
+                        </button>
+                        <AnimatePresence initial={false}>
+                          {isOpen && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{
+                                duration: 0.25,
+                                ease: [0.22, 1, 0.36, 1],
+                              }}
+                              className="overflow-hidden"
+                            >
+                              <p className="px-4 pb-4 text-sm leading-relaxed text-muted-foreground text-pretty">
+                                {faq.a}
+                              </p>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
 

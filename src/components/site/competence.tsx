@@ -18,6 +18,7 @@ export function Competence() {
           alt=""
           fill
           sizes="100vw"
+          loading="lazy"
           className="object-cover opacity-25"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-navy-deep via-navy-deep/85 to-navy-deep" />

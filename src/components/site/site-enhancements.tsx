@@ -19,7 +19,7 @@ export function ScrollProgress() {
   return (
     <motion.div
       style={{ scaleX }}
-      className="fixed inset-x-0 top-0 z-[55] h-0.5 origin-left bg-gradient-to-r from-gold via-gold-light to-gold"
+      className="fixed inset-x-0 top-0 z-[55] h-0.5 origin-left bg-gradient-to-r from-gold via-gold-light to-gold print:hidden"
       aria-hidden="true"
     />
   );
@@ -49,7 +49,7 @@ export function BackToTop() {
           onClick={() =>
             window.scrollTo({ top: 0, behavior: "smooth" })
           }
-          className="fixed bottom-5 left-5 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-gold/30 bg-navy-deep/90 text-gold backdrop-blur-sm shadow-premium transition-all hover:scale-105 hover:bg-navy-deep hover:text-gold-light sm:bottom-6 sm:left-6"
+          className="fixed bottom-5 left-5 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-gold/30 bg-navy-deep/90 text-gold backdrop-blur-sm shadow-premium transition-all hover:scale-105 hover:bg-navy-deep hover:text-gold-light print:hidden sm:bottom-6 sm:left-6"
           aria-label="Back to top"
         >
           <ArrowUp className="h-5 w-5" />

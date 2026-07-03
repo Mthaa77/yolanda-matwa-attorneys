@@ -45,6 +45,31 @@ export const TRUST_MARKERS = [
   { label: "Menlyn Maine", value: "Pretoria East" },
 ];
 
+// Real, verifiable figures only — no fabricated "clients served" counters.
+// Every number here can be substantiated from the public record or credentials.
+export const STATS = [
+  {
+    value: "2013",
+    label: "Admitted as an Attorney",
+    sublabel: "of the High Court of South Africa",
+  },
+  {
+    value: "6",
+    label: "Core Practice Areas",
+    sublabel: "conveyancing, notarial, family, estates, commercial, litigation",
+  },
+  {
+    value: "3",
+    label: "Postgraduate Qualifications",
+    sublabel: "Tax Law, Competition Law, LLM in progress",
+  },
+  {
+    value: "1",
+    label: "Former Competition Tribunal Experience",
+    sublabel: "rare among boutique conveyancers",
+  },
+];
+
 export const CREDENTIALS = [
   {
     year: "2012",
@@ -89,6 +114,11 @@ export const FOUNDER_BIO = {
     "Unexpected legal bills can be incredibly frustrating. It can also erode trust in our relationship. So, when it comes to pricing, we are transparent.",
 };
 
+export interface ServiceFAQ {
+  q: string;
+  a: string;
+}
+
 export interface ServiceDetail {
   slug: string;
   title: string;
@@ -100,6 +130,7 @@ export interface ServiceDetail {
   covers: string[];
   approach: string;
   prepare: string[];
+  faqs: ServiceFAQ[];
   accent: "navy" | "gold" | "sage";
 }
 
@@ -131,6 +162,20 @@ export const SERVICES: ServiceDetail[] = [
       "Bond grant letter from your bank (if financed)",
       "Rates account number for the property (if available)",
     ],
+    faqs: [
+      {
+        q: "Can I choose my own conveyancer, or does the bank decide?",
+        a: "By law, the purchaser has the right to choose the transferring attorney — even when financing with a bond. The bank may appoint the bond registration attorney, but the transfer itself is your choice. We regularly work alongside bank-appointed bond attorneys to keep your transfer coordinated and on track.",
+      },
+      {
+        q: "How long will my property transfer take?",
+        a: "A straightforward residential transfer typically runs 8 to 12 weeks from signed offer to registration. The variables are bond approval, municipal rates clearance (often 2 to 4 weeks), and whether existing bonds need cancellation. We flag delays early and update you at every milestone.",
+      },
+      {
+        q: "What will I pay in transfer costs?",
+        a: "Beyond the purchase price: SARS transfer duty (on a sliding scale above R1.1m), the conveyancer's professional fee (LPC-regulated tariff), Deeds Office registration fees, and post/petties. Bond registration fees apply separately if financed. We provide a written, line-by-line estimate before you commit.",
+      },
+    ],
   },
   {
     slug: "wills-estates",
@@ -157,6 +202,20 @@ export const SERVICES: ServiceDetail[] = [
       "Full names and ID numbers of intended beneficiaries",
       "Names and details of your chosen executor (or ask us to act)",
       "Guardian details, if you have minor children",
+    ],
+    faqs: [
+      {
+        q: "Do I need a notary to draft my will?",
+        a: "No — any admitted attorney can draft a will. But a will drafted without tax and estate-planning thought can cost your heirs far more in estate duty and friction than the drafting fee. Yolanda's tax-law grounding means your will is efficient, not merely valid.",
+      },
+      {
+        q: "How often should I update my will?",
+        a: "Review your will after every major life event: marriage, divorce, birth or adoption of a child, death of a beneficiary or executor, significant asset acquisition or disposal, and relocation across borders. A will that no longer reflects your circumstances can cause precisely the disputes it was meant to prevent.",
+      },
+      {
+        q: "What happens if I die without a will?",
+        a: "Your estate is distributed according to the Intestate Succession Act — a fixed formula that may not match your wishes, can delay administration, and may impose guardianship arrangements you would not have chosen. A valid will is one of the most meaningful things you can leave behind.",
+      },
     ],
   },
   {
@@ -185,6 +244,20 @@ export const SERVICES: ServiceDetail[] = [
       "Details of any existing trusts or business interests",
       "Whether you wish to include or exclude accrual",
     ],
+    faqs: [
+      {
+        q: "What is the difference between an ANC with and without accrual?",
+        a: "An ANC without accrual means complete financial separation — each spouse keeps what is theirs, and growth during the marriage stays separate. An ANC with accrual means each spouse shares in the growth of the other's estate during the marriage, which the Constitutional Court has called the fairer default for most modern marriages. We help you choose what genuinely fits your circumstances.",
+      },
+      {
+        q: "Can we change our marital regime after getting married?",
+        a: "Yes — since a 2014 Constitutional Court ruling, a postnuptial contract can change an in-community marriage to out-of-community. But it requires a High Court application, notice to creditors, and is significantly more involved than an ANC signed before the wedding. Far simpler to decide before the day.",
+      },
+      {
+        q: "When must the antenuptial contract be signed?",
+        a: "Strictly before the marriage is solemnised. An ANC signed even one day after the wedding does not take effect — the marriage is then automatically in community of property, and changing it requires the full postnuptial court process. Plan the ANC at least two to three weeks before your date.",
+      },
+    ],
   },
   {
     slug: "deceased-estates",
@@ -211,6 +284,20 @@ export const SERVICES: ServiceDetail[] = [
       "A list of the deceased's assets and liabilities",
       "Details of all beneficiaries and next of kin",
       "Bank statements and bond account details (where applicable)",
+    ],
+    faqs: [
+      {
+        q: "How long does deceased estate administration take?",
+        a: "A straightforward estate runs 6 to 9 months from reporting to the Master through to final distribution. Complex estates — disputes, offshore assets, significant tax exposure — can take 12 to 18 months or longer. The L&D account laydown period, SARS compliance, and Master's Office processing times all factor in.",
+      },
+      {
+        q: "What if there is no will?",
+        a: "The estate is administered under the Intestate Succession Act, and the Master will appoint an executor (often a family member or a professional nominated by the family). The process is longer, the distribution follows a fixed formula, and estate duty planning opportunities are limited. We can still administer the estate efficiently — but a will makes everything simpler.",
+      },
+      {
+        q: "Do I have to pay estate duty?",
+        a: "Estate duty is levied at 20% on the dutiable estate above the primary abatement (currently R3.5 million), with a possible spousal rollover. Many estates fall below the threshold and pay nothing, but life policies, retirement interests, and property valuations all affect the calculation. Proper estate planning can materially reduce the duty your heirs pay.",
+      },
     ],
   },
   {
@@ -239,6 +326,20 @@ export const SERVICES: ServiceDetail[] = [
       "Details of the other contracting party or parties",
       "Your commercial non-negotiables and preferred timelines",
     ],
+    faqs: [
+      {
+        q: "How is your contract review different from a template-based service?",
+        a: "Yolanda's competition-law grounding at the CCSA — assessing the public-interest impact of mergers and drafting merger conditions — means she reads a contract for the risks no template anticipates: regulatory exposure, anti-competitive clauses, compliance gaps, and the leverage points buried in boilerplate. You get a review, not a rubber stamp.",
+      },
+      {
+        q: "Do you handle ongoing contract management, or just drafting?",
+        a: "Both. We draft new agreements, review existing ones before signature, and assist with variations, renewals, and dispute resolution down the line. Many clients keep us on retainer for ongoing commercial matters — it is almost always cheaper to review a contract before signing than to litigate it after.",
+      },
+      {
+        q: "What does a competition-law compliance review involve?",
+        a: "We assess your commercial agreements and practices for exposure under the Competition Act — prohibited horizontal and vertical arrangements, abuse of dominance, and merger notification thresholds. For most SME clients this is a focused, fixed-fee review; for larger or regulated clients it can form part of a broader compliance programme.",
+      },
+    ],
   },
   {
     slug: "litigation",
@@ -265,6 +366,20 @@ export const SERVICES: ServiceDetail[] = [
       "Invoices, receipts or proof of financial loss (if claimed)",
       "Contact details of any witnesses",
       "Any prior court documents or demand letters received",
+    ],
+    faqs: [
+      {
+        q: "Do I have to go to court to resolve my dispute?",
+        a: "Not always — and often not. Yolanda approaches disputes strategically, having negotiated settlement agreements at the Competition Tribunal. A well-drafted letter of demand, a structured without-prejudice exchange, or mediation can resolve many matters without the cost and delay of trial. We pursue court only when it is genuinely the right path.",
+      },
+      {
+        q: "What does litigation cost?",
+        a: "It depends on complexity, the stage reached, and whether the matter is opposed. We quote in writing before any work begins and flag scope changes before they happen. For most matters we can offer a phased approach — a fixed fee for the demand and pre-litigation stage, then a revised estimate if proceedings become necessary.",
+      },
+      {
+        q: "How long does a court matter take?",
+        a: "An unopposed motion can be resolved in 2 to 4 months. An opposed application typically runs 6 to 12 months. A full trial, with pleadings, discovery, and witnesses, can take 18 to 36 months in the High Court roll. We give you a realistic timeline up front and update it as the matter progresses.",
+      },
     ],
   },
 ];

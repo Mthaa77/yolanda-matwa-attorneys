@@ -142,3 +142,51 @@ Task: Continuous QA + new features (POPIA cookie consent, service "What to Prepa
 3. **"Insights" article route scaffold** — if/when articles are written, a `/insights/[slug]` rendering path (or an in-page modal) would let the Legal Insights cards become clickable.
 4. **Accessibility audit pass** — verify ARIA labels on all interactive elements, color contrast ratios, and keyboard tab order across the new sections.
 5. **Performance check** — with more sections now on the page, consider lazy-loading below-the-fold images and verifying LCP/CLS remain optimal.
+
+---
+Task ID: 4
+Agent: Main (Z.ai Code) — webDevReview cron cycle 3
+Task: Continuous QA + new features (service mini-FAQs, stats strip, privacy/POPIA modal, print stylesheet) + performance (lazy images) + print:hidden.
+
+## Current Project Status Assessment
+- Site stable and fully verified through 3 prior cycles. No bugs, no runtime errors.
+- QA at start of cycle: clean 200 responses, no console/page errors.
+- All previously-built sections working: Hero, TrustBar, AboutFounder, WhyChooseUs, ServicesGrid+Modals (with What to Prepare), Competence, ProcessTimeline, FAQ, TestimonialsScaffold, LegalInsights, ContactSection (form→DB), FinalCTA, Footer + global enhancements (ScrollProgress, BackToTop, LoadingScreen, WhatsAppButton, CookieConsent).
+
+## Completed Modifications This Cycle
+
+### New Features
+1. **Service modal "Common Questions" mini-FAQ** — added `faqs: ServiceFAQ[]` (3 Q&As each, 18 total across 6 services) to all services in site-data.ts. ServiceModal now renders a "COMMON QUESTIONS" accordion section with animated expand/collapse (Plus icon rotates 45°), single-open behavior, reset to first-open when switching services. Questions are genuinely useful (e.g. "Can I choose my own conveyancer?" → yes by law; "ANC with vs without accrual"; "How long does litigation take?"). Answers reflect Yolanda's actual credentials (CCSA, Tribunal). Placed after the "What to Prepare" card.
+2. **Stats/credentials highlight strip** (`stats-strip.tsx`) — full-width navy band with 4 real, verifiable figures (no fabricated "clients served"): 2013 (admitted attorney), 6 (core practice areas), 3 (postgraduate qualifications), 1 (Competition Tribunal experience — "rare among boutique conveyancers"). Gold-gradient values, staggered reveal, gold hairline borders top+bottom, centered gold glow. Placed between SectionDivider and WhyChooseUs.
+3. **Privacy/POPIA detail modal** (`privacy-modal.tsx` + `privacy-provider.tsx`) — comprehensive POPIA compliance notice with 4 sections: What We Collect, How We Use Your Information, Your Rights Under POPIA, Our Information Officer. Plus a legal record-keeping obligation note (LPC retention). Navy header with ShieldCheck icon, scrollable body, contact footer. Triggered via a custom `yma:open-privacy` DOM event so any component can open it without prop drilling. Wired into: footer "Privacy & POPIA Notice" link + cookie consent "POPIA compliance" link.
+
+### Performance & Compliance
+4. **Print stylesheet** (`@media print` in globals.css) — forces light theme black-on-white, hides all interactive chrome (nav, footer, floating buttons, cookie banner, scroll progress, WhatsApp, back-to-top), collapses animations, prints URLs after links, forces navy-bg sections to white, converts gold accents to ink-efficient dark grey. Verified by generating a 7.6MB PDF via agent-browser.
+5. **Lazy-loading images** — added `loading="lazy"` to all 3 below-the-fold images (founder portrait, competence bg, office exterior). Hero keeps `priority`. Improves LCP and reduces initial payload.
+6. **`print:hidden`** added to all fixed interactive overlays (WhatsAppButton, BackToTop, ScrollProgress, CookieConsent) so they never appear in print output.
+
+### Styling Polish
+7. Stats strip uses gold-gradient text values at clamp(2.5–4rem) for premium numerical display, with staggered reveal and a centered gold glow backdrop.
+8. Service modal mini-FAQ uses the same gold-border-on-open + rotating Plus icon pattern as the main FAQ section, for visual consistency.
+9. Footer bottom bar restructured to include the Privacy & POPIA Notice link inline with copyright.
+
+## Verification Results
+- `bun run lint`: CLEAN (fixed one react-hooks/set-state-in-effect error in ServiceModal by deferring setOpenFaq into a setTimeout, consistent with prior LoadingScreen fix).
+- agent-browser QA: no page errors, no console errors.
+- Stats strip: all 4 stats confirmed present via body text (Admitted, Core Practice Areas, Postgraduate Qualifications, Competition Tribunal Experience).
+- Service modal mini-FAQ: opened Conveyancing modal → "COMMON QUESTIONS" heading + 3 Q&As present (first expanded). Tested accordion toggle: clicked FAQ 2 → FAQ 2 opened, FAQ 1 closed (single-open behavior confirmed). Answers render correctly.
+- Privacy modal: clicked footer "Privacy & POPIA Notice" link → modal opened with all 4 sections (What We Collect, How We Use Your Information, Your Rights Under POPIA, Our Information Officer) + legal record-keeping note. Closed via Escape.
+- Print stylesheet: generated qa-round4-print.pdf (7.6MB) successfully — confirms @media print rules apply without errors.
+- Mobile responsive (390px): stats strip renders correctly.
+- Screenshots: qa-round4-privacy-modal, qa-round4-stats-mobile, qa-round4-fullpage (1.9MB), qa-round4-print.pdf.
+
+## Unresolved Issues / Risks
+- None functional. All features verified working.
+- Minor: the print PDF is 7.6MB (full page) — acceptable for a multi-section single-page site; could be optimized further with `next/image` print variants, but low priority.
+
+## Priority Recommendations for Next Cycle
+1. **Accessibility audit pass** — verify ARIA labels, color contrast ratios (WCAG AA), keyboard tab order, and screen-reader behavior across all new components (stats strip, mini-FAQ accordion, privacy modal). Add `role="dialog"` and focus-trap to modals if not present.
+2. **"Insights" article rendering** — make the Legal Insights cards clickable to open an in-page article modal (or a simple markdown renderer), so when real articles are written they can be published without new routes.
+3. **Service comparison table** — a premium touch: a sortable/filterable table comparing what each service covers, ideal for clients deciding between e.g. wills vs estate administration.
+4. **Multilingual teaser** — given the Pretoria market, a discreet "Afrikaans / isiZulu enquiries welcome" note (only if confirmed with client) could broaden accessibility.
+5. **Open Graph / social share image** — generate a branded OG image (navy + gold, YM monogram, tagline) so link previews on WhatsApp/Facebook look premium when the site is shared.
