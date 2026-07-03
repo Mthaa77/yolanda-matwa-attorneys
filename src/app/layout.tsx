@@ -3,6 +3,7 @@ import { Playfair_Display, Outfit } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as SonnerToaster } from "@/components/ui/sonner";
+import { buildFaqJsonLd } from "@/lib/json-ld";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -134,6 +135,8 @@ const jsonLd = {
   sameAs: ["https://www.facebook.com/p/Yolanda-Matwa-Attorneys-61560226510063/"],
 };
 
+const faqJsonLd = buildFaqJsonLd();
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -145,6 +148,10 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
         />
       </head>
       <body

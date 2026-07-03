@@ -1,16 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowUpRight, ArrowRight } from "lucide-react";
 import { SERVICES, type ServiceDetail } from "@/lib/site-data";
 import { SectionHeading } from "./section-heading";
 import { StaggerGroup, staggerItem } from "./scroll-reveal";
 import { ServiceModal } from "./service-modal";
+import { OPEN_SERVICE_EVENT_NAME } from "@/lib/service-events";
 import { cn } from "@/lib/utils";
 
 export function ServicesGrid() {
   const [active, setActive] = useState<ServiceDetail | null>(null);
+
+  // Allow other components (e.g. the comparison table headers) to open a
+  // specific service modal by dispatching the `yma:open-service` event.
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const slug = (e as CustomEvent<string>).detail;
+      const service = SERVICES.find((s) => s.slug === slug);
+      if (service) setActive(service);
+    };
+    window.addEventListener(OPEN_SERVICE_EVENT_NAME, handler);
+    return () => window.removeEventListener(OPEN_SERVICE_EVENT_NAME, handler);
+  }, []);
 
   const scrollToContact = () => {
     document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });

@@ -9,6 +9,7 @@ import {
   COMPARISON_CATEGORIES,
   type Coverage,
 } from "@/lib/site-data";
+import { openServiceModal } from "@/lib/service-events";
 import { SectionHeading } from "./section-heading";
 import { cn } from "@/lib/utils";
 
@@ -132,14 +133,18 @@ export function ServiceComparison() {
                     scope="col"
                     className="px-3 py-5 text-center align-bottom sm:px-4"
                   >
-                    <div className="flex flex-col items-center gap-2">
-                      <span className="flex h-10 w-10 items-center justify-center rounded-full border border-gold/30 bg-gold/10">
+                    <button
+                      onClick={() => openServiceModal(s.slug)}
+                      className="group flex flex-col items-center gap-2 transition-transform hover:scale-105 focus-visible:scale-105"
+                      aria-label={`Open ${s.title} details`}
+                    >
+                      <span className="flex h-10 w-10 items-center justify-center rounded-full border border-gold/30 bg-gold/10 transition-colors group-hover:border-gold/60 group-hover:bg-gold/20">
                         <s.icon className="h-5 w-5 text-gold-light" />
                       </span>
-                      <span className="text-xs font-semibold leading-tight text-cream/90">
+                      <span className="text-xs font-semibold leading-tight text-cream/90 transition-colors group-hover:text-gold-light">
                         {s.shortTitle}
                       </span>
-                    </div>
+                    </button>
                   </th>
                 ))}
               </tr>
