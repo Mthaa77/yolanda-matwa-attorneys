@@ -37,9 +37,51 @@ export function ServiceModal({ service, onClose, onNavigate }: ServiceModalProps
     return () => clearTimeout(t);
   }, [service?.slug]);
 
+  // Prev/next navigation within the SERVICES array (wraps around)
+  const navigate = (dir: -1 | 1) => {
+    if (!service || !onNavigate) return;
+    const idx = SERVICES.findIndex((s) => s.slug === service.slug);
+    const nextIdx = (idx + dir + SERVICES.length) % SERVICES.length;
+    onNavigate(SERVICES[nextIdx]);
+  };
+  const goTo = (idx: number) => {
+    if (!service || !onNavigate) return;
+    const clamped = ((idx % SERVICES.length) + SERVICES.length) % SERVICES.length;
+    onNavigate(SERVICES[clamped]);
+  };
+  const currentIdx = service
+    ? SERVICES.findIndex((s) => s.slug === service.slug)
+    : -1;
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+      // Only handle service-navigation keys when the focus is not inside a
+      // text-editable control (so typing in inputs isn't hijacked).
+      const tag = (document.activeElement?.tagName || "").toLowerCase();
+      const editable =
+        tag === "input" ||
+        tag === "textarea" ||
+        tag === "select" ||
+        (document.activeElement as HTMLElement)?.isContentEditable;
+      if (editable) return;
+
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        navigate(-1);
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        navigate(1);
+      } else if (e.key === "Home") {
+        e.preventDefault();
+        goTo(0);
+      } else if (e.key === "End") {
+        e.preventDefault();
+        goTo(SERVICES.length - 1);
+      }
     };
     if (service) {
       document.addEventListener("keydown", onKey);
@@ -49,7 +91,7 @@ export function ServiceModal({ service, onClose, onNavigate }: ServiceModalProps
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
     };
-  }, [service, onClose]);
+  }, [service, onClose, onNavigate]);
 
   const scrollToContact = () => {
     onClose();
@@ -59,17 +101,6 @@ export function ServiceModal({ service, onClose, onNavigate }: ServiceModalProps
         ?.scrollIntoView({ behavior: "smooth" });
     }, 200);
   };
-
-  // Prev/next navigation within the SERVICES array (wraps around)
-  const navigate = (dir: -1 | 1) => {
-    if (!service || !onNavigate) return;
-    const idx = SERVICES.findIndex((s) => s.slug === service.slug);
-    const nextIdx = (idx + dir + SERVICES.length) % SERVICES.length;
-    onNavigate(SERVICES[nextIdx]);
-  };
-  const currentIdx = service
-    ? SERVICES.findIndex((s) => s.slug === service.slug)
-    : -1;
 
   return (
     <AnimatePresence>
@@ -270,19 +301,26 @@ export function ServiceModal({ service, onClose, onNavigate }: ServiceModalProps
                     <span className="sm:hidden">Prev</span>
                   </button>
 
-                  {/* position indicator */}
-                  <div className="flex items-center gap-1.5" aria-hidden="true">
-                    {SERVICES.map((s, i) => (
-                      <span
-                        key={s.slug}
-                        className={cn(
-                          "h-1.5 rounded-full transition-all",
-                          i === currentIdx
-                            ? "w-5 bg-gold"
-                            : "w-1.5 bg-navy/15",
-                        )}
-                      />
-                    ))}
+                  {/* position indicator + keyboard hint */}
+                  <div className="flex flex-col items-center gap-1">
+                    <div className="flex items-center gap-1.5" aria-hidden="true">
+                      {SERVICES.map((s, i) => (
+                        <span
+                          key={s.slug}
+                          className={cn(
+                            "h-1.5 rounded-full transition-all",
+                            i === currentIdx
+                              ? "w-5 bg-gold"
+                              : "w-1.5 bg-navy/15",
+                          )}
+                        />
+                      ))}
+                    </div>
+                    <span className="hidden items-center gap-1 text-[0.6rem] text-muted-foreground/50 lg:flex">
+                      <kbd className="rounded border border-border bg-white px-1 py-0.5 font-sans text-[0.55rem]">←</kbd>
+                      <kbd className="rounded border border-border bg-white px-1 py-0.5 font-sans text-[0.55rem]">→</kbd>
+                      to browse
+                    </span>
                   </div>
 
                   <button

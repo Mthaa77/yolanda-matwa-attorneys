@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Mail, Loader2, Check, Bell } from "lucide-react";
+import { Mail, Loader2, Check, Bell, Users } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
@@ -11,6 +11,27 @@ export function InsightsAlert() {
   const [consent, setConsent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
+  const [subscribedEmail, setSubscribedEmail] = useState("");
+  const [readerCount, setReaderCount] = useState<number | null>(null);
+
+  // Fetch the real subscriber count once on mount (for social proof).
+  // Only displayed when > 0 — never fabricated.
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/insights-count")
+      .then((r) => r.json())
+      .then((data) => {
+        if (!cancelled && data?.ok && typeof data.count === "number") {
+          setReaderCount(data.count);
+        }
+      })
+      .catch(() => {
+        /* fail silently — count is optional */
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,6 +48,7 @@ export function InsightsAlert() {
         description:
           "We'll let you know when new insights are published. No spam, ever.",
       });
+      setSubscribedEmail(email);
       setDone(true);
       setEmail("");
       setConsent(false);
@@ -36,6 +58,27 @@ export function InsightsAlert() {
       });
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  const unsubscribe = async () => {
+    if (!subscribedEmail) return;
+    try {
+      const res = await fetch("/api/insights-unsubscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: subscribedEmail }),
+      });
+      if (!res.ok) throw new Error("Request failed");
+      toast.success("Unsubscribed.", {
+        description: "You won't receive further insight notifications.",
+      });
+      setDone(false);
+      setSubscribedEmail("");
+    } catch {
+      toast.error("Could not unsubscribe.", {
+        description: "Please email us to be removed.",
+      });
     }
   };
 
@@ -65,23 +108,44 @@ export function InsightsAlert() {
             One email when a new article is published. No newsletter, no spam,
             unsubscribe anytime.
           </p>
+          {/* Real subscriber count — only shown when > 0 (never fabricated) */}
+          {readerCount !== null && readerCount > 0 && (
+            <p className="mt-3 inline-flex items-center gap-1.5 text-xs text-cream/45">
+              <Users className="h-3.5 w-3.5 text-gold/70" />
+              Join{" "}
+              <span className="font-semibold text-gold-light">
+                {readerCount}
+              </span>{" "}
+              {readerCount === 1 ? "reader" : "readers"} already on the list
+            </p>
+          )}
         </div>
 
         {done ? (
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="flex shrink-0 items-center gap-3 rounded-xl border border-gold/30 bg-gold/10 px-5 py-4"
+            className="flex shrink-0 flex-col gap-3 rounded-xl border border-gold/30 bg-gold/10 px-5 py-4"
           >
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gold">
-              <Check className="h-5 w-5 text-navy-deep" />
-            </span>
-            <div>
-              <p className="text-sm font-semibold text-cream">Subscribed</p>
-              <p className="text-xs text-cream/60">
-                Watch your inbox for confirmation.
-              </p>
+            <div className="flex items-center gap-3">
+              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gold">
+                <Check className="h-5 w-5 text-navy-deep" />
+              </span>
+              <div>
+                <p className="text-sm font-semibold text-cream">Subscribed</p>
+                <p className="text-xs text-cream/60">
+                  Watch your inbox for confirmation.
+                </p>
+              </div>
             </div>
+            {subscribedEmail && (
+              <button
+                onClick={unsubscribe}
+                className="self-start text-xs text-cream/50 underline underline-offset-2 transition-colors hover:text-gold-light"
+              >
+                Undo — unsubscribe
+              </button>
+            )}
           </motion.div>
         ) : (
           <form onSubmit={onSubmit} className="w-full max-w-md shrink-0">

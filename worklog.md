@@ -329,3 +329,48 @@ Task: Continuous QA + service modal prev/next navigation + insights alert email 
 3. **Service modal keyboard shortcuts** — add ArrowLeft/ArrowRight keyboard shortcuts to navigate prev/next services when the modal is open (in addition to the buttons).
 4. **Unsubscribe flow** — add an unsubscribe mechanism (email link or a small form) for insights subscribers, required for POPIA/email compliance.
 5. **Insights subscriber count display** — show a subtle "Join N readers" social proof line once the subscriber count grows (only if it's a real, non-fabricated number).
+
+---
+Task ID: 8
+Agent: Main (Z.ai Code) — webDevReview cron cycle 7
+Task: Continuous QA + service modal keyboard shortcuts + insights unsubscribe flow + live subscriber count.
+
+## Current Project Status Assessment
+- Site stable and fully verified through 7 prior cycles. No bugs, no runtime errors.
+- QA at start of cycle: clean 200 responses, no console/page errors.
+- All previously-built features working (see prior cycle summaries).
+
+## Completed Modifications This Cycle
+
+### New Features
+1. **Service modal keyboard shortcuts** — extended the ServiceModal keydown handler to support ArrowLeft (prev service), ArrowRight (next service), Home (first service), and End (last service), in addition to the existing Escape (close). Shortcuts are disabled when focus is inside a text-editable control (input/textarea/select/contentEditable) so typing isn't hijacked. Added a keyboard hint below the position indicator dots showing "← → to browse" with styled `<kbd>` elements (visible on lg+ screens). The handler properly depends on [service, onClose, onNavigate] so it always has fresh references.
+2. **Insights unsubscribe flow** (`/api/insights-unsubscribe` + InsightsAlert "Undo" link) — POPIA-compliant unsubscribe. The API sets the subscriber's status to 'unsubscribed' (rather than deleting the record — keeping the row prevents a re-subscribe from briefly resuming emails). The InsightsAlert success state now shows an "Undo — unsubscribe" link below the "Subscribed" confirmation; clicking it calls the unsubscribe API, shows a "Unsubscribed" toast, and returns the form to its initial state. Verified end-to-end: subscribed unsub-test@example.com → clicked Undo → form returned → DB record status changed to 'unsubscribed'.
+3. **Live subscriber count** (`/api/insights-count` + InsightsAlert display) — fetches the real count of active subscribers on mount and displays "Join N readers already on the list" with a Users icon. Only shown when count > 0 (never fabricated). Handles errors gracefully (returns 0, hides the line). Verified: displays "Join 3 readers already on the list" with the real DB count.
+
+### Styling Polish
+4. Keyboard hint uses styled `<kbd>` elements with border + white bg for a premium documentation-style look.
+5. Subscriber count line uses gold Users icon + gold-light number for subtle emphasis on the navy card.
+6. Unsubscribe "Undo" link is discreet (cream/50, underline) so it doesn't compete with the success state but is clearly accessible.
+
+## Verification Results
+- `bun run lint`: CLEAN — no errors (removed an unused eslint-disable directive that produced a warning).
+- agent-browser QA: no page errors, no console errors.
+- Keyboard shortcuts: opened Conveyancing modal → pressed ArrowRight → title changed to "Wills & Estate Planning" → pressed ArrowLeft → title changed back to "Conveyancing & Property Transfers" → pressed Home → stayed at Conveyancing (first). Keyboard hint "to browse" visible in DOM.
+- Subscriber count: displays "Join 3 readers already on the list" (real count from DB). Count API returns {"ok":true,"count":3}.
+- Unsubscribe flow: subscribed unsub-test@example.com → "Subscribed" success + "Undo — unsubscribe" link appeared → clicked Undo → form returned to initial state → DB record status changed to 'unsubscribed' (verified via raw query). Count remained 3 (unsub-test no longer active).
+- Mobile responsive (390px): insights alert with count renders correctly.
+- Screenshots: qa-round8-insights-count, qa-round8-insights-mobile, qa-round8-service-nav, qa-round8-fullpage (2.6MB).
+
+## Known Issue Resolved
+- `$queryRawUnsafe` with a tagged template doesn't work in Prisma (it expects a plain string, not template parts). Switched the insights-count route to `$queryRaw` (the tagged-template-safe variant). Same pattern as the insights-subscribe route which already uses `$executeRaw`. Note: SQLite COUNT returns bigint, so typed the result as `Array<{ count: bigint }>` and converted with Number().
+
+## Unresolved Issues / Risks
+- None functional. All features verified working end-to-end.
+- The raw SQL approach (for insights-subscribe, insights-unsubscribe, insights-count) remains a pragmatic workaround for the dev server's stale Prisma Client cache. All three routes use the safe `$executeRaw`/`$queryRaw` tagged-template variants (parameterized). In a fresh production start, the typed `db.insightsSubscriber.*` methods would work normally.
+
+## Priority Recommendations for Next Cycle
+1. **Keyboard tab-order audit** — verify the full-page tab order is logical with all interactive elements (skip link → nav → service cards → comparison headers/filters → FAQ → insights form → contact form → footer), with visible focus indicators throughout.
+2. **WCAG contrast verification** — run a contrast check on all text/background combinations, especially cream/45 and cream/55 on navy (the subscriber count and unsubscribe link tones), and adjust any below 4.5:1.
+3. **Email confirmation flow** — send a confirmation email on subscribe (with a verification link) to fully comply with email best practices and confirm the address is valid/owned.
+4. **Service modal "related services" suggestions** — at the bottom of each service modal, suggest 1-2 related services (e.g. Wills → Deceased Estates) to encourage exploration.
+5. **Contact form auto-fill from service modal** — when a user clicks "Start Your Enquiry" in a service modal, pre-fill the contact form's service dropdown with that service.
