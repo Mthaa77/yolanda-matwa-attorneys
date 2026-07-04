@@ -833,3 +833,67 @@ Task: Complete GitHub upload after user granted Contents:write permission to the
 ## Unresolved Issues / Risks
 - None. Upload complete and verified clean.
 - **Security reminder**: the PAT was pasted in chat and used for pushes. Recommend the user rotate/expire this PAT now that the upload is complete, since it has Contents:write on the repo.
+
+---
+Task ID: 18
+Agent: Main (Z.ai Code) — direct user request
+Task: Add 3 new modern premium lead-converting sections + an advanced interactive onboarding component after the welcome section.
+
+## Current Project Status Assessment
+- Site stable and fully verified. No bugs, no runtime errors.
+- QA at start of cycle: clean 200 responses, no console/page errors.
+
+## Completed Modifications This Cycle
+
+### 1. Interactive Onboarding Wizard (`onboarding-wizard.tsx`) — after TrustBar
+An advanced multi-step "Find the Right Service in 30 Seconds" tool that asks 3 questions (situation, urgency, experience) and recommends the best-matching service using a weighted-scoring algorithm. Each answer option carries weights toward service slugs; the highest-scoring service wins (tie-break by SERVICES order).
+- **Step 1**: "What brings you here today?" — 6 options (buying property, planning family future, getting married, loved one passed, business/contract, dispute) each with icon + description + weights.
+- **Step 2**: "How soon do you need this resolved?" — 3 options (urgent/month/planning).
+- **Step 3**: "Have you worked with an attorney on this before?" — 2 options (first time / previously).
+- **Result screen**: shows the recommended service (title + tagline + description), a "What to prepare first" preview (3 items from the service's prepare list), and CTAs ("Start this enquiry" → #contact, "See all services" → #services) + "Start over".
+- **Premium UI**: gradient progress bar, animated step transitions (AnimatePresence x-slide), selected-option gold highlight + checkmark, step indicator, back button, faded step numbers, hover lift on options, trust footnote.
+- **Verified end-to-end**: selected "Getting married soon" → "Planning ahead" → "First time" → recommended **Antenuptial & Postnuptial Contracts** with prepare-list preview + CTAs.
+
+### 2. Pain Points / Empathy section (`pain-points.tsx`) — after AboutFounder
+A visually stunning, persuasive section that names the real anxieties clients feel and reframes each with reassurance. Cinematic navy background with filmic grain, gold glow, hairline borders.
+- 6 pain-point cards, each with: an italic display-font "worry" quote (e.g. "Will my property transfer fall through at the last minute?"), a context paragraph, and a gold-accented reassurance block separated by a divider.
+- Each card has a colored icon (gold/navy/sage per accent), hover lift + glow + gold border.
+- Bottom CTA banner: "Whatever the worry, the first conversation is the simplest step." → "Talk to us".
+- Converts by showing the visitor they are understood — and that there is a calm path through.
+
+### 3. Pricing Transparency section (`pricing-transparency.tsx`) — after ServiceComparison
+Delivers on the firm's stated "transparent pricing" value (which the content scrape flagged as unfulfilled). Explains HOW fees work honestly, without fabricating rand figures.
+- **Pull-quote promise**: the firm's verbatim transparency quote in a gold-bordered card.
+- **4-step fee process**: (1) We listen first — no cost/15 min, (2) A written line-by-line quote — before any work, (3) You decide with full information — no pressure, (4) What we quoted is what you pay — our promise. Each step has a faded number, gradient icon, connecting arrow (desktop), hover lift + gold accent.
+- **"What a quote includes" card**: 6 itemised inclusions (professional fees, statutory costs, disbursements, updates, named contact, free first consult) with gold checkmarks.
+- **"Why we don't publish a price list" card**: navy card with AlertCircle icon, honest explanation that every matter is different, CTA "Request your quote".
+- Converts by removing the "afraid of the bill" friction — the #1 objection for legal services.
+
+### 4. Guarantees / Peace of Mind section (`guarantees.tsx`) — after ProcessTimeline
+A premium trust-building section with the firm's commitments + an interactive animated seal.
+- **Left column**: SectionHeading + an interactive premium seal (a rotating 30s SVG textPath ring reading "Trust · Transparency · Competence" around a static gold ShieldCheck badge) + "The Yolanda Matwa Standard" label + CTA.
+- **Right column**: 6 guarantee cards in a 2-column grid — (1) written quote before work, (2) named contact, (3) updates at every milestone, (4) POPIA confidentiality, (5) scope changes flagged before cost, (6) verifiable credentials. Each with gradient icon, hover lift, gold accent line.
+- **Trust footnote**: sage-bordered note confirming every commitment is grounded in how the practice actually operates.
+- Converts by removing the final trust friction before first contact.
+
+### Page wiring
+Updated `page.tsx` with optimal lead-converting order:
+Hero → LiveTicker → TrustBar → **OnboardingWizard** → AboutFounder → **PainPoints** → SectionDivider → StatsStrip → WhyChooseUs → ServicesGrid → ServiceComparison → **PricingTransparency** → Competence → ProcessTimeline → **Guarantees** → SectionDivider → FAQ → TestimonialsScaffold → LegalInsights → ContactSection → FinalCTA.
+
+## Verification Results
+- `bun run lint`: CLEAN — no errors.
+- agent-browser QA: no page errors, no console errors.
+- All 4 new sections confirmed present: onboarding, painPoints, pricing, guarantees.
+- Onboarding wizard end-to-end: selected "Getting married soon" → "Planning ahead" → "First time" → recommended **Antenuptial & Postnuptial Contracts** with prepare-list + CTAs + Start over. Verified result screen text: "Our recommendation", "Antenuptial & Postnuptial Contracts", "What to prepare first".
+- Mobile responsive (390px): onboarding wizard renders correctly.
+- Screenshots: qa-onboarding, qa-onboarding-mobile, qa-painpoints, qa-pricing, qa-guarantees, qa-fullpage-newsections (4.2MB).
+
+## Unresolved Issues / Risks
+- None functional. All features verified working end-to-end.
+
+## Priority Recommendations for Next Cycle
+1. **Onboarding wizard analytics** — track which services are most recommended to inform content/capacity planning.
+2. **Pricing section fixed-fee wills teaser** — if the client confirms a wills fixed-fee package, add a dedicated card (the content scrape flagged this as an opportunity).
+3. **Guarantees section testimonials integration** — once real reviews arrive, weave them into the guarantees grid as social proof.
+4. **Pain points A/B testing** — test different worry phrasings to optimise conversion.
+5. **Onboarding result deep-link** — allow sharing a direct link to a specific recommendation (e.g. `?matter=anc`).

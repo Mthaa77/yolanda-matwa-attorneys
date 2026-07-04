@@ -2,13 +2,17 @@ import { Navbar } from "@/components/site/navbar";
 import { Hero } from "@/components/site/hero";
 import { LiveTicker } from "@/components/site/live-ticker";
 import { TrustBar } from "@/components/site/trust-bar";
+import { OnboardingWizard } from "@/components/site/onboarding-wizard";
 import { AboutFounder } from "@/components/site/about-founder";
+import { PainPoints } from "@/components/site/pain-points";
 import { StatsStrip } from "@/components/site/stats-strip";
 import { WhyChooseUs } from "@/components/site/why-choose-us";
 import { ServicesGrid } from "@/components/site/services-grid";
 import { ServiceComparison } from "@/components/site/service-comparison";
+import { PricingTransparency } from "@/components/site/pricing-transparency";
 import { Competence } from "@/components/site/competence";
 import { ProcessTimeline } from "@/components/site/process-timeline";
+import { Guarantees } from "@/components/site/guarantees";
 import { FAQSection } from "@/components/site/faq-section";
 import { TestimonialsScaffold } from "@/components/site/testimonials-scaffold";
 import { LegalInsights } from "@/components/site/legal-insights";
@@ -43,14 +47,18 @@ export default function Home() {
           <Hero />
           <LiveTicker />
           <TrustBar />
+          <OnboardingWizard />
           <AboutFounder />
+          <PainPoints />
           <SectionDivider />
           <StatsStrip />
           <WhyChooseUs />
           <ServicesGrid />
           <ServiceComparison />
+          <PricingTransparency />
           <Competence />
           <ProcessTimeline />
+          <Guarantees />
           <SectionDivider />
           <FAQSection />
           <TestimonialsScaffold />
