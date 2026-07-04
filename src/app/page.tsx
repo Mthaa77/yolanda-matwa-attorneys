@@ -21,11 +21,7 @@ import { FinalCTA } from "@/components/site/final-cta";
 import { Footer } from "@/components/site/footer";
 import { WhatsAppButton } from "@/components/site/whatsapp-button";
 import { SectionDivider } from "@/components/site/section-divider";
-import {
-  ScrollProgress,
-  BackToTop,
-  LoadingScreen,
-} from "@/components/site/site-enhancements";
+import { ScrollProgress, BackToTop } from "@/components/site/site-enhancements";
 import { CookieConsent } from "@/components/site/cookie-consent";
 import { PrivacyProvider } from "@/components/site/privacy-provider";
 
@@ -40,7 +36,6 @@ export default function Home() {
         >
           Skip to content
         </a>
-        <LoadingScreen />
         <ScrollProgress />
         <Navbar />
         <main id="main-content" className="flex-1">
