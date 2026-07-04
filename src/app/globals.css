@@ -58,15 +58,15 @@
 
 :root {
   /* Brand — Trusted Counsel palette */
-  --navy: #16305C;        /* Primary navy */
+  --navy: #16305C;
   --navy-light: #1E3D72;
-  --navy-deep: #0F1F38;   /* Deep navy — trust, authority */
-  --gold: #B08D45;        /* Warm brass-gold accent */
-  --gold-light: #D9C79A;  /* Pale gold highlight */
+  --navy-deep: #0F1F38;
+  --gold: #B08D45;
+  --gold-light: #D9C79A;
   --gold-soft: #E8D9B5;
-  --sage: #6B7F6E;        /* Muted sage */
-  --cream: #F9FAFB;       /* Soft off-white */
-  --mist: #EEF1F6;        /* Pale blue-grey */
+  --sage: #6B7F6E;
+  --cream: #F9FAFB;
+  --mist: #EEF1F6;
 
   /* shadcn tokens mapped to brand */
   --radius: 0.625rem;
@@ -157,18 +157,16 @@
     outline-offset: 2px;
     border-radius: 4px;
   }
-  /* Remove default outline only when focus-visible is supported */
   :focus:not(:focus-visible) {
     outline: none;
   }
 
-  /* Refined heading rendering */
   h1, h2, h3, h4 {
     text-wrap: balance;
     letter-spacing: -0.015em;
   }
 
-  /* Respect reduced motion */
+  /* Respect reduced motion without suppressing the visual hierarchy. */
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -209,7 +207,6 @@
     text-wrap: pretty;
   }
 
-  /* Gold gradient text */
   .text-gradient-gold {
     background: linear-gradient(135deg, #D9C79A 0%, #B08D45 50%, #8A6E32 100%);
     -webkit-background-clip: text;
@@ -217,7 +214,6 @@
     -webkit-text-fill-color: transparent;
   }
 
-  /* Navy gradient text */
   .text-gradient-navy {
     background: linear-gradient(135deg, #0F1F38 0%, #16305C 50%, #1E3D72 100%);
     -webkit-background-clip: text;
@@ -239,9 +235,28 @@
     box-shadow: 0 24px 64px -16px rgba(15, 31, 56, 0.45);
   }
 
-  /* Thin gold divider line */
   .divider-gold {
     background: linear-gradient(90deg, transparent, var(--gold) 50%, transparent);
+  }
+}
+
+/* Runs on the compositor instead of React/Framer Motion on every frame. */
+@keyframes marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+.marquee-track {
+  animation: marquee 38s linear infinite;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Deep sections do not need to be painted until they are approached. This keeps
+   the initial load responsive while preserving server-rendered markup and SEO. */
+@supports (content-visibility: auto) {
+  main > section:nth-of-type(n + 7) {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 900px;
   }
 }
 
@@ -250,7 +265,6 @@
    who want to print service info or the "What to Prepare" list.
    ============================================================ */
 @media print {
-  /* Force light theme + black-on-white */
   html {
     scroll-behavior: auto;
     scroll-padding-top: 0;
@@ -262,7 +276,6 @@
     print-color-adjust: exact;
   }
 
-  /* Hide all interactive / decorative-only chrome */
   nav,
   footer,
   .print\:hidden,
@@ -274,7 +287,6 @@
     display: none !important;
   }
 
-  /* Collapse animations for instant print */
   * {
     animation: none !important;
     transition: none !important;
@@ -282,31 +294,26 @@
     transform: none !important;
   }
 
-  /* Ensure headings keep their hierarchy but print crisply */
   h1, h2, h3, h4 {
     color: #0F1F38 !important;
     page-break-after: avoid;
   }
 
-  /* Keep section content together where possible */
   section {
     page-break-inside: avoid;
   }
 
-  /* Remove decorative blurs/glows that waste ink */
   [class*="blur-3xl"],
   [class*="bg-grain"] {
     display: none !important;
   }
 
-  /* Print URLs after links for reference */
   a[href^="http"]::after {
     content: " (" attr(href) ")";
     font-size: 0.8em;
     color: #555;
   }
 
-  /* Force dark text on navy backgrounds to remain legible */
   [class*="bg-navy"],
   [class*="bg-navy-deep"] {
     background: #ffffff !important;
@@ -317,7 +324,6 @@
     color: #0F1F38 !important;
   }
 
-  /* Gold accents become dark grey for ink efficiency */
   [class*="text-gold"],
   [class*="text-gradient-gold"] {
     color: #6b5320 !important;
