@@ -31,14 +31,17 @@ function useOfficeClock() {
 
     // The office status only changes by the minute. Updating once per minute
     // avoids re-rendering the entire marquee every second.
+    let interval: number | undefined;
     const millisecondsToNextMinute = 60_000 - (Date.now() % 60_000) + 40;
     const timeout = window.setTimeout(() => {
       update();
-      const interval = window.setInterval(update, 60_000);
-      return () => window.clearInterval(interval);
+      interval = window.setInterval(update, 60_000);
     }, millisecondsToNextMinute);
 
-    return () => window.clearTimeout(timeout);
+    return () => {
+      window.clearTimeout(timeout);
+      if (interval !== undefined) window.clearInterval(interval);
+    };
   }, []);
 
   return now;
