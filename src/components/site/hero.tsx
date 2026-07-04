@@ -33,8 +33,6 @@ export function Hero() {
 
   return (
     <section id="home" className="relative min-h-screen overflow-hidden bg-navy-deep">
-      {/* Keep the hero image still after decode: a large continuous scale animation
-          is expensive on lower-powered devices and does not add enough value. */}
       <div className="absolute -inset-5">
         <Image
           src="/images/pegasus-building.jpg"
@@ -43,14 +41,16 @@ export function Hero() {
           priority
           quality={82}
           sizes="100vw"
-          className="object-cover object-center"
+          className="object-cover object-[60%_center] brightness-[1.08] saturate-[1.04]"
         />
       </div>
 
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(15,31,56,0.98)_0%,rgba(15,31,56,0.93)_33%,rgba(15,31,56,0.57)_61%,rgba(15,31,56,0.18)_100%)]" />
-      <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(15,31,56,0.98)_0%,rgba(15,31,56,0.14)_42%,rgba(15,31,56,0.53)_100%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_72%_at_20%_42%,rgba(30,61,114,0.31),transparent_67%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-grain opacity-[0.055] mix-blend-overlay" />
+      {/* Kept strongest behind the copy, then deliberately opened on the right
+          so the firm's actual Pegasus Building location can be seen clearly. */}
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(15,31,56,0.94)_0%,rgba(15,31,56,0.87)_30%,rgba(15,31,56,0.48)_57%,rgba(15,31,56,0.06)_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(15,31,56,0.84)_0%,rgba(15,31,56,0.08)_44%,rgba(15,31,56,0.32)_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_66%_72%_at_15%_42%,rgba(30,61,114,0.24),transparent_65%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-grain opacity-[0.035] mix-blend-overlay" />
 
       <div className="pointer-events-none absolute inset-4 hidden border border-gold/10 lg:block" />
       <div className="pointer-events-none absolute left-4 top-4 hidden h-20 w-20 border-l border-t border-gold/55 lg:block" />
@@ -117,7 +117,7 @@ export function Hero() {
             className="relative hidden lg:block"
           >
             <div className="absolute -inset-3 rounded-[2rem] bg-gold/10 blur-2xl" />
-            <div className="relative overflow-hidden rounded-[1.65rem] border border-gold/30 bg-navy-deep/62 p-5 shadow-[0_28px_70px_-28px_rgba(0,0,0,0.8)] backdrop-blur-xl xl:p-6">
+            <div className="relative overflow-hidden rounded-[1.65rem] border border-gold/30 bg-navy-deep/54 p-5 shadow-[0_28px_70px_-28px_rgba(0,0,0,0.72)] backdrop-blur-lg xl:p-6">
               <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(145deg,rgba(255,255,255,0.11),transparent_34%,rgba(176,141,69,0.1))]" />
               <div className="relative">
                 <div className="flex items-start justify-between">
@@ -144,7 +144,7 @@ export function Hero() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.2, duration: 0.7 }}
-        className="absolute bottom-8 right-5 hidden items-center gap-2.5 rounded-full border border-cream/15 bg-navy-deep/52 px-4 py-2 backdrop-blur-md sm:flex lg:right-12"
+        className="absolute bottom-8 right-5 hidden items-center gap-2.5 rounded-full border border-cream/15 bg-navy-deep/42 px-4 py-2 backdrop-blur-sm sm:flex lg:right-12"
       >
         <MapPin className="h-3.5 w-3.5 text-gold" />
         <span className="text-[0.64rem] font-bold uppercase tracking-[0.17em] text-cream/75">The Pegasus Building</span>
@@ -152,7 +152,7 @@ export function Hero() {
         <span className="text-[0.64rem] text-cream/48">Menlyn Maine</span>
       </motion.div>
 
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-navy-deep to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-navy-deep/85 to-transparent" />
     </section>
   );
 }
