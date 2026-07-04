@@ -1,13 +1,20 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { ArrowRight, Clock, FileText, Sparkles } from "lucide-react";
 import { INSIGHT_ARTICLES, type InsightArticle } from "@/lib/site-data";
 import { SectionHeading } from "./section-heading";
 import { StaggerGroup, staggerItem } from "./scroll-reveal";
-import { ArticleModal } from "./article-modal";
 import { InsightsAlert } from "./insights-alert";
+
+// The full article reader contains dialog and subscription UI. It is only needed
+// after a visitor selects an insight, so keep it out of the initial page bundle.
+const ArticleModal = dynamic(
+  () => import("./article-modal").then((module) => module.ArticleModal),
+  { ssr: false },
+);
 
 export function LegalInsights() {
   const [active, setActive] = useState<InsightArticle | null>(null);
@@ -45,7 +52,6 @@ export function LegalInsights() {
               onClick={() => setActive(article)}
               className="group relative flex flex-col overflow-hidden rounded-xl border border-border bg-white p-6 text-left transition-all duration-300 hover:-translate-y-1.5 hover:border-gold/40 hover:shadow-premium"
             >
-              {/* status ribbon */}
               <div className="mb-5 flex items-center justify-between">
                 <span className="rounded-full bg-navy/5 px-2.5 py-1 text-[0.65rem] font-semibold uppercase tracking-wider text-navy">
                   {article.topic}
@@ -73,7 +79,6 @@ export function LegalInsights() {
                 </span>
               </div>
 
-              {/* hover bottom line */}
               <span className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-gold transition-transform duration-500 group-hover:scale-x-100" />
             </motion.button>
           ))}
@@ -87,18 +92,12 @@ export function LegalInsights() {
           className="mt-10 flex flex-col items-center justify-between gap-4 rounded-2xl border border-navy/10 bg-white p-6 shadow-sm sm:flex-row sm:p-7"
         >
           <p className="text-sm text-muted-foreground text-pretty">
-            <span className="font-semibold text-navy-deep">
-              Want a specific question answered?
-            </span>{" "}
-            Tell us what you&apos;re trying to understand — it may shape what we
-            publish first.
+            <span className="font-semibold text-navy-deep">Want a specific question answered?</span>{" "}
+            Tell us what you&apos;re trying to understand — it may shape what we publish first.
           </p>
           <button
-            onClick={() =>
-              document
-                .querySelector("#contact")
-                ?.scrollIntoView({ behavior: "smooth" })
-            }
+            type="button"
+            onClick={() => document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" })}
             className="group inline-flex shrink-0 items-center gap-2 rounded-full border border-navy/15 bg-white px-5 py-2.5 text-sm font-semibold text-navy-deep transition-all hover:border-gold/50 hover:text-gold"
           >
             Suggest a Topic
@@ -106,13 +105,12 @@ export function LegalInsights() {
           </button>
         </motion.div>
 
-        {/* Insights alert email signup */}
         <div className="mt-8">
           <InsightsAlert />
         </div>
       </div>
 
-      <ArticleModal article={active} onClose={() => setActive(null)} />
+      {active && <ArticleModal article={active} onClose={() => setActive(null)} />}
     </section>
   );
 }
