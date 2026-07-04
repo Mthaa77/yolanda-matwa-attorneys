@@ -690,3 +690,40 @@ Task: Replace founder image with actual photo, add firm logo to services section
 3. **Logo favicon** — the favicon.svg (YM monogram) could be replaced with a favicon derived from the real logo for brand consistency.
 4. **Logo in loading screen** — the LoadingScreen currently uses a "YM" text monogram; could use the real logo image.
 5. **OG image refresh** — regenerate the OG share image using the real logo + founder photo for authentic branding.
+
+---
+Task ID: 15
+Agent: Main (Z.ai Code) — direct user request
+Task: Upgrade hero section with the actual Pegasus building image.
+
+## Current Project Status Assessment
+- Site stable and fully verified. No bugs, no runtime errors.
+- QA at start of cycle: clean 200 responses, no console/page errors.
+
+## Completed Modifications This Cycle
+
+### Image Asset
+- **`pegasus-building.jpg`** (was `main-1612194838.jpg`, 255K) — copied to `/public/images/`. Identified via VLM as a modern multi-story office building exterior: light gray concrete facade, dark-tinted glass windows in a grid pattern, prominent vertical columns, blue sky, autumnal landscaping, and "OSPREYS" signage. This is the actual Pegasus Building in Menlyn Maine where the firm practices.
+
+### Hero Section Upgrade (`hero.tsx`)
+1. **Replaced the hero background image**: swapped `/images/hero-office.png` (AI-generated office interior) with `/images/pegasus-building.jpg` (the actual Pegasus Building exterior). Updated the alt text to "The Pegasus Building in Menlyn Maine, Pretoria East — home of Yolanda Matwa Attorneys". Added `object-center` positioning.
+2. **Tuned the cinematic color grades for the brighter exterior**: since the building photo is brighter (blue sky, light concrete) than the previous dark office interior, strengthened the left-side navy gradient (from navy-deep/92 to navy-deep/88) for text legibility, while letting the architecture show through more on the right (from navy-deep/30 to navy-deep/20) for an authentic "this is where we practise" feel. Adjusted the top gradient (from navy-deep/20 to navy-deep/25) and tightened the radial vignette (75%×65% at 28%×50%, opacity 0.6) to focus on the left content area.
+3. **Added a premium location caption** in the bottom-right of the hero (xl: breakpoint): a glassmorphic pill with a gold MapPin icon, "THE PEGASUS BUILDING" (uppercase tracked), a divider, and "Menlyn Maine" — an editorial touch that names the building shown in the image, connecting the cinematic visual to the firm's address. Animated fade-in at 1.6s delay. Added MapPin to the lucide-react imports.
+
+## Verification Results
+- `bun run lint`: CLEAN — no errors.
+- agent-browser QA: no page errors, no console errors.
+- Hero image: source = `/images/pegasus-building.jpg` confirmed, alt text correct, loaded=true (naturalWidth: 800).
+- Location caption: DOM element found with text "The Pegasus Building · Menlyn Maine", visible at xl+ breakpoint (isVisible: true at 1440px).
+- Mobile responsive (390px): hero renders correctly (caption hidden on mobile per xl: breakpoint, building image fills screen).
+- Screenshots: qa-hero-pegasus (desktop, 1.2MB), qa-hero-pegasus-mobile (390px, 319K), qa-fullpage-pegasus (3.1MB).
+
+## Unresolved Issues / Risks
+- None functional. All features verified working end-to-end.
+- Note: the building image shows "OSPREYS" signage on the facade — this is the building's own signage (the Pegasus Building houses multiple tenants). If the client wants this obscured, a CSS treatment or alternate photo could be used, but it's authentic to the location.
+
+## Priority Recommendations for Next Cycle
+1. **Logo favicon** — replace the favicon.svg (YM monogram) with a favicon derived from the real logo for brand consistency.
+2. **OG image refresh** — regenerate the OG share image using the real logo + Pegasus building for authentic branding.
+3. **Hero image optimization** — consider generating next/image variants at specific breakpoints for faster LCP on mobile.
+4. **Contact section map** — could add a small Pegasus building photo thumbnail next to the map for visual reinforcement.

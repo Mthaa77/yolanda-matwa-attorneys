@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Compass, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowRight, Compass, MapPin, ShieldCheck, Sparkles } from "lucide-react";
 import Image from "next/image";
 import { FIRM } from "@/lib/site-data";
 
@@ -28,27 +28,29 @@ export function Hero() {
       id="home"
       className="relative min-h-screen overflow-hidden bg-navy-deep"
     >
-      {/* === Cinematic background layers (static, no parallax) === */}
+      {/* === Cinematic background — the actual Pegasus Building, Menlyn Maine === */}
       <div className="absolute inset-0">
         <Image
-          src="/images/hero-office.png"
-          alt="The Yolanda Matwa Attorneys office interior in Menlyn Maine"
+          src="/images/pegasus-building.jpg"
+          alt="The Pegasus Building in Menlyn Maine, Pretoria East — home of Yolanda Matwa Attorneys"
           fill
           priority
           sizes="100vw"
-          className="object-cover"
+          className="object-cover object-center"
         />
       </div>
 
-      {/* Cinematic color grades — three stacked gradients for depth */}
-      <div className="absolute inset-0 bg-gradient-to-r from-navy-deep via-navy-deep/92 to-navy-deep/30" />
-      <div className="absolute inset-0 bg-gradient-to-t from-navy-deep via-navy-deep/20 to-navy-deep/50" />
-      {/* Vignette for cinematic focus */}
+      {/* Cinematic color grades — strengthened left gradient for text legibility
+          over the brighter building exterior, with the architecture showing
+          through more on the right for an authentic "this is where we practise" feel. */}
+      <div className="absolute inset-0 bg-gradient-to-r from-navy-deep via-navy-deep/88 to-navy-deep/20" />
+      <div className="absolute inset-0 bg-gradient-to-t from-navy-deep via-navy-deep/25 to-navy-deep/55" />
+      {/* Vignette for cinematic focus on the left content area */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 80% 60% at 30% 50%, transparent 0%, rgba(15,31,56,0.55) 100%)",
+            "radial-gradient(ellipse 75% 65% at 28% 50%, transparent 0%, rgba(15,31,56,0.6) 100%)",
         }}
       />
       {/* Subtle grain for filmic texture */}
@@ -218,6 +220,21 @@ export function Hero() {
             className="absolute inset-0 bg-gradient-to-b from-gold to-gold/30"
           />
         </span>
+      </motion.div>
+
+      {/* === Location caption — names the building shown (editorial touch) === */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.6, duration: 0.8 }}
+        className="absolute bottom-10 right-8 hidden items-center gap-2.5 rounded-full border border-cream/15 bg-navy-deep/50 px-4 py-2 backdrop-blur-md xl:flex"
+      >
+        <MapPin className="h-3.5 w-3.5 text-gold" />
+        <span className="text-[0.65rem] font-medium uppercase tracking-[0.18em] text-cream/70">
+          The Pegasus Building
+        </span>
+        <span className="h-3 w-px bg-cream/20" />
+        <span className="text-[0.65rem] text-cream/45">Menlyn Maine</span>
       </motion.div>
 
       {/* Bottom fade into next section */}
