@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Outfit } from "next/font/google";
 import "./globals.css";
-import { Toaster } from "@/components/ui/toaster";
 import { Toaster as SonnerToaster } from "@/components/ui/sonner";
 import { buildFaqJsonLd } from "@/lib/json-ld";
 
@@ -43,9 +42,7 @@ export const metadata: Metadata = {
   authors: [{ name: "Yolanda Matwa Attorneys" }],
   creator: "Yolanda Matwa Attorneys",
   icons: {
-    icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
-    ],
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
   },
   openGraph: {
     title: "Yolanda Matwa Attorneys | Committed to Helping Our Clients Succeed",
@@ -116,10 +113,7 @@ const jsonLd = {
       closes: "17:00",
     },
   ],
-  areaServed: {
-    "@type": "City",
-    name: "Pretoria",
-  },
+  areaServed: { "@type": "City", name: "Pretoria" },
   founder: {
     "@type": "Person",
     name: "Yolanda Okharedia",
@@ -145,20 +139,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-        />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
       </head>
-      <body
-        className={`${playfair.variable} ${outfit.variable} font-sans antialiased bg-background text-foreground`}
-      >
+      <body className={`${playfair.variable} ${outfit.variable} font-sans antialiased bg-background text-foreground`}>
         {children}
-        <Toaster />
         <SonnerToaster />
       </body>
     </html>
