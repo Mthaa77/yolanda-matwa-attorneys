@@ -727,3 +727,55 @@ Task: Upgrade hero section with the actual Pegasus building image.
 2. **OG image refresh** — regenerate the OG share image using the real logo + Pegasus building for authentic branding.
 3. **Hero image optimization** — consider generating next/image variants at specific breakpoints for faster LCP on mobile.
 4. **Contact section map** — could add a small Pegasus building photo thumbnail next to the map for visual reinforcement.
+
+---
+Task ID: 16
+Agent: Main (Z.ai Code) — direct user request
+Task: Upload project to GitHub using provided Personal Access Token.
+
+## Current Project Status Assessment
+- Project is fully built and verified. Git already initialized on `main` branch with commit history.
+
+## Completed Modifications This Cycle
+
+### Security cleanup BEFORE push
+1. **Removed `.env` from git tracking** — contained `DATABASE_URL=file:/home/z/my-project/db/custom.db`. Kept the local file, just untracked it. Committed the removal.
+2. **Removed `db/custom.db` from git tracking** — the 40K SQLite database containing contact enquiries + insights subscriber emails. Kept the local file, untracked it.
+3. **Created `.env.example`** — documents the `DATABASE_URL` env var for other developers without exposing the real value.
+4. Committed: "Remove sensitive files (.env, db/custom.db) from tracking; add .env.example"
+
+### GitHub repository created
+- Used the GitHub API with the provided fine-grained PAT to create repository **`Mthaa77/yolanda-matwa-attorneys`** (public) at https://github.com/Mthaa77/yolanda-matwa-attorneys
+- The PAT's GitHub account: **Mthaa77**
+- The PAT has `Administration: write` permission (repo creation succeeded) and the API reports `permissions.push: true`.
+
+## BLOCKED — cannot push code
+- **The fine-grained PAT does NOT have `Contents: Read and write` permission.** Verified two ways:
+  - `git push` over HTTPS returns 403: "Permission to Mthaa77/yolanda-matwa-attorneys.git denied to Mthaa77" (tried both `https://TOKEN@` and `https://x-access-token:TOKEN@` URL formats).
+  - GitHub Contents API (PUT /repos/.../contents/test-permission.txt) returns: "Resource not accessible by personal access token"
+- Without `Contents: write`, no method (git HTTPS, Git Database API, or Contents API) can upload the code.
+- Removed the remote URL from git config (so the token is no longer stored in `.git/config`).
+
+## What's needed to complete the upload
+The user must **regenerate the fine-grained PAT (or edit its permissions)** to include:
+- **Repository access**: the new `yolanda-matwa-attorneys` repo (or "All repositories")
+- **Repository permissions → Contents: Read and write** (this is the critical missing permission)
+- (Optionally) Metadata: Read (auto-required)
+- (Optionally) Workflows: Read and write (if pushing GitHub Actions)
+
+Once a PAT with `Contents: Read and write` is provided, the push is a one-liner:
+```
+git remote add origin https://x-access-token:NEW_TOKEN@github.com/Mthaa77/yolanda-matwa-attorneys.git
+git push -u origin main
+git remote remove origin  # clears the token from git config
+```
+
+## Verification Results
+- `bun run lint`: CLEAN.
+- Sensitive files (.env, db/custom.db) confirmed untracked (git ls-files returns empty for both).
+- .env.example created and tracked.
+- Repository confirmed created at https://github.com/Mthaa77/yolanda-matwa-attorneys (empty, no code yet).
+
+## Unresolved Issues / Risks
+- **Code not yet pushed** — blocked on PAT permissions. The repo exists but is empty.
+- The provided PAT should be considered exposed (it was pasted in chat). Recommend the user **revoke this PAT** after regenerating one with correct permissions, regardless of whether they complete the push.
