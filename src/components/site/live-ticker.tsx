@@ -27,7 +27,7 @@ function useOfficeClock() {
 
   useEffect(() => {
     const update = () => setNow(new Date());
-    update();
+    const initial = window.setTimeout(update, 0);
 
     // The office status only changes by the minute. Updating once per minute
     // avoids re-rendering the entire marquee every second.
@@ -39,6 +39,7 @@ function useOfficeClock() {
     }, millisecondsToNextMinute);
 
     return () => {
+      window.clearTimeout(initial);
       window.clearTimeout(timeout);
       if (interval !== undefined) window.clearInterval(interval);
     };
@@ -110,7 +111,9 @@ export function LiveTicker() {
                 {status.open && (
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-sage/70" />
                 )}
-                <span className={`relative inline-flex h-1.5 w-1.5 rounded-full ${status.open ? "bg-sage" : "bg-cream/40"}`} />
+                <span
+                  className={`relative inline-flex h-1.5 w-1.5 rounded-full ${status.open ? "bg-sage" : "bg-cream/40"}`}
+                />
               </span>
               {status.label}
             </span>
@@ -123,7 +126,10 @@ export function LiveTicker() {
         <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-navy-deep to-transparent" />
         <div className="marquee-track flex w-max items-center gap-8 whitespace-nowrap will-change-transform group-hover:[animation-play-state:paused]">
           {marqueeItems.map((entry, index) => (
-            <span key={`${entry.text}-${index}`} className="inline-flex items-center gap-2 text-xs font-medium text-cream/65">
+            <span
+              key={`${entry.text}-${index}`}
+              className="inline-flex items-center gap-2 text-xs font-medium text-cream/65"
+            >
               <entry.icon className="h-3.5 w-3.5 text-gold/80" />
               {entry.text}
               <span className="ml-8 h-1 w-1 rounded-full bg-gold/30" />
