@@ -4,7 +4,6 @@ const nextConfig: NextConfig = {
   output: "standalone",
   poweredByHeader: false,
   compress: true,
-  optimizePackageImports: ["lucide-react"],
   images: {
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 31_536_000,
