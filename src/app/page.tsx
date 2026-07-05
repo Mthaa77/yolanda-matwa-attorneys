@@ -2,6 +2,7 @@ import { Navbar } from "@/components/site/navbar";
 import { Hero } from "@/components/site/hero";
 import { LiveTicker } from "@/components/site/live-ticker";
 import { TrustBar } from "@/components/site/trust-bar";
+import { SouthAfricanTrust } from "@/components/site/south-african-trust";
 import { OnboardingWizard } from "@/components/site/onboarding-wizard";
 import { AboutFounder } from "@/components/site/about-founder";
 import { PainPoints } from "@/components/site/pain-points";
@@ -42,6 +43,7 @@ export default function Home() {
           <Hero />
           <LiveTicker />
           <TrustBar />
+          <SouthAfricanTrust />
           <OnboardingWizard />
           <AboutFounder />
           <PainPoints />
