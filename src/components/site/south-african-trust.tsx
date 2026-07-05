@@ -7,34 +7,34 @@ import {
   ShieldCheck,
 } from "lucide-react";
 
-const institutionalPanels = [
+const pillars = [
   {
     icon: Scale,
-    title: "South African legal authority",
+    title: "Clear counsel, from the outset",
     body:
-      "Position the firm within the local legal system with clear references to admitted practice, notarial work and conveyancing authority.",
+      "You deserve to understand your options before you make a decision. We make the process clear, practical and personal from the first conversation.",
   },
   {
     icon: Landmark,
-    title: "Government-facing legal workflows",
+    title: "Careful work on important matters",
     body:
-      "Show familiarity with the legal and administrative environments clients already trust: the Deeds Office, Master of the High Court, CIPC and SARS touchpoints.",
+      "From a property transfer to a deceased estate or commercial agreement, each instruction is handled with precision and the attention it deserves.",
   },
   {
     icon: ShieldCheck,
-    title: "Trust, compliance and care",
+    title: "A practice built around trust",
     body:
-      "Reinforce POPIA-conscious communication, structured document handling and careful legal process management through premium trust signals.",
+      "Your information, timelines and legal concerns are treated with discretion, structure and the respect that serious legal work requires.",
   },
 ];
 
-const systemChips = [
-  "Master of the High Court",
-  "Deeds Office",
-  "CIPC",
-  "SARS",
-  "Competition Tribunal context",
-  "POPIA-conscious client handling",
+const practiceAreas = [
+  "Property transfers",
+  "Notarial services",
+  "Deceased estates",
+  "Family agreements",
+  "Commercial matters",
+  "Clear fee guidance",
 ];
 
 export function SouthAfricanTrust() {
@@ -50,22 +50,20 @@ export function SouthAfricanTrust() {
             <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
               <div className="max-w-3xl">
                 <div className="mb-4 inline-flex items-center gap-3 rounded-full border border-gold/25 bg-gold/10 px-4 py-2 text-[0.68rem] font-bold uppercase tracking-[0.22em] text-gold">
-                  <span className="flex items-center gap-2">
-                    <Flag className="h-3.5 w-3.5" />
-                    South African legal trust signals
-                  </span>
+                  <Flag className="h-3.5 w-3.5" />
+                  A South African legal practice
                 </div>
                 <h2 className="font-display text-3xl font-bold tracking-tight text-navy-deep sm:text-4xl">
-                  A law-firm presence that feels grounded in South African legal reality.
+                  Steady counsel for the decisions that shape your life.
                 </h2>
                 <p className="mt-4 max-w-2xl text-base leading-relaxed text-foreground/70">
-                  This layer gives the website more local authority by introducing South African legal cues, institutional references and elegant national colour accents — without making the design feel loud or unprofessional.
+                  Whether you are purchasing a home, protecting your family&apos;s legacy, planning an estate or making a business decision, you need advice that is clear, careful and built around your circumstances.
                 </p>
               </div>
 
               <div className="rounded-[1.2rem] border border-navy/10 bg-[linear-gradient(135deg,rgba(15,31,56,0.96),rgba(30,61,114,0.95))] px-5 py-4 text-cream shadow-premium">
                 <p className="text-[0.62rem] font-bold uppercase tracking-[0.18em] text-gold-light/85">
-                  National context
+                  Based in Pretoria
                 </p>
                 <div className="mt-3 flex items-center gap-3">
                   <span className="grid h-11 w-11 place-items-center rounded-xl bg-white/10 text-gold-light">
@@ -73,10 +71,10 @@ export function SouthAfricanTrust() {
                   </span>
                   <div>
                     <p className="font-display text-lg font-semibold text-cream">
-                      Pretoria-based, South Africa-aware
+                      Menlyn Maine, Pretoria East
                     </p>
                     <p className="text-sm text-cream/68">
-                      Local legal credibility with modern digital presentation.
+                      A personal practice for life&apos;s significant legal moments.
                     </p>
                   </div>
                 </div>
@@ -85,23 +83,24 @@ export function SouthAfricanTrust() {
           </div>
 
           <div className="grid gap-5 px-6 py-8 sm:px-8 lg:grid-cols-3 lg:px-10 lg:py-10">
-            {institutionalPanels.map((panel) => {
-              const Icon = panel.icon;
+            {pillars.map((pillar) => {
+              const Icon = pillar.icon;
               return (
                 <article
-                  key={panel.title}
-                  className="relative overflow-hidden rounded-[1.35rem] border border-navy/10 bg-white p-6 shadow-[0_16px_40px_-32px_rgba(15,31,56,0.5)]"
+                  key={pillar.title}
+                  className="group relative overflow-hidden rounded-[1.35rem] border border-navy/10 bg-white p-6 shadow-[0_16px_40px_-32px_rgba(15,31,56,0.5)] transition-all duration-500 hover:-translate-y-1.5 hover:border-gold/35 hover:shadow-[0_28px_56px_-34px_rgba(15,31,56,0.5)]"
                 >
                   <div className="pointer-events-none absolute right-0 top-0 h-24 w-24 bg-[radial-gradient(circle_at_top_right,rgba(176,141,69,0.18),transparent_65%)]" />
-                  <span className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl border border-gold/25 bg-[linear-gradient(145deg,rgba(232,217,181,0.38),rgba(255,255,255,0.9))] text-gold shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
+                  <span className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl border border-gold/25 bg-[linear-gradient(145deg,rgba(232,217,181,0.38),rgba(255,255,255,0.9))] text-gold shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] transition-transform duration-500 group-hover:scale-110 group-hover:[transform:rotateY(12deg)]">
                     <Icon className="h-5 w-5" />
                   </span>
                   <h3 className="font-display text-xl font-bold text-navy-deep">
-                    {panel.title}
+                    {pillar.title}
                   </h3>
                   <p className="mt-3 text-sm leading-relaxed text-foreground/68">
-                    {panel.body}
+                    {pillar.body}
                   </p>
+                  <span className="absolute inset-x-0 bottom-0 h-1 origin-left scale-x-0 bg-gradient-to-r from-gold via-gold-light to-transparent transition-transform duration-500 group-hover:scale-x-100" />
                 </article>
               );
             })}
@@ -112,17 +111,17 @@ export function SouthAfricanTrust() {
               <div>
                 <p className="inline-flex items-center gap-2 text-[0.68rem] font-bold uppercase tracking-[0.2em] text-navy/60">
                   <ScrollText className="h-3.5 w-3.5 text-gold" />
-                  Institutional reference cues
+                  The work we are trusted to do
                 </p>
                 <p className="mt-2 max-w-2xl text-sm leading-relaxed text-foreground/64">
-                  These are presented as trust anchors and operational cues — helping visitors feel that the firm understands the systems behind South African legal work.
+                  Every instruction is different. The standard remains the same: thoughtful legal work, clear communication and a dependable path forward.
                 </p>
               </div>
 
               <div className="flex flex-wrap gap-2.5 lg:max-w-2xl lg:justify-end">
-                {systemChips.map((chip, index) => (
+                {practiceAreas.map((area, index) => (
                   <span
-                    key={chip}
+                    key={area}
                     className={`inline-flex items-center gap-2 rounded-full border px-3.5 py-2 text-xs font-medium shadow-sm ${
                       index % 3 === 0
                         ? "border-[#007a33]/20 bg-[#007a33]/8 text-navy-deep"
@@ -132,7 +131,7 @@ export function SouthAfricanTrust() {
                     }`}
                   >
                     <span className="h-1.5 w-1.5 rounded-full bg-current/70" />
-                    {chip}
+                    {area}
                   </span>
                 ))}
               </div>
