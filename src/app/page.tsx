@@ -27,7 +27,6 @@ import { Footer } from "@/components/site/footer";
 import { WhatsAppButton } from "@/components/site/whatsapp-button";
 import { SectionDivider } from "@/components/site/section-divider";
 import { ScrollProgress, BackToTop } from "@/components/site/site-enhancements";
-import { HeadingMotionDirector } from "@/components/site/heading-motion-director";
 import { CookieConsent } from "@/components/site/cookie-consent";
 import { PrivacyProvider } from "@/components/site/privacy-provider";
 
@@ -35,7 +34,6 @@ export default function Home() {
   return (
     <PrivacyProvider>
       <div className="flex min-h-screen flex-col bg-cream">
-        {/* Skip to content — keyboard accessibility */}
         <a
           href="#main-content"
           className="sr-only z-[100] rounded-full bg-navy-deep px-5 py-3 text-sm font-semibold text-cream focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:shadow-premium"
@@ -44,8 +42,7 @@ export default function Home() {
         </a>
         <ScrollProgress />
         <Navbar />
-        <main id="main-content" className="flex-1">
-          <HeadingMotionDirector />
+        <main id="main-content" className="flex-1 overflow-x-clip">
           <Hero />
           <LiveTicker />
           <TrustBar />
