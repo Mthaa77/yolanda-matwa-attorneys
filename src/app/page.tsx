@@ -13,6 +13,7 @@ import { ServiceComparison } from "@/components/site/service-comparison";
 import { PricingTransparency } from "@/components/site/pricing-transparency";
 import { Competence } from "@/components/site/competence";
 import { ProcessTimeline } from "@/components/site/process-timeline";
+import { LegalFoundations } from "@/components/site/legal-foundations";
 import { Guarantees } from "@/components/site/guarantees";
 import { FAQSection } from "@/components/site/faq-section";
 import { TestimonialsScaffold } from "@/components/site/testimonials-scaffold";
@@ -55,6 +56,7 @@ export default function Home() {
           <PricingTransparency />
           <Competence />
           <ProcessTimeline />
+          <LegalFoundations />
           <Guarantees />
           <SectionDivider />
           <FAQSection />
