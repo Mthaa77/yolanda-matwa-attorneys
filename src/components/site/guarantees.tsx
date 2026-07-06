@@ -11,6 +11,7 @@ import {
   ShieldCheck,
   Sparkles,
 } from "lucide-react";
+import { lawLibraryVisual } from "@/lib/visual-assets";
 import { StaggerGroup, staggerItem } from "./scroll-reveal";
 
 const GUARANTEES = [
@@ -84,7 +85,26 @@ export function Guarantees() {
                 </p>
               </div>
 
-              <div className="mt-10 rounded-[1.35rem] border border-gold/25 bg-[linear-gradient(145deg,rgba(176,141,69,0.18),rgba(255,255,255,0.05))] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]">
+              <div className="group relative mt-8 overflow-hidden rounded-[1.35rem] border border-gold/25 bg-white/[0.06] p-2 shadow-[0_22px_48px_-32px_rgba(0,0,0,0.8)] [perspective:900px]">
+                <div className="relative overflow-hidden rounded-[1rem]">
+                  <img
+                    src={lawLibraryVisual}
+                    alt="Law books and gavel"
+                    width={360}
+                    height={258}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-44 w-full object-cover opacity-80 transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(15,31,56,0.72),transparent_65%),linear-gradient(0deg,rgba(15,31,56,0.8),transparent_52%)]" />
+                  <div className="absolute inset-x-0 bottom-0 p-4">
+                    <p className="text-[0.62rem] font-bold uppercase tracking-[0.19em] text-gold-light/85">Measured legal work</p>
+                    <p className="mt-1 font-display text-lg font-semibold text-cream">Every detail carries weight.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-6 rounded-[1.35rem] border border-gold/25 bg-[linear-gradient(145deg,rgba(176,141,69,0.18),rgba(255,255,255,0.05))] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]">
                 <div className="flex items-start gap-4">
                   <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-gold/35 bg-gold/10 text-gold-light">
                     <Sparkles className="h-5 w-5" />
