@@ -4,8 +4,11 @@ import {
   Scale,
   ScrollText,
   ShieldCheck,
+  Sparkles,
 } from "lucide-react";
 import { firmLogoImage } from "@/lib/director-welcome-image";
+
+const BRAND_FILM = "/images/Golden_logo_animation_light_sweep_202607061503.mp4";
 
 const pillars = [
   {
@@ -57,34 +60,44 @@ export function SouthAfricanTrust() {
           </p>
         </div>
 
-        <figure className="group relative overflow-hidden rounded-[2rem] border border-gold/30 bg-[linear-gradient(135deg,#ffffff_0%,#f8f4eb_45%,#eef1f6_100%)] p-4 shadow-[0_32px_80px_-40px_rgba(15,31,56,0.45)] sm:p-6 lg:p-8">
-          <div className="pointer-events-none absolute -left-16 -top-16 h-52 w-52 rounded-full border border-gold/25" />
-          <div className="pointer-events-none absolute -bottom-16 -right-16 h-56 w-56 rounded-full border border-navy/10" />
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-[linear-gradient(90deg,#000000_0%,#ffb81c_18%,#007a33_40%,#ffffff_58%,#de3831_76%,#0038a8_100%)]" />
-          <div className="relative flex min-h-[17rem] items-center justify-center overflow-hidden rounded-[1.45rem] border border-navy/8 bg-white px-6 py-10 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] sm:min-h-[22rem] sm:px-10 lg:min-h-[26rem]">
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_38%,rgba(176,141,69,0.13),transparent_46%)]" />
-            <img
-              src={firmLogoImage}
-              alt="Yolanda Matwa Attorneys logo"
-              width={1800}
-              height={950}
-              loading="lazy"
-              decoding="async"
-              className="relative block h-auto max-h-[20rem] w-full max-w-[52rem] object-contain transition-transform duration-1000 group-hover:scale-[1.02] sm:max-h-[24rem]"
-            />
+        <figure className="group relative overflow-hidden rounded-[1.65rem] border border-gold/35 bg-[#09101d] p-2.5 shadow-[0_34px_84px_-42px_rgba(15,31,56,0.72)] sm:rounded-[2rem] sm:p-3 lg:p-4">
+          <div className="pointer-events-none absolute -left-16 -top-16 h-52 w-52 rounded-full border border-gold/20" />
+          <div className="pointer-events-none absolute -bottom-16 -right-16 h-56 w-56 rounded-full border border-white/10" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-[linear-gradient(90deg,#000000_0%,#ffb81c_20%,#fff5d6_50%,#ffb81c_80%,#000000_100%)]" />
+
+          <div className="relative overflow-hidden rounded-[1.15rem] border border-gold/20 bg-black shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)] sm:rounded-[1.45rem]">
+            <div className="pointer-events-none absolute inset-0 z-10 border border-white/[0.07]" />
+            <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-20 bg-gradient-to-b from-black/22 to-transparent" />
+            <video
+              className="block h-auto w-full object-contain"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              poster={firmLogoImage}
+              aria-label="Yolanda Matwa Attorneys animated brand identity"
+              disablePictureInPicture
+              controlsList="nodownload noplaybackrate"
+            >
+              <source src={BRAND_FILM} type="video/mp4" />
+              Your browser does not support the brand animation.
+            </video>
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-24 bg-gradient-to-t from-black/28 to-transparent" />
           </div>
-          <figcaption className="relative flex flex-col gap-4 px-1 pb-1 pt-6 text-navy-deep sm:flex-row sm:items-center sm:justify-between sm:px-3 sm:pt-7">
-            <div className="flex items-center gap-3">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-gold/25 bg-gold/10 text-gold shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
-                <Scale className="h-5 w-5" />
+
+          <figcaption className="relative flex min-w-0 flex-col gap-4 px-1 pb-1 pt-5 text-cream sm:flex-row sm:items-center sm:justify-between sm:px-3 sm:pt-6">
+            <div className="flex min-w-0 items-center gap-3">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-gold/25 bg-gold/10 text-gold-light shadow-[inset_0_1px_0_rgba(255,255,255,0.12)]">
+                <Sparkles className="h-5 w-5" />
               </span>
-              <div>
-                <p className="font-display text-lg font-semibold text-navy-deep">Yolanda Matwa Attorneys</p>
-                <p className="mt-0.5 text-sm text-foreground/60">Menlyn Maine, Pretoria East</p>
+              <div className="min-w-0">
+                <p className="text-[0.62rem] font-bold uppercase tracking-[0.2em] text-gold-light/85">The firm signature</p>
+                <p className="mt-1 font-display text-lg font-semibold text-cream sm:text-xl">Yolanda Matwa Attorneys</p>
               </div>
             </div>
-            <p className="max-w-md text-sm leading-relaxed text-foreground/62 sm:text-right">
-              A personal practice for property, family, estate and commercial matters.
+            <p className="max-w-md text-sm leading-relaxed text-cream/62 sm:text-right">
+              Clear legal direction, thoughtfully delivered from Menlyn Maine, Pretoria East.
             </p>
           </figcaption>
         </figure>
