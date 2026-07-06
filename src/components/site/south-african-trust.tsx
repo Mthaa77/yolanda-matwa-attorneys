@@ -1,12 +1,11 @@
 import {
-  Building2,
   Flag,
   Landmark,
   Scale,
   ScrollText,
   ShieldCheck,
 } from "lucide-react";
-import { constitutionFeatureImage } from "@/lib/director-welcome-image";
+import { firmLogoImage } from "@/lib/director-welcome-image";
 
 const pillars = [
   {
@@ -58,31 +57,33 @@ export function SouthAfricanTrust() {
           </p>
         </div>
 
-        <figure className="group relative overflow-hidden rounded-[2rem] border border-gold/30 bg-navy-deep p-2.5 shadow-[0_32px_80px_-40px_rgba(15,31,56,0.72)] sm:p-3">
+        <figure className="group relative overflow-hidden rounded-[2rem] border border-gold/30 bg-[linear-gradient(135deg,#ffffff_0%,#f8f4eb_45%,#eef1f6_100%)] p-4 shadow-[0_32px_80px_-40px_rgba(15,31,56,0.45)] sm:p-6 lg:p-8">
           <div className="pointer-events-none absolute -left-16 -top-16 h-52 w-52 rounded-full border border-gold/25" />
-          <div className="pointer-events-none absolute -bottom-16 -right-16 h-56 w-56 rounded-full border border-gold/15" />
-          <div className="relative overflow-hidden rounded-[1.45rem] bg-[#111827]">
+          <div className="pointer-events-none absolute -bottom-16 -right-16 h-56 w-56 rounded-full border border-navy/10" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-[linear-gradient(90deg,#000000_0%,#ffb81c_18%,#007a33_40%,#ffffff_58%,#de3831_76%,#0038a8_100%)]" />
+          <div className="relative flex min-h-[17rem] items-center justify-center overflow-hidden rounded-[1.45rem] border border-navy/8 bg-white px-6 py-10 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] sm:min-h-[22rem] sm:px-10 lg:min-h-[26rem]">
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_38%,rgba(176,141,69,0.13),transparent_46%)]" />
             <img
-              src={constitutionFeatureImage}
-              alt="The Constitution of the Republic of South Africa"
-              width={2048}
-              height={1143}
+              src={firmLogoImage}
+              alt="Yolanda Matwa Attorneys logo"
+              width={1800}
+              height={950}
               loading="lazy"
               decoding="async"
-              className="block h-auto w-full object-contain transition-transform duration-1000 group-hover:scale-[1.015]"
+              className="relative block h-auto max-h-[20rem] w-full max-w-[52rem] object-contain transition-transform duration-1000 group-hover:scale-[1.02] sm:max-h-[24rem]"
             />
           </div>
-          <figcaption className="relative flex flex-col gap-4 px-3 pb-3 pt-6 text-cream sm:flex-row sm:items-center sm:justify-between sm:px-5 sm:pb-5">
+          <figcaption className="relative flex flex-col gap-4 px-1 pb-1 pt-6 text-navy-deep sm:flex-row sm:items-center sm:justify-between sm:px-3 sm:pt-7">
             <div className="flex items-center gap-3">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-gold/25 bg-gold/10 text-gold-light shadow-[inset_0_1px_0_rgba(255,255,255,0.14)]">
-                <Building2 className="h-5 w-5" />
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-gold/25 bg-gold/10 text-gold shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
+                <Scale className="h-5 w-5" />
               </span>
               <div>
-                <p className="font-display text-lg font-semibold text-cream">Yolanda Matwa Attorneys</p>
-                <p className="mt-0.5 text-sm text-cream/62">Menlyn Maine, Pretoria East</p>
+                <p className="font-display text-lg font-semibold text-navy-deep">Yolanda Matwa Attorneys</p>
+                <p className="mt-0.5 text-sm text-foreground/60">Menlyn Maine, Pretoria East</p>
               </div>
             </div>
-            <p className="max-w-md text-sm leading-relaxed text-cream/68 sm:text-right">
+            <p className="max-w-md text-sm leading-relaxed text-foreground/62 sm:text-right">
               A personal practice for property, family, estate and commercial matters.
             </p>
           </figcaption>
