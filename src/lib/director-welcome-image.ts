@@ -1,2 +1,3 @@
 // Full, uncropped director portrait for the welcome section.
-export const directorWelcomeImage = "data:image/webp;base64,REPLACE";
+// Kept separate so the welcome composition can evolve without changing other imagery.
+export { directorPortrait as directorWelcomeImage } from "./visual-assets";
