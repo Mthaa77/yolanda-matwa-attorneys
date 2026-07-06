@@ -1,3 +1,2 @@
-// Full, uncropped director portrait for the welcome section.
-// Kept separate so the welcome composition can evolve without changing other imagery.
-export { directorPortrait as directorWelcomeImage } from "./visual-assets";
+// Full, uncropped Director visual for the welcome section.
+export const directorWelcomeImage = "/images/Yolanda_Matwa_Attorneys_legal_needs_2026.jpeg";
