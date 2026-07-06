@@ -1,5 +1,5 @@
 import { ArrowRight, Scale, ShieldCheck } from "lucide-react";
-import { lawLibraryVisual } from "@/lib/visual-assets";
+import { justiceFeatureImage } from "@/lib/director-welcome-image";
 
 export function LegalFoundations() {
   return (
@@ -13,10 +13,10 @@ export function LegalFoundations() {
           <div className="pointer-events-none absolute -bottom-16 -right-12 h-52 w-52 rounded-full border border-white/10" />
           <div className="relative overflow-hidden rounded-[1.25rem] bg-black">
             <img
-              src={lawLibraryVisual}
-              alt="Law books and a gavel"
-              width={525}
-              height={376}
+              src={justiceFeatureImage}
+              alt="Gavel against the South African flag"
+              width={1189}
+              height={720}
               loading="lazy"
               decoding="async"
               className="block h-auto w-full object-contain"
@@ -24,7 +24,7 @@ export function LegalFoundations() {
           </div>
           <figcaption className="relative flex items-center justify-between gap-4 px-2 pb-1 pt-5 sm:px-4 sm:pt-6">
             <div>
-              <p className="text-[0.64rem] font-bold uppercase tracking-[0.2em] text-gold-light/85">Measured legal work</p>
+              <p className="text-[0.64rem] font-bold uppercase tracking-[0.2em] text-gold-light/85">Justice, care and clarity</p>
               <p className="mt-1 font-display text-xl font-semibold text-cream">Every detail carries weight.</p>
             </div>
             <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-gold/25 bg-gold/10 text-gold-light">
