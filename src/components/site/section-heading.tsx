@@ -33,7 +33,7 @@ export function SectionHeading({
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           className={cn(
             "flex items-center gap-3",
             align === "center" && "justify-center",
@@ -42,7 +42,7 @@ export function SectionHeading({
           <span className="h-px w-8 bg-gold/60" />
           <span
             className={cn(
-              "text-xs font-medium uppercase tracking-[0.18em]",
+              "text-xs font-bold uppercase tracking-[0.2em]",
               light ? "text-gold-light" : "text-gold",
             )}
           >
@@ -51,19 +51,15 @@ export function SectionHeading({
           {align === "center" && <span className="h-px w-8 bg-gold/60" />}
         </motion.div>
       )}
-      <motion.h2
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-40px" }}
-        transition={{ duration: 0.6, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+      <h2
         className={cn(
-          "font-display font-bold leading-[1.08] tracking-tight text-balance",
+          "font-display font-bold leading-[1.08] tracking-[-0.025em] text-balance",
           "text-[clamp(1.75rem,3.5vw,3rem)]",
           light ? "text-cream" : "text-navy-deep",
         )}
       >
         {title}
-      </motion.h2>
+      </h2>
       {description && (
         <motion.p
           initial={{ opacity: 0, y: 20 }}
