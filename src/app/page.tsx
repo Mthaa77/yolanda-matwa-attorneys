@@ -18,6 +18,7 @@ import { Guarantees } from "@/components/site/guarantees";
 import { FAQSection } from "@/components/site/faq-section";
 import { TestimonialsScaffold } from "@/components/site/testimonials-scaffold";
 import { LegalInsights } from "@/components/site/legal-insights";
+import { WhatsAppContact } from "@/components/site/whatsapp-contact";
 import { ContactSection } from "@/components/site/contact-section";
 import { FinalCTA } from "@/components/site/final-cta";
 import { Footer } from "@/components/site/footer";
@@ -62,6 +63,7 @@ export default function Home() {
           <FAQSection />
           <TestimonialsScaffold />
           <LegalInsights />
+          <WhatsAppContact />
           <ContactSection />
           <FinalCTA />
         </main>
