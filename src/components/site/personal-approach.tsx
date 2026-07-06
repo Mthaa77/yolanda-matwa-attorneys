@@ -1,4 +1,4 @@
-import { ArrowRight, HeartHandshake, MessageCircleMore, Quote } from "lucide-react";
+import { ArrowRight, HeartHandshake, MessageCircle, Quote } from "lucide-react";
 import { practiceConversationImage } from "@/lib/director-welcome-image";
 
 export function PersonalApproach() {
@@ -25,7 +25,7 @@ export function PersonalApproach() {
           <figcaption className="relative flex flex-col gap-3 px-2 pb-1 pt-5 sm:flex-row sm:items-center sm:justify-between sm:px-4 sm:pt-6">
             <div className="flex items-center gap-3">
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-gold/25 bg-gold/10 text-gold">
-                <MessageCircleMore className="h-5 w-5" />
+                <MessageCircle className="h-5 w-5" />
               </span>
               <div>
                 <p className="text-[0.62rem] font-bold uppercase tracking-[0.19em] text-gold">The first conversation</p>
