@@ -51,6 +51,30 @@ export function HeadingMotionDirector() {
 
   return (
     <style>{`
+      #main-content {
+        overflow-x: clip;
+      }
+
+      #main-content h1,
+      #main-content h2,
+      #main-content h3,
+      #main-content p,
+      #main-content figure,
+      #main-content figcaption {
+        min-width: 0;
+        max-inline-size: 100%;
+      }
+
+      #main-content h1,
+      #main-content h2,
+      #main-content h3 {
+        overflow-wrap: anywhere;
+      }
+
+      #main-content img {
+        max-inline-size: 100%;
+      }
+
       [data-heading-motion="prepared"] {
         opacity: 0;
         transform: translate3d(0, 0.55em, 0);
