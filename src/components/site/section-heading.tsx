@@ -23,7 +23,7 @@ export function SectionHeading({
   return (
     <div
       className={cn(
-        "flex flex-col gap-4",
+        "flex min-w-0 flex-col gap-4",
         align === "center" && "items-center text-center",
         className,
       )}
@@ -35,7 +35,7 @@ export function SectionHeading({
           viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           className={cn(
-            "flex items-center gap-3",
+            "flex flex-wrap items-center gap-3",
             align === "center" && "justify-center",
           )}
         >
@@ -53,8 +53,7 @@ export function SectionHeading({
       )}
       <h2
         className={cn(
-          "font-display font-bold leading-[1.08] tracking-[-0.025em] text-balance",
-          "text-[clamp(1.75rem,3.5vw,3rem)]",
+          "max-w-full break-words font-display text-[clamp(2.15rem,6.4vw,4rem)] font-bold leading-[1.04] tracking-[-0.04em] text-balance drop-shadow-[0_12px_22px_rgba(15,31,56,0.13)]",
           light ? "text-cream" : "text-navy-deep",
         )}
       >
