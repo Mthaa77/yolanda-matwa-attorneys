@@ -1,3 +1,5 @@
+"use client";
+
 import { ArrowDown, BookOpenText, Scale, Sparkles } from "lucide-react";
 import { constitutionFeatureImage } from "@/lib/director-welcome-image";
 
