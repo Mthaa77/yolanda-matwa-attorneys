@@ -8,7 +8,9 @@ import { AboutFounder } from "@/components/site/about-founder";
 import { PainPoints } from "@/components/site/pain-points";
 import { StatsStrip } from "@/components/site/stats-strip";
 import { WhyChooseUs } from "@/components/site/why-choose-us";
+import { ServicesHero } from "@/components/site/services-hero";
 import { ServicesGrid } from "@/components/site/services-grid";
+import { PersonalApproach } from "@/components/site/personal-approach";
 import { ServiceComparison } from "@/components/site/service-comparison";
 import { PricingTransparency } from "@/components/site/pricing-transparency";
 import { Competence } from "@/components/site/competence";
@@ -52,7 +54,9 @@ export default function Home() {
           <SectionDivider />
           <StatsStrip />
           <WhyChooseUs />
+          <ServicesHero />
           <ServicesGrid />
+          <PersonalApproach />
           <ServiceComparison />
           <PricingTransparency />
           <Competence />
