@@ -6,6 +6,7 @@ import {
   ScrollText,
   ShieldCheck,
 } from "lucide-react";
+import { legalIdentityVisual } from "@/lib/visual-assets";
 
 const pillars = [
   {
@@ -61,19 +62,30 @@ export function SouthAfricanTrust() {
                 </p>
               </div>
 
-              <div className="rounded-[1.2rem] border border-navy/10 bg-[linear-gradient(135deg,rgba(15,31,56,0.96),rgba(30,61,114,0.95))] px-5 py-4 text-cream shadow-premium">
-                <p className="text-[0.62rem] font-bold uppercase tracking-[0.18em] text-gold-light/85">
-                  Based in Pretoria
-                </p>
-                <div className="mt-3 flex items-center gap-3">
-                  <span className="grid h-11 w-11 place-items-center rounded-xl bg-white/10 text-gold-light">
+              <div className="group relative min-h-[12rem] overflow-hidden rounded-[1.2rem] border border-navy/10 bg-navy-deep text-cream shadow-[0_20px_42px_-28px_rgba(15,31,56,0.7)] lg:w-[23rem]">
+                <img
+                  src={legalIdentityVisual}
+                  alt="Yolanda Matwa Attorneys legal identity visual"
+                  width={480}
+                  height={270}
+                  loading="lazy"
+                  decoding="async"
+                  className="absolute inset-0 h-full w-full object-cover opacity-45 transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,rgba(15,31,56,0.95),rgba(15,31,56,0.5)_62%,rgba(15,31,56,0.72))]" />
+                <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-[linear-gradient(90deg,#ffb81c_0%,#007a33_38%,#ffffff_56%,#de3831_76%,#0038a8_100%)]" />
+                <div className="relative flex h-full items-end gap-3 p-5">
+                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-gold/25 bg-gold/10 text-gold-light shadow-[inset_0_1px_0_rgba(255,255,255,0.16)]">
                     <Building2 className="h-5 w-5" />
                   </span>
                   <div>
-                    <p className="font-display text-lg font-semibold text-cream">
+                    <p className="text-[0.62rem] font-bold uppercase tracking-[0.18em] text-gold-light/85">
+                      Based in Pretoria
+                    </p>
+                    <p className="mt-1 font-display text-lg font-semibold text-cream">
                       Menlyn Maine, Pretoria East
                     </p>
-                    <p className="text-sm text-cream/68">
+                    <p className="mt-1 text-sm text-cream/68">
                       A personal practice for life&apos;s significant legal moments.
                     </p>
                   </div>
