@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X } from "lucide-react";
-import { FIRM } from "@/lib/site-data";
+import { MessageCircle } from "lucide-react";
+import { WHATSAPP_DISPLAY, WHATSAPP_LINK } from "@/lib/whatsapp";
 
 export function WhatsAppButton() {
   const [visible, setVisible] = useState(false);
@@ -36,19 +36,18 @@ export function WhatsAppButton() {
                 transition={{ duration: 0.25 }}
                 className="hidden overflow-hidden whitespace-nowrap rounded-full bg-navy-deep px-4 py-2 text-sm font-medium text-cream shadow-premium sm:block"
               >
-                Chat with us
+                WhatsApp {WHATSAPP_DISPLAY}
               </motion.span>
             )}
           </AnimatePresence>
           <a
-            href={`https://wa.me/${FIRM.whatsapp}`}
+            href={WHATSAPP_LINK}
             target="_blank"
             rel="noopener noreferrer"
             className="group flex h-14 w-14 items-center justify-center rounded-full bg-sage text-white shadow-premium transition-all hover:scale-105 hover:bg-sage/90"
-            aria-label="Chat on WhatsApp"
+            aria-label={`Chat on WhatsApp at ${WHATSAPP_DISPLAY}`}
           >
             <MessageCircle className="h-6 w-6" />
-            {/* ping ring */}
             <span className="absolute -z-10 h-14 w-14 animate-ping rounded-full bg-sage/30" />
           </a>
         </motion.div>
