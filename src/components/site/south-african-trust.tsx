@@ -6,7 +6,7 @@ import {
   ScrollText,
   ShieldCheck,
 } from "lucide-react";
-import { legalIdentityVisual } from "@/lib/visual-assets";
+import { constitutionFeatureImage } from "@/lib/director-welcome-image";
 
 const pillars = [
   {
@@ -63,8 +63,8 @@ export function SouthAfricanTrust() {
           <div className="pointer-events-none absolute -bottom-16 -right-16 h-56 w-56 rounded-full border border-gold/15" />
           <div className="relative overflow-hidden rounded-[1.45rem] bg-[#111827]">
             <img
-              src={legalIdentityVisual}
-              alt="Yolanda Matwa Attorneys — Founder and Principal Attorney"
+              src={constitutionFeatureImage}
+              alt="The Constitution of the Republic of South Africa"
               width={2048}
               height={1143}
               loading="lazy"
