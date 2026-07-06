@@ -27,6 +27,7 @@ import { Footer } from "@/components/site/footer";
 import { WhatsAppButton } from "@/components/site/whatsapp-button";
 import { SectionDivider } from "@/components/site/section-divider";
 import { ScrollProgress, BackToTop } from "@/components/site/site-enhancements";
+import { HeadingMotionDirector } from "@/components/site/heading-motion-director";
 import { CookieConsent } from "@/components/site/cookie-consent";
 import { PrivacyProvider } from "@/components/site/privacy-provider";
 
@@ -44,6 +45,7 @@ export default function Home() {
         <ScrollProgress />
         <Navbar />
         <main id="main-content" className="flex-1">
+          <HeadingMotionDirector />
           <Hero />
           <LiveTicker />
           <TrustBar />
