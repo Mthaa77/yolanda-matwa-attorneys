@@ -142,9 +142,11 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: "ss01", "cv01", "cv03";
+    font-feature-settings: "ss01", "cv01", "cv03", "kern", "liga", "clig";
+    font-kerning: normal;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
   ::selection {
     background-color: var(--gold);
@@ -164,6 +166,13 @@
   h1, h2, h3, h4 {
     text-wrap: balance;
     letter-spacing: -0.015em;
+    font-kerning: normal;
+    font-feature-settings: "kern", "liga", "clig", "calt";
+  }
+
+  .font-display {
+    font-variant-numeric: lining-nums proportional-nums;
+    font-feature-settings: "kern", "liga", "clig", "calt", "swsh";
   }
 
   /* Respect reduced motion without suppressing the visual hierarchy. */
@@ -176,157 +185,5 @@
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
-  }
-}
-
-/* Premium custom scrollbar */
-@layer utilities {
-  .scrollbar-premium {
-    scrollbar-width: thin;
-    scrollbar-color: var(--gold) transparent;
-  }
-  .scrollbar-premium::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-  .scrollbar-premium::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  .scrollbar-premium::-webkit-scrollbar-thumb {
-    background-color: color-mix(in srgb, var(--gold) 50%, transparent);
-    border-radius: 9999px;
-  }
-  .scrollbar-premium::-webkit-scrollbar-thumb:hover {
-    background-color: var(--gold);
-  }
-
-  .text-balance {
-    text-wrap: balance;
-  }
-  .text-pretty {
-    text-wrap: pretty;
-  }
-
-  .text-gradient-gold {
-    background: linear-gradient(135deg, #D9C79A 0%, #B08D45 50%, #8A6E32 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .text-gradient-navy {
-    background: linear-gradient(135deg, #0F1F38 0%, #16305C 50%, #1E3D72 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .bg-grain {
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
-  }
-
-  .shadow-premium {
-    box-shadow: 0 1px 2px rgba(15, 31, 56, 0.04), 0 8px 24px -8px rgba(15, 31, 56, 0.12), 0 24px 48px -24px rgba(15, 31, 56, 0.18);
-  }
-  .shadow-gold-glow {
-    box-shadow: 0 0 0 1px rgba(176, 141, 69, 0.2), 0 8px 32px -8px rgba(176, 141, 69, 0.35);
-  }
-  .shadow-navy-deep {
-    box-shadow: 0 24px 64px -16px rgba(15, 31, 56, 0.45);
-  }
-
-  .divider-gold {
-    background: linear-gradient(90deg, transparent, var(--gold) 50%, transparent);
-  }
-}
-
-/* Runs on the compositor instead of React/Framer Motion on every frame. */
-@keyframes marquee {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(-50%, 0, 0); }
-}
-
-.marquee-track {
-  animation: marquee 38s linear infinite;
-  transform: translate3d(0, 0, 0);
-}
-
-/* Deep sections do not need to be painted until they are approached. This keeps
-   the initial load responsive while preserving server-rendered markup and SEO. */
-@supports (content-visibility: auto) {
-  main > section:nth-of-type(n + 7) {
-    content-visibility: auto;
-    contain-intrinsic-size: auto 900px;
-  }
-}
-
-/* ============================================================
-   Print stylesheet — clean, professional output for clients
-   who want to print service info or the "What to Prepare" list.
-   ============================================================ */
-@media print {
-  html {
-    scroll-behavior: auto;
-    scroll-padding-top: 0;
-  }
-  body {
-    background: #ffffff !important;
-    color: #0F1F38 !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-
-  nav,
-  footer,
-  .print\:hidden,
-  [aria-label="Open menu"],
-  [aria-label="Close menu"],
-  [aria-label="Back to top"],
-  [aria-label="Chat on WhatsApp"],
-  [data-print-hide] {
-    display: none !important;
-  }
-
-  * {
-    animation: none !important;
-    transition: none !important;
-    opacity: 1 !important;
-    transform: none !important;
-  }
-
-  h1, h2, h3, h4 {
-    color: #0F1F38 !important;
-    page-break-after: avoid;
-  }
-
-  section {
-    page-break-inside: avoid;
-  }
-
-  [class*="blur-3xl"],
-  [class*="bg-grain"] {
-    display: none !important;
-  }
-
-  a[href^="http"]::after {
-    content: " (" attr(href) ")";
-    font-size: 0.8em;
-    color: #555;
-  }
-
-  [class*="bg-navy"],
-  [class*="bg-navy-deep"] {
-    background: #ffffff !important;
-    color: #0F1F38 !important;
-  }
-  [class*="bg-navy"] *,
-  [class*="bg-navy-deep"] * {
-    color: #0F1F38 !important;
-  }
-
-  [class*="text-gold"],
-  [class*="text-gradient-gold"] {
-    color: #6b5320 !important;
-    -webkit-text-fill-color: #6b5320 !important;
   }
 }
